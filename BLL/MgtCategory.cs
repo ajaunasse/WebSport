@@ -17,7 +17,7 @@ namespace BLL
                 new Category { Id = 1, Title = "Course à pied" },
                 new Category { Id = 2, Title = "Gym" },
                 new Category { Id = 3, Title = "Fitness" },
-                new Category { Id = 4, Title = "Cyclisme" }
+                new Category { Id = 4, Title = "Cycliste" }
             };
 
             return result;
