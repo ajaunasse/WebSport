@@ -4,6 +4,8 @@
 @section AdditionalMeta
 {
     @Styles.Render("~/Content/Home.css")
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 }
    
     <div class="row">
@@ -14,16 +16,17 @@
                     <h3>Trouvez un événement sportif près de chez vous</h3>
                 </div>
                 <div class="container">
-                    
-                    <form class="form">
+                    @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+                    {
+
                         <div class="form-group row">
                             <div class="col-3">
-                                <label for="exampleInputEmail1">Où ?</label>
-                                <input type="text" class="form-control" id="where" placeholder="Saisissez une ville">
+                                <label for="city" >Où ?</label>
+                                <input type="text" class="form-control" id="city" name="ville" placeholder="Saisissez une ville">
                             </div>
                             <div class="col-3">
                                 <label for="exampleInputEmail1">Quoi ?</label>
-                                <select class="form-control" id="inlineFormCustomSelect">
+                                <select class="form-control" id="type" name="type">
                                     <option selected>Choose...</option>
                                     <option value="1">Running</option>
                                     <option value="2">Cyclisme</option>
@@ -32,17 +35,43 @@
                             </div>
                             <div class="col-3">
                                 <label for="exampleInputEmail1">Quand ?</label>
-                                <input type="date" class="form-control" id="where">
+                                <input type="date" class="form-control" id="date" name="date">
                             </div>
                             <div class="col-3">
                                 <button type="submit" class="btn btn-outline-primary" id="searchButton"> <i class="material-icons">search</i> Valider</button>
                             </div>
                         </div>
 
-                       
-                    </form>
+
+                    }
                 </div>
             </div>
 
         </div>
     </div>
+@section scripts {
+    <script type="text/javascript">
+          $( function() {
+            var availableTags = [
+              "Nantes",
+              "Bordeaux",
+              "Paris",
+              "Lille",
+              "Brest",
+              "Marseille",
+              "Toulouse",
+              "Montpellier",
+              "Strasbourg",
+              "Lyon",
+              "Saint-Etienne",
+              "Metz",
+              "Nancy",
+              "Lens",
+            ];
+            $("#city").autocomplete({
+              source: availableTags
+            });
+          } );
+
+</script>
+}

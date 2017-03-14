@@ -1,78 +1,48 @@
-﻿@model WUI.Models.RaceModel
-
-@{
-    ViewBag.Title = "Create";
+﻿@{
+    ViewBag.Title = "Création d'une course";
 }
-
-@section css {
-    @Styles.Render("~/Content/Race/css")
-}
-
-<h2>Création d'une course</h2>
-
-@using (Html.BeginForm("Create", "Race", FormMethod.Post, new { @class = "form-design" }))
+@section AdditionalMeta
 {
-    // Génère un token dans le cookie d'authentification afin de contrer les
-    // attaques de type Cross-site Request forgery
-    @Html.AntiForgeryToken();
-    
-    // Grâce à la propriété "true", on affiche uniquement les erreurs
-    // n'étant pas rattachées à la propriété du model (ici RaceModel)
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>RaceModel</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Title, new { @class="form-control", size = "30" })
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Description, new { @class="form-control", placeholder = "20 car. min", size = "30" })
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DateStart)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.DateStart, new { @class="form-control", placeholder = "JJ/MM/AAAA", type="date", size = "30" })
-            @Html.ValidationMessageFor(model => model.DateStart)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DateEnd)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.DateEnd, new { @class="form-control", placeholder = "JJ/MM/AAAA", type="date", size = "30" })
-            @Html.ValidationMessageFor(model => model.DateEnd)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Town)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Town, new { @class="form-control", size = "30" })
-            @Html.ValidationMessageFor(model => model.Town)
-        </div>
-
-        <p>
-            <input type="submit" value="Créer la course" />
-        </p>
-    </fieldset>
+    @Styles.Render("~/Content/Home.css")
 }
 
-<div>
-    @Html.ActionLink("Retour à la liste", "Index")
+<div class="row">
+    <div class="text-center col-md-9 offset-md-4">
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="headerJumbotron">
+                <h3>Création d'une nouvelle course</h3>
+            </div>
+            <div class="container">
+
+                <form class="form">
+                    <div class="form-group row">
+                        <div class="col-3">
+                            <label for="exampleInputEmail1">Où ?</label>
+                            <input type="text" class="form-control" id="where" placeholder="Saisissez une ville">
+                        </div>
+                        <div class="col-3">
+                            <label for="exampleInputEmail1">Quoi ?</label>
+                            <select class="form-control" id="inlineFormCustomSelect">
+                                <option selected>Choose...</option>
+                                <option value="1">Running</option>
+                                <option value="2">Cyclisme</option>
+                                <option value="3">Natation</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="exampleInputEmail1">Quand ?</label>
+                            <input type="date" class="form-control" id="where">
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-outline-primary" id="searchButton"> <i class="material-icons">search</i> Valider</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>
 </div>
-
-@section Scripts {
-
-}
