@@ -21,7 +21,7 @@ namespace WUI.Models
         [Required(ErrorMessage = "Le {0} est requis")]
         public string Title { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "Description de la course")]
         [StringLength(200, MinimumLength=20, ErrorMessage="La {0} doit faire au minimum 20 caractères")]
         [Required(ErrorMessage = "La {0} est requise")]
         public string Description { get; set; }
@@ -32,7 +32,7 @@ namespace WUI.Models
         // Par défaut, une date est requise car le type DateTime n'est pas "Nullable"
         public DateTime DateStart { get; set; }
 
-        [Display(Name = "Date de fin")]
+        [Display(Name = "Date de fin d'inscription")]
         [DataType(DataType.Text)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         [CompareDate("DateStart")]
