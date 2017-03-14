@@ -15,6 +15,8 @@
         <EntityTypeShape EntityType="BddLoginModel.PointEntity" Width="1.5" PointX="5.25" PointY="5" />
         <AssociationConnector Association="BddLoginModel.FK_POI_Categorie" />
         <AssociationConnector Association="BddLoginModel.FK_POI_Point" />
+        <AssociationConnector Association="BddLoginModel.FK_POI_Course" />
+        <AssociationConnector Association="BddLoginModel.FK_Point_Course" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

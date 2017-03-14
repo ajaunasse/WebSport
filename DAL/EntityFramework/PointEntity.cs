@@ -23,7 +23,9 @@ namespace DAL.EntityFramework
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
+        public Nullable<int> CourseId { get; set; }
     
         public virtual ICollection<POIEntity> POIs { get; set; }
+        public virtual RaceEntity Course { get; set; }
     }
 }

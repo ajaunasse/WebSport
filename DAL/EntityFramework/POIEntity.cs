@@ -18,8 +18,10 @@ namespace DAL.EntityFramework
         public string Titre { get; set; }
         public int CategorieId { get; set; }
         public int PointId { get; set; }
+        public Nullable<int> CourseId { get; set; }
     
         public virtual CategorieEntity Categorie { get; set; }
         public virtual PointEntity Point { get; set; }
+        public virtual RaceEntity Course { get; set; }
     }
 }
