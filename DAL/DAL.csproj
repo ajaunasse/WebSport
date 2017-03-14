@@ -64,6 +64,9 @@
     <Compile Include="DbHelper\DbFactory.cs" />
     <Compile Include="DbRace.cs" />
     <Compile Include="DbHelper\DbTools.cs" />
+    <Compile Include="EntityFramework\CategorieEntity.cs">
+      <DependentUpon>WebSportModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\ContributorEntity.cs">
       <DependentUpon>WebSportModel.tt</DependentUpon>
     </Compile>
@@ -86,6 +89,12 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\PersonEntity.cs">
+      <DependentUpon>WebSportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\POIEntity.cs">
+      <DependentUpon>WebSportModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\PointEntity.cs">
       <DependentUpon>WebSportModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\RaceEntity.cs">
@@ -157,6 +166,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="ClassDiagram1.cd" />
     <None Include="EntityFramework\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

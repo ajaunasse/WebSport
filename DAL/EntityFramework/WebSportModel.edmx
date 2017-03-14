@@ -4,26 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BddLoginModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="BddLoginModelStoreContainer">
-          <EntitySet Name="Course" EntityType="BddLoginModel.Store.Course" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Participant" EntityType="BddLoginModel.Store.Participant" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Personne" EntityType="BddLoginModel.Store.Personne" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Competiteur_Course" Association="BddLoginModel.Store.FK_Competiteur_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="Participant" EntitySet="Participant" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Competiteur_Personne" Association="BddLoginModel.Store.FK_Competiteur_Personne">
-            <End Role="Personne" EntitySet="Personne" />
-            <End Role="Participant" EntitySet="Participant" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="BddLoginModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Titre" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" />
           <Property Name="DateStart" Type="datetime" Nullable="false" />
           <Property Name="DateEnd" Type="datetime" Nullable="false" />
@@ -43,16 +37,34 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Nom" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="Prenom" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Prenom" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="500" />
           <Property Name="Telephone" Type="varchar" MaxLength="10" />
           <Property Name="DateNaissance" Type="datetime" />
         </EntityType>
+        <EntityType Name="POI">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategorieId" Type="int" Nullable="false" />
+          <Property Name="PointId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Point">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="Altitude" Type="float" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Competiteur_Course">
-          <End Role="Course" Type="BddLoginModel.Store.Course" Multiplicity="1" />
-          <End Role="Participant" Type="BddLoginModel.Store.Participant" Multiplicity="*" />
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
               <PropertyRef Name="Id" />
@@ -63,8 +75,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Competiteur_Personne">
-          <End Role="Personne" Type="BddLoginModel.Store.Personne" Multiplicity="1" />
-          <End Role="Participant" Type="BddLoginModel.Store.Participant" Multiplicity="*" />
+          <End Role="Personne" Type="Self.Personne" Multiplicity="1" />
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Personne">
               <PropertyRef Name="Id" />
@@ -74,8 +86,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+        <Association Name="FK_POI_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="POI" Type="Self.POI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="POI">
+              <PropertyRef Name="CategorieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POI_Point">
+          <End Role="Point" Type="Self.Point" Multiplicity="1" />
+          <End Role="POI" Type="Self.POI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Point">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="POI">
+              <PropertyRef Name="PointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BddLoginModelStoreContainer">
+          <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personne" EntityType="Self.Personne" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="POI" EntityType="Self.POI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Point" EntityType="Self.Point" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Competiteur_Course" Association="Self.FK_Competiteur_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Participant" EntitySet="Participant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Competiteur_Personne" Association="Self.FK_Competiteur_Personne">
+            <End Role="Personne" EntitySet="Personne" />
+            <End Role="Participant" EntitySet="Participant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POI_Categorie" Association="Self.FK_POI_Categorie">
+            <End Role="Categorie" EntitySet="Categorie" />
+            <End Role="POI" EntitySet="POI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POI_Point" Association="Self.FK_POI_Point">
+            <End Role="Point" EntitySet="Point" />
+            <End Role="POI" EntitySet="POI" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BddLoginModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -90,6 +149,17 @@
           <AssociationSet Name="FK_Competiteur_Personne" Association="BddLoginModel.FK_Competiteur_Personne">
             <End Role="Person" EntitySet="PersonEntities" />
             <End Role="Contributor" EntitySet="ContributorEntities" />
+          </AssociationSet>
+          <EntitySet Name="CategorieEntities" EntityType="BddLoginModel.CategorieEntity" />
+          <EntitySet Name="POIEntities" EntityType="BddLoginModel.POIEntity" />
+          <EntitySet Name="PointEntities" EntityType="BddLoginModel.PointEntity" />
+          <AssociationSet Name="FK_POI_Categorie" Association="BddLoginModel.FK_POI_Categorie">
+            <End Role="Categorie" EntitySet="CategorieEntities" />
+            <End Role="POI" EntitySet="POIEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POI_Point" Association="BddLoginModel.FK_POI_Point">
+            <End Role="Point" EntitySet="PointEntities" />
+            <End Role="POI" EntitySet="POIEntities" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="RaceEntity">
@@ -152,6 +222,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CategorieEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="POIs" Relationship="BddLoginModel.FK_POI_Categorie" FromRole="Categorie" ToRole="POI" />
+        </EntityType>
+        <EntityType Name="POIEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategorieId" Type="Int32" Nullable="false" />
+          <Property Name="PointId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="BddLoginModel.FK_POI_Categorie" FromRole="POI" ToRole="Categorie" />
+          <NavigationProperty Name="Point" Relationship="BddLoginModel.FK_POI_Point" FromRole="POI" ToRole="Point" />
+        </EntityType>
+        <EntityType Name="PointEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Altitude" Type="Double" Nullable="false" />
+          <NavigationProperty Name="POIs" Relationship="BddLoginModel.FK_POI_Point" FromRole="Point" ToRole="POI" />
+        </EntityType>
+        <Association Name="FK_POI_Categorie">
+          <End Type="BddLoginModel.CategorieEntity" Role="Categorie" Multiplicity="1" />
+          <End Type="BddLoginModel.POIEntity" Role="POI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="POI">
+              <PropertyRef Name="CategorieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_POI_Point">
+          <End Type="BddLoginModel.PointEntity" Role="Point" Multiplicity="1" />
+          <End Type="BddLoginModel.POIEntity" Role="POI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Point">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="POI">
+              <PropertyRef Name="PointId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -192,6 +315,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CategorieEntities">
+            <EntityTypeMapping TypeName="BddLoginModel.CategorieEntity">
+              <MappingFragment StoreEntitySet="Categorie">
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POIEntities">
+            <EntityTypeMapping TypeName="BddLoginModel.POIEntity">
+              <MappingFragment StoreEntitySet="POI">
+                <ScalarProperty Name="PointId" ColumnName="PointId" />
+                <ScalarProperty Name="CategorieId" ColumnName="CategorieId" />
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointEntities">
+            <EntityTypeMapping TypeName="BddLoginModel.PointEntity">
+              <MappingFragment StoreEntitySet="Point">
+                <ScalarProperty Name="Altitude" ColumnName="Altitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -206,9 +357,10 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
