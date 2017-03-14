@@ -30,6 +30,6 @@ body {
     font-size: 20px;
     letter-spacing: 7px;
 }
-.form label {
+form label {
     font-weight: bold;
 }
