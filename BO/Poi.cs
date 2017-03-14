@@ -11,8 +11,11 @@ namespace BO
     /// <summary>
     /// Poi : Point d'intérêt = Localisation GPS associée à une catégorie : Départ, Arrivée, Ravitaillement...
     /// </summary>
+    
     public class Poi : Point
     {
+
+        public int id { get; set; } 
         public string Title { get; set; }
 
         private Category _category;
