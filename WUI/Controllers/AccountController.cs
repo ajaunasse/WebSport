@@ -5,6 +5,8 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using BLL;
+using BO;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
@@ -33,12 +35,17 @@ namespace WUI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(PersonneModel model)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            if (model != null)
             {
-                return RedirectToLocal(returnUrl);
+                MgtPersonne mgtpers = new MgtPersonne();
+                Personne pers = new Personne(model.Email);
+                pers.Password = model.Password;
+                bool valide = mgtpers.ValidateConnection(pers);
             }
+
+
 
             // Si nous sommes arrivés là, quelque chose a échoué, réafficher le formulaire
             ModelState.AddModelError("", "Le nom d'utilisateur ou mot de passe fourni est incorrect.");
