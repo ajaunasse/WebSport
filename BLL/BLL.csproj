@@ -42,6 +42,7 @@
     <Compile Include="MgtCategory.cs" />
     <Compile Include="MgtCompetitor.cs" />
     <Compile Include="MgtDisplayConfiguration.cs" />
+    <Compile Include="MgtPersonne.cs" />
     <Compile Include="MgtRace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

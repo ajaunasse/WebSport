@@ -22,6 +22,8 @@ namespace WUI.Models
 
         public DateTime? DateNaissance { get; set; }
 
+        public string Password { get; set; }
+
         public virtual ICollection<DisplayConfigurationModel> DisplayConfigurations { get; set; }
     }
 }
