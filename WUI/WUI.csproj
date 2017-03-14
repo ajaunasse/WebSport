@@ -200,13 +200,13 @@
     <EmbeddedResource Include="App_Data\Xml\Race.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="Content\Bootstrap\bootstrap-theme.css" />
-    <Content Include="Content\Bootstrap\bootstrap-theme.min.css" />
-    <Content Include="Content\Bootstrap\bootstrap.css" />
+    <Content Include="Content\Bootstrap\bootstrap-grid.min.css" />
+    <Content Include="Content\Bootstrap\bootstrap-reboot.min.css" />
     <Content Include="Content\Bootstrap\bootstrap.min.css" />
     <Content Include="Content\Bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Category.css" />
     <Content Include="Content\Race.css" />
+    <Content Include="Content\Home.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -264,14 +264,11 @@
     <Content Include="DLL\RouteDebug.dll" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Bootstrap\bootstrap-theme.css.map" />
-    <Content Include="Content\Bootstrap\bootstrap-theme.min.css.map" />
-    <Content Include="Content\Bootstrap\bootstrap.css.map" />
-    <Content Include="Content\Bootstrap\bootstrap.min.css.map" />
     <Content Include="Content\Bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Bootstrap\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Bootstrap\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Images\home.jpg" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Bootstrap\npm.js" />
