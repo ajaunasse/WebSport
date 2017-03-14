@@ -19,6 +19,8 @@ namespace BO
 
         public string Phone { get; set; }
 
+        public string Password { get; set; }
+
         [NonSerialized]
         private DateTime? _dateNaissance;
         public DateTime DateNaissance

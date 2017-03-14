@@ -40,9 +40,10 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nom" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Prenom" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="500" />
+          <Property Name="Email" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Telephone" Type="varchar" MaxLength="10" />
           <Property Name="DateNaissance" Type="datetime" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="POI">
           <Key>
@@ -237,10 +238,11 @@
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="Lastname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Firstname" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Mail" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Mail" Type="String" MaxLength="500" Unicode="false" FixedLength="false" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Contributors" Relationship="BddLoginModel.FK_Competiteur_Personne" FromRole="Person" ToRole="Contributor" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Competiteur_Course">
           <End Role="Race" Type="BddLoginModel.RaceEntity" Multiplicity="1" />
@@ -378,6 +380,7 @@
           <EntitySetMapping Name="PersonEntities">
             <EntityTypeMapping TypeName="BddLoginModel.PersonEntity">
               <MappingFragment StoreEntitySet="Personne">
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Lastname" ColumnName="Nom" />
                 <ScalarProperty Name="Firstname" ColumnName="Prenom" />

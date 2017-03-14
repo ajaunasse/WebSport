@@ -25,6 +25,7 @@ namespace DAL.EntityFramework
         public string Mail { get; set; }
         public string Phone { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
+        public string Password { get; set; }
     
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
     }
