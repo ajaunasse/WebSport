@@ -9,9 +9,7 @@ namespace WUI.Controllers
     public class HomeController : Controller
     {
         public ActionResult Index()
-        {
-            ViewBag.Message = "Modifiez ce modèle pour dynamiser votre application ASP.NET MVC.";
-
+        {          
             return View();
         }
 

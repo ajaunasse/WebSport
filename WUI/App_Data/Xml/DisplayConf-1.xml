@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ArrayOfDisplayConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<ArrayOfDisplayConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <DisplayConfiguration>
     <id>00000000-0000-0000-0000-000000000000</id>
     <personneid>1</personneid>

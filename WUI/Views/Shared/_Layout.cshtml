@@ -3,39 +3,36 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - Mon application ASP.NET MVC</title>
+        <title>WebSport | @ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Styles.Render("~/bundles/Bootstrap/css")
-        @RenderSection("css", required: false)
-        @Scripts.Render("~/bundles/modernizr")
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
+        @Styles.Render("~/Content/Site.css")
+        @Styles.Render("~/Content/Bootstrap/bootstrap.min.css")
+        @RenderSection("AdditionalMeta", true)
+
+        <script>
+            $("#dropdown").select2({
+                theme: "bootstrap"
+            });
+
+        </script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.6/select2-bootstrap.css" rel="stylesheet" />
+
     </head>
     <body>
         <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("votre logo ici", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    @Html.Partial("_Menu")
-                </div>
-            </div>
+             @Html.Partial("_Menu")
         </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
+        <div class="container container-table">
                 @RenderBody()
-            </section>
         </div>
-        @Html.Partial("_Footer")
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryui")
-        @Scripts.Render("~/bundles/bootstrap/js")
-        @RenderSection("scripts", required: false)
+
+        @Scripts.Render("~/Scripts/jquery-1.10.2.js")
+        @Scripts.Render("~/Scripts/Bootstrap/bootstrap.js")
+
     </body>
 </html>
