@@ -18,6 +18,16 @@ namespace WUI
                 defaults: new { controller = "Race", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+                name: "add_course",
+                url: "Admin/Course/Create",
+                defaults: new { controller = "Race", action = "Create", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "edit_course",
+                url: "Admin/Course/Edit/{id}",
+                defaults: new { controller = "Race", action = "Edit", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "Configuration",
                 url: "Configuration/{PersonneId}/{action}/{id}",
                 defaults: new { controller = "DisplayConfiguration", PersonneId = "1", action = "Index", id = UrlParameter.Optional }
