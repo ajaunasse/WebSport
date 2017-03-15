@@ -36,6 +36,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel();
@@ -91,6 +92,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Edit/5
+        [AllowAnonymous]
         public ActionResult Edit(int id = 0)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel();
