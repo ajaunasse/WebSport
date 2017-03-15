@@ -4,40 +4,69 @@
 @section AdditionalMeta
 {
     @Styles.Render("~/Content/Home.css")
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 }
-   
-    <div class="row">
-        <div class="text-center col-md-9 offset-md-4" >
-           
-            <div class="jumbotron jumbotron-fluid">
-                <div class="headerJumbotron">
-                    <h3>Trouvez un événement sportif près de chez vous</h3>
-                </div>
-                <div class="container">
-                    
-                    <form class="form">
-                        <div class="form-group row">
-                            <div class="col-3">
-                                <label for="exampleInputEmail1">Où ?</label>
-                                <input type="text" class="form-control" id="where" placeholder="Saisissez une ville">
-                            </div>
-                            <div class="col-3">
-                                <label for="exampleInputEmail1">De </label>
-                                <input type="date" class="form-control" id="date" name="dateDebut" />
-                            </div>
-                            <div class="col-3">
-                                <label for="exampleInputEmail1">A </label>
-                                <input type="date" class="form-control" id="date" name="dateFin" />
-                            </div>
-                            <div class="col-3">
-                                <button type="submit" class="btn btn-outline-primary" id="searchButton"> <i class="material-icons">search</i> Valider</button>
-                            </div>
-                        </div>
 
-                       
-                    </form>
-                </div>
+<div class="row" >
+    <div class="text-center col-md-9 offset-md-4">
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="headerJumbotron">
+                <h3>Trouvez un événement sportif près de chez vous</h3>
             </div>
+            <div class="container">
+                @using (Html.BeginForm("Index", "Search", FormMethod.Get))
+                {
 
+                    <div class="form-group row">
+                        <div class="col-3">
+                            <label for="city">Où ?</label>
+                            <input type="text" class="form-control" id="city" name="ville" placeholder="Saisissez une ville">
+                        </div>
+                        <div class="col-3">
+                            <label for="exampleInputEmail1">De </label>
+                            <input type="date" class="form-control" id="date" name="dateDebut" />
+                        </div>
+                        <div class="col-3">
+                            <label for="exampleInputEmail1">A </label>
+                            <input type="date" class="form-control" id="date" name="dateFin" />
+                        </div>
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-outline-primary" id="searchButton"> <i class="material-icons">search</i> Valider</button>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
         </div>
+
     </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+          $( function() {
+            var availableTags = [
+              "Nantes",
+              "Bordeaux",
+              "Paris",
+              "Lille",
+              "Brest",
+              "Marseille",
+              "Toulouse",
+              "Montpellier",
+              "Strasbourg",
+              "Lyon",
+              "Saint-Etienne",
+              "Metz",
+              "Nancy",
+              "Lens",
+            ];
+            $("#city").autocomplete({
+              source: availableTags
+            });
+          } );
+
+    </script>
+}

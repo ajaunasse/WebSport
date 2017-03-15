@@ -25,6 +25,10 @@ namespace WUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(PersonneModel personne)
         {
+            if (personne.Phone.Length != 10)
+            {
+                
+            }
 
             if (personne != null)
             {

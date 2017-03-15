@@ -2,10 +2,7 @@
 @{
     ViewBag.Title = "Création d'une course";
 }
-@section AdditionalMeta
-{
-    @Styles.Render("~/Content/Home.css")
-}
+
 <div class="row">
     <div class="text-center col-md-9 offset-md-4">
 
@@ -14,31 +11,33 @@
                 <h3>Création d'une nouvelle course</h3>
             </div>
 
-            @using (Html.BeginForm(new { @class = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
+            @using (Html.BeginForm()) {
                 <div class="container">
 
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-3">
                                 @Html.LabelFor(m => m.Title)
                                 @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Saisissez un titre de course" })
                                 @Html.ValidationMessageFor(m => m.Title)
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-3">
                                 @Html.LabelFor(m => m.DateStart)
                                 @Html.TextBoxFor(m => m.DateStart, new { type = "date", @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.DateStart)
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-3">
                                 @Html.LabelFor(m => m.DateEnd)
                                 @Html.TextBoxFor(m => m.DateEnd, new { type = "date", @class = "form-control"})
                                 @Html.ValidationMessageFor(m => m.DateEnd)
+                            </div>
+                            <div class="col-3">
+                                @Html.LabelFor(m => m.Town)
+                                @Html.TextBoxFor(m => m.Town, new {  @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.Town)
                             </div>
                         </div>
                         <div class="row">
@@ -47,8 +46,8 @@
                                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Description)
                             </div>
-                            <div class="col-4 offset-4">
-                                <button type="submit" name="action" class="btn btn-outline-primary " id="searchButton"> <i class="material-icons">add</i> Ajouter</button>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-outline-primary align-middle" id="searchButton"> <i class="material-icons">search</i> Valider</button>
                             </div>
                         </div>
                     </div>
@@ -57,4 +56,5 @@
         </div>
 
     </div>
+</div>
 

@@ -1,0 +1,123 @@
+﻿* {
+    font-family: 'Roboto' ;
+   
+}
+/* NAV BAR STYLE*/
+.navbar-right {
+    height: 100%;
+    position: fixed !important;
+    background-color: #455a64;
+    width: 200px;
+    float:left;
+    margin-top: 0px;
+    position: fixed;
+    left: 0;
+    margin: 0;
+    transition: all 0.5s;
+}
+.navbar-right ul {
+    padding: 0;
+    padding-top: 0;
+    margin-top: 25px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+ul:not(.browser-default) li {
+    list-style-type: none;
+}
+
+.navbar-right li {
+    float: none;
+    line-height: 48px;
+}
+@media only screen and (max-width: 992px) {
+
+    .sideBar a {
+        padding: 0 16px;
+    }
+}
+.navbar-right a {
+    color: #ccc;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    line-height: 48px;
+    padding-left: 15px;
+}
+.navbar-right a .material-icons {
+   vertical-align: middle;
+   padding-right: 5px;
+}
+.navbar-right li:hover {
+    cursor: pointer;
+    background-color: #fff ;
+    color : #fff;
+    text-decoration:  none;
+}
+.navbar-right li:a {
+    color: #fff;
+}
+li.logo {
+    text-align: center;
+    margin-top: 32px;
+    border-bottom: 1px solid #ccc;
+}
+li.logo i.material-icons {
+    font-size: 84px;
+    color: #fff;
+}
+li.logo:hover {
+    background: none;
+}
+@media only screen and (max-width: 950px) {
+    .navbar-right {
+        width:40px !important;
+    }
+    .navbar-right a {
+     padding: 0 10px;
+   }
+   .navbar-right a span.libelle-nav {
+     display: none;
+   }
+   li.logo i.material-icons {
+    font-size: 40px;
+    color: #fff;
+}
+}
+
+
+/* ADMIN CONTENT STYLE */
+.adminContent {
+    margin-top: 30px;
+}
+.titlePage {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    display: inline-block;
+}
+
+.pull-right {
+    float: right;
+}
+
+.table thead tr th {
+    vertical-align: bottom; 
+    border : 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
+}
+
+.table td {
+    border: 1px solid #ccc;
+}
+a.withIcon {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+a.withIcon i.material-icons {
+    line-height: 14px;
+    letter-spacing: 5px;
+}
