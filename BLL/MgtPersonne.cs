@@ -4,24 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
+using DAL.EntityFramework;
 
 namespace BLL
 {
-    class MgtPersonne
+    public class MgtPersonne
     {
-        //public bool ValidateConnection(PersonneModel personne)
-        //{
-        //    // TODO : Aller chercher ces informations en BDD via la DAL
-        //    var result = new List<Category>
-        //    {
-        //        new Category { Id = 1, Title = "Course à pied" },
-        //        new Category { Id = 2, Title = "Gym" },
-        //        new Category { Id = 3, Title = "Fitness" },
-        //        new Category { Id = 4, Title = "Cyclisme" }
-        //    };
 
-        //    return result;
-        //}
+        private static MgtPersonne _instance;
+
+        public static MgtPersonne GetInstance()
+        {
+            if (_instance == null)
+                _instance = new MgtPersonne();
+            return _instance;
+        }
+        public bool ValidateConnection(Personne pers)
+        {
+            WebSportEntities context = new WebSportEntities();
+
+            PersonEntity entity = context.PersonEntities.Single(p =>p.Mail == pers.Email);
+
+            if (entity.Password == pers.Password)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
 
         // CREATE
 
