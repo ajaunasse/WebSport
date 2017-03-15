@@ -1,5 +1,6 @@
 ﻿* {
     font-family: 'Roboto' ;
+   
 }
 /* NAV BAR STYLE*/
 .navbar-right {
@@ -88,5 +89,35 @@ li.logo:hover {
 
 /* ADMIN CONTENT STYLE */
 .adminContent {
-    margin-top: 15px;
+    margin-top: 30px;
+}
+.titlePage {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    display: inline-block;
+}
+
+.pull-right {
+    float: right;
+}
+
+.table thead tr th {
+    vertical-align: bottom; 
+    border : 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
+}
+
+.table td {
+    border: 1px solid #ccc;
+}
+a.withIcon {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+a.withIcon i.material-icons {
+    line-height: 14px;
+    letter-spacing: 5px;
 }

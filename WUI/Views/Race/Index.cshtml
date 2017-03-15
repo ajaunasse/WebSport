@@ -3,106 +3,45 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
 
-@section css {
-    @Styles.Render("~/Content/Race/css")
-}
+<div class="row adminContent">
+    <div class="col-lg-12">
+        <h3 class="titlePage">Liste des courses
+            
+        </h3>
+        <a href="#" class="btn btn-success pull-right withIcon"> <i class="material-icons">add</i> Créer une course</a>
+        <hr />
+        <br />
+        <table class="table">
+            <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Nom</th>
+                      <th>Date début</th>
+                      <th>Date Fin</th>
+                      <th>Action</th>
+                  </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                <tr>
+                    <td row>@item.Id</td>
+                    <td>@item.Title</td>
+                    <td>@item.DateStart</td>
+                    <td>@item.DateEnd</td>
+                    <td> 
+                        <a href="" class="btn btn-outline-primary btn-sm"><i class="material-icons">mode_edit</i></a>
+                        <a href="" class="btn btn-outline-danger btn-sm"><i class="material-icons">delete_forever</i></a>
+                    </td>
+                </tr>
+                }
 
-<h2>Liste des courses</h2>
 
-<nav class="navbar navbar-default">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-filter" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
+            </tbody>
+        </table>
 
-    <div class="collapse navbar-collapse" id="navbar-filter">
-        <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filtres <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="/Race">Par défaut</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="/Race?sortType=BY_TITLE">Par titre</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="/Race?sortType=BY_TOWN">Par ville</a></li>
-                </ul>
-            </li>
-            <li>
-                <div class="form-group">
-                    <input type="text" id="search-ac" class="form-control" placeholder="Recherche" style="margin-top:10px;">
-                </div>
-            </li>
-        </ul>
+    
     </div>
-
-</nav>
-
-<p>
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    @Html.ActionLink("Créer une nouvelle course", "Create")
-</p>
-<div class="row row-bold">
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        @Html.DisplayNameFor(model => model.Title)
-    </div>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-        @Html.DisplayNameFor(model => model.DateStart)
-    </div>
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-        @Html.DisplayNameFor(model => model.DateEnd)
-    </div>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-        @Html.DisplayNameFor(model => model.Town)
-    </div>
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Nb compet.</div>
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Nb organ.</div>
-    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">&nbsp;</div>
 </div>
-
-
-@if (Model != null)
-{
-    foreach (var item in Model)
-    {
-        <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                @Html.DisplayFor(modelItem => item.Title)
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                @Html.DisplayFor(modelItem => item.Description)
-            </div>
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                @Html.DisplayFor(modelItem => item.DateStart)
-            </div>
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                @Html.DisplayFor(modelItem => item.DateEnd)
-            </div>
-            <div class="col-xs-2 col-sm-2 col-lg-2">
-                @Html.DisplayFor(modelItem => item.Town)
-            </div>
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                @Html.DisplayTextFor(modelItem => item.Competitors.Count)
-            </div>
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                @Html.DisplayTextFor(modelItem => item.Organisers.Count)
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                @Html.ActionLink("Modifier", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Voir le détail", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Supprimer", "Delete", new { id = item.Id })
-            </div>
-        </div>
-    }
-}
-
-
-@section scripts {
-    @Scripts.Render("~/bundles/Race/js")
-}
