@@ -33,3 +33,10 @@ body {
 form label {
     font-weight: bold;
 }
+
+.add{
+    margin-top:12%;
+}
+.remove_field{
+    margin-top:18%;
+}

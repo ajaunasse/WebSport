@@ -150,6 +150,25 @@ namespace WUI.Extensions
             };
         }
 
+        public static Personne ToBo(this PersonneModel bo)
+        {
+            if (bo == null) return null;
+
+            return new Personne
+            {
+                Id = bo.Id,
+                Nom = bo.Nom,
+                Prenom = bo.Prenom,
+                DateNaissance = bo.DateNaissance,
+                Email = bo.Email,
+                Phone = bo.Phone,
+                Password = bo.Password,
+                Role = bo.Role,
+
+                //DisplayConfigurations = bo.DisplayConfigurations.Select(x => x.ToModel()).ToList()
+            };
+        }
+
         public static OrganizerModel ToModel(this Organizer bo)
         {
             if (bo == null) return null;

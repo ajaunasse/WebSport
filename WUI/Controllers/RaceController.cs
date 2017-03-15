@@ -56,6 +56,13 @@ namespace WUI.Controllers
             return View();
         }
 
+        //GET: /Race/AddPoint
+        [AllowAnonymous]
+        public ActionResult AddPoint()
+        {
+            return View();
+        }
+
         //
         // POST: /Race/Create
         [HttpPost]
