@@ -23,22 +23,27 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-3">
                                 @Html.LabelFor(m => m.Title)
                                 @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Saisissez un titre de course" })
                                 @Html.ValidationMessageFor(m => m.Title)
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-3">
                                 @Html.LabelFor(m => m.DateStart)
                                 @Html.TextBoxFor(m => m.DateStart, new { type = "date", @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.DateStart)
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-3">
                                 @Html.LabelFor(m => m.DateEnd)
                                 @Html.TextBoxFor(m => m.DateEnd, new { type = "date", @class = "form-control"})
                                 @Html.ValidationMessageFor(m => m.DateEnd)
+                            </div>
+                            <div class="col-3">
+                                @Html.LabelFor(m => m.Town)
+                                @Html.TextBoxFor(m => m.Town, new {  @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.Town)
                             </div>
                         </div>
                         <div class="row">
