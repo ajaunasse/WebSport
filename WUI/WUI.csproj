@@ -170,6 +170,7 @@
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CompetitorController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -355,13 +356,12 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Page404.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\Connect.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
-=======
-    <Content Include="Views\Account\Connect.cshtml" />
     <Content Include="Views\Race\AddPoint.cshtml" />
->>>>>>> origin/master
+    <Content Include="Views\Shared\_adminLayout.cshtml" />
+    <Content Include="Views\Shared\_adminMenu.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />
