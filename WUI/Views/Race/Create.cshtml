@@ -2,9 +2,9 @@
 @{
     ViewBag.Title = "Création d'une course";
 }
-
-@section css {
-    @Styles.Render("~/Content/Race/css")
+@section AdditionalMeta
+{
+    @Styles.Render("~/Content/Home.css")
 }
 <div class="row">
     <div class="text-center col-md-9 offset-md-4">
@@ -14,7 +14,10 @@
                 <h3>Création d'une nouvelle course</h3>
             </div>
 
-            @using (Html.BeginForm()) {
+            @using (Html.BeginForm(new { @class = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
                 <div class="container">
 
 
@@ -44,8 +47,8 @@
                                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.Description)
                             </div>
-                            <div class="col-3">
-                                <button type="submit" class="btn btn-outline-primary align-middle" id="searchButton"> <i class="material-icons">search</i> Valider</button>
+                            <div class="col-4 offset-4">
+                                <button type="submit" name="action" class="btn btn-outline-primary " id="searchButton"> <i class="material-icons">add</i> Ajouter</button>
                             </div>
                         </div>
                     </div>
@@ -55,7 +58,3 @@
 
     </div>
 
-
-@section Scripts {
-
-}
