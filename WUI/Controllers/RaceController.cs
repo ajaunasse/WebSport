@@ -49,6 +49,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Create
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
