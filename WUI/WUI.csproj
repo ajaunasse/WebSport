@@ -172,7 +172,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CompetitorController.cs" />
-    <Compile Include="Controllers\ConnectionController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\DisplayConfigurationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -355,7 +355,8 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Page404.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Account\Connect.cshtml" />
+    <Content Include="Views\Shared\Connect.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />

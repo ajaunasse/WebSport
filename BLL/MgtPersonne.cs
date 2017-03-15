@@ -52,6 +52,42 @@ namespace BLL
             return bo;
         }
 
+        public PersonEntity BoToEntity(Personne personne)
+        {
+            PersonEntity bo = new PersonEntity();
+            bo.Mail = personne.Email;
+            bo.Id = personne.Id;
+            bo.Lastname = personne.Nom;
+            bo.Firstname = personne.Prenom;
+            bo.BirthDate = personne.DateNaissance;
+            bo.Password = personne.Password;
+            bo.Phone = personne.Phone;
+            bo.Role = personne.Role;
+
+            return bo;
+        }
+
+        public Personne Addpersonne(Personne personne)
+        {
+            try
+            {
+                PersonEntity entity = BoToEntity(personne);
+                WebSportEntities context = new WebSportEntities();
+                context.PersonEntities.Add(entity);
+                context.SaveChanges();
+
+                return EntityToBO(entity);
+
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+            
+        }
+
         // CREATE
 
         // UPDATE
