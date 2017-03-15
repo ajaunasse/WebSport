@@ -13,6 +13,12 @@
         @Styles.Render("~/Content/Bootstrap/bootstrap.min.css")
         @RenderSection("AdditionalMeta", false)
 
+        <script>
+            $("#dropdown").select2({
+                theme: "bootstrap"
+            });
+
+        </script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.6/select2-bootstrap.css" rel="stylesheet" />
 
     </head>
@@ -27,9 +33,6 @@
 
         @Scripts.Render("~/Scripts/jquery-1.10.2.js")
         @Scripts.Render("~/Scripts/Bootstrap/bootstrap.js")
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        @RenderSection("scripts", false)
 
     </body>
 </html>
