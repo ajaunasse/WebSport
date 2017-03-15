@@ -12,7 +12,11 @@ namespace WUI
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                name: "list_course",
+                url: "Admin/Course/Index",
+                defaults: new { controller = "Race", action = "Index", id = UrlParameter.Optional }
+            );
             routes.MapRoute(
                 name: "Configuration",
                 url: "Configuration/{PersonneId}/{action}/{id}",
@@ -24,6 +28,12 @@ namespace WUI
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Admin",
+                url: "Admin",
+                defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
+            );
+
         }
     }
 }
