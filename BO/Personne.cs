@@ -21,9 +21,11 @@ namespace BO
 
         public string Password { get; set; }
 
+        public int Role { get; set; }
+
         [NonSerialized]
         private DateTime? _dateNaissance;
-        public DateTime DateNaissance
+        public DateTime? DateNaissance
         {
             get
             {

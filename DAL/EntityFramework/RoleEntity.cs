@@ -12,23 +12,16 @@ namespace DAL.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class PersonEntity
+    public partial class RoleEntity
     {
-        public PersonEntity()
+        public RoleEntity()
         {
-            this.Contributors = new HashSet<ContributorEntity>();
+            this.Personnes = new HashSet<PersonEntity>();
         }
     
         public int Id { get; set; }
-        public string Lastname { get; set; }
-        public string Firstname { get; set; }
-        public string Mail { get; set; }
-        public string Phone { get; set; }
-        public Nullable<System.DateTime> BirthDate { get; set; }
-        public string Password { get; set; }
-        public int Role { get; set; }
+        public string Titre { get; set; }
     
-        public virtual ICollection<ContributorEntity> Contributors { get; set; }
-        public virtual RoleEntity Role1 { get; set; }
+        public virtual ICollection<PersonEntity> Personnes { get; set; }
     }
 }

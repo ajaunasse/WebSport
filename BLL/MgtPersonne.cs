@@ -19,7 +19,7 @@ namespace BLL
                 _instance = new MgtPersonne();
             return _instance;
         }
-        public bool ValidateConnection(Personne pers)
+        public Personne ValidateConnection(Personne pers)
         {
             WebSportEntities context = new WebSportEntities();
 
@@ -27,14 +27,29 @@ namespace BLL
 
             if (entity.Password == pers.Password)
             {
-                return true;
+                pers = EntityToBO(entity);
+                return pers;
             }
             else
             {
-                return false;
+                return null;
             }
 
 
+        }
+
+        public Personne EntityToBO(PersonEntity personne)
+        {
+            Personne bo = new Personne(personne.Mail);
+            bo.Id = personne.Id;
+            bo.Nom = personne.Lastname;
+            bo.Prenom = personne.Firstname;
+            bo.DateNaissance = personne.BirthDate;
+            bo.Password = personne.Password;
+            bo.Phone = personne.Phone;
+            bo.Role = personne.Role;
+
+            return bo;
         }
 
         // CREATE

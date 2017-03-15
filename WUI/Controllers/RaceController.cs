@@ -58,17 +58,17 @@ namespace WUI.Controllers
         //
         // POST: /Race/Create
         [HttpPost]
+        [AllowAnonymous]
         // Le flag ci-dessus permet de préciser à l'action Create qu'il faut vérifier
         // si le token issu du cookie d'authentification a été bien été défini dans
         // la requête HTTP POST pour l'envoi du formulaire
-        [ValidateAntiForgeryToken]
         public ActionResult Create(RaceModel race)
         {
             try
             {
-                if (ModelState.IsValid && MgtRace.GetInstance().AddRace(race.ToBo()))
+                if (MgtRace.GetInstance().AddRace(race.ToBo()))
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Create");
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace WUI.Controllers
                 }
 
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }
