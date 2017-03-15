@@ -37,12 +37,19 @@ namespace WUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(PersonneModel model)
         {
+            bool valide = false;
+
             if (model != null)
             {
                 MgtPersonne mgtpers = new MgtPersonne();
                 Personne pers = new Personne(model.Email);
                 pers.Password = model.Password;
-                bool valide = mgtpers.ValidateConnection(pers);
+                pers = mgtpers.ValidateConnection(pers);
+                model = Extensions.Extensions.ToModel(pers);
+            }
+            if (model != null)
+            {
+                return View("Connect", model);
             }
 
 

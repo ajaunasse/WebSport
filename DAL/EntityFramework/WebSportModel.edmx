@@ -44,6 +44,7 @@
           <Property Name="Telephone" Type="varchar" MaxLength="10" />
           <Property Name="DateNaissance" Type="datetime" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="POI">
           <Key>
@@ -64,6 +65,13 @@
           <Property Name="Longitude" Type="float" Nullable="false" />
           <Property Name="Altitude" Type="float" Nullable="false" />
           <Property Name="CourseId" Type="int" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titre" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_Competiteur_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
@@ -86,6 +94,18 @@
             </Principal>
             <Dependent Role="Participant">
               <PropertyRef Name="PersonneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personne_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Personne" Type="Self.Personne" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Personne">
+              <PropertyRef Name="Role" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -144,6 +164,7 @@
           <EntitySet Name="Personne" EntityType="Self.Personne" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POI" EntityType="Self.POI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Point" EntityType="Self.Point" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Competiteur_Course" Association="Self.FK_Competiteur_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="Participant" EntitySet="Participant" />
@@ -151,6 +172,10 @@
           <AssociationSet Name="FK_Competiteur_Personne" Association="Self.FK_Competiteur_Personne">
             <End Role="Personne" EntitySet="Personne" />
             <End Role="Participant" EntitySet="Participant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personne_Role" Association="Self.FK_Personne_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Personne" EntitySet="Personne" />
           </AssociationSet>
           <AssociationSet Name="FK_POI_Categorie" Association="Self.FK_POI_Categorie">
             <End Role="Categorie" EntitySet="Categorie" />
@@ -204,6 +229,11 @@
             <End Role="RaceEntity" EntitySet="RaceEntities" />
             <End Role="PointEntity" EntitySet="PointEntities" />
           </AssociationSet>
+          <EntitySet Name="RoleEntities" EntityType="BddLoginModel.RoleEntity" />
+          <AssociationSet Name="FK_Personne_Role" Association="BddLoginModel.FK_Personne_Role">
+            <End Role="Role" EntitySet="RoleEntities" />
+            <End Role="PersonEntity" EntitySet="PersonEntities" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="RaceEntity">
           <Key>
@@ -243,6 +273,8 @@
           <Property Name="BirthDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Contributors" Relationship="BddLoginModel.FK_Competiteur_Personne" FromRole="Person" ToRole="Contributor" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role1" Relationship="BddLoginModel.FK_Personne_Role" FromRole="PersonEntity" ToRole="Role" />
         </EntityType>
         <Association Name="FK_Competiteur_Course">
           <End Role="Race" Type="BddLoginModel.RaceEntity" Multiplicity="1" />
@@ -349,6 +381,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="RoleEntity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Personnes" Relationship="BddLoginModel.FK_Personne_Role" FromRole="Role" ToRole="PersonEntity" />
+        </EntityType>
+        <Association Name="FK_Personne_Role">
+          <End Type="BddLoginModel.RoleEntity" Role="Role" Multiplicity="1" />
+          <End Type="BddLoginModel.PersonEntity" Role="PersonEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonEntity">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -380,6 +432,7 @@
           <EntitySetMapping Name="PersonEntities">
             <EntityTypeMapping TypeName="BddLoginModel.PersonEntity">
               <MappingFragment StoreEntitySet="Personne">
+                <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Lastname" ColumnName="Nom" />
@@ -416,6 +469,14 @@
                 <ScalarProperty Name="Altitude" ColumnName="Altitude" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleEntities">
+            <EntityTypeMapping TypeName="BddLoginModel.RoleEntity">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
