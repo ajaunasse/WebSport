@@ -21,11 +21,12 @@ namespace WUI.Controllers
         public ActionResult Index()
         {
             string ville = Request.QueryString["ville"];
-            string type = Request.QueryString["dateDebut"];
-            string date = Request.QueryString["dateFin"];
-
-            var result = MgtRace.GetInstance().GetAllItems();
-            return View();
+            string strDateDebut = Request.QueryString["dateDebut"];
+            string strDateFin = Request.QueryString["dateFin"];
+            DateTime dateDebut = DateTime.Parse(strDateDebut);
+            DateTime dateFin = DateTime.Parse(strDateFin);
+            var result = MgtRace.GetInstance().GetRaceByTownAndDate(ville, dateDebut, dateFin);
+            return View(result);
 
   
         }

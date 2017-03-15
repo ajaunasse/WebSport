@@ -1,5 +1,62 @@
-﻿@{
+﻿@using WUI.Models
+@model List <BO.Race>
+@{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">@item.Title</h4>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><b>Date : </b>@item.DateStart au @item.DateEnd</p>
+                        <a href="#" class="btn btn-primary">S'inscrire</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6">
+                <div id="map" style="height: 500px ; width:500px;"></div>
+            </div>
+        }
+    }
+
+</div>
+@section scripts {
+<script>
+        function initMap() {
+            var myLatLng = { lat: 47.2262079, lng: -1.6202498 };
+            var myLatLng2 = { lat: 48.0389214, lng: -1.6923924 };
+        // Create a map object and specify the DOM element for display.
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: myLatLng
+            });
+            var map2 = new google.maps.Map(document.getElementById('map2'), {
+                zoom: 12,
+                center: myLatLng2
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Campus Nantes'
+            });
+            var marker2 = new google.maps.Marker({
+                position: myLatLng2,
+                map: map2,
+                title: 'Campus Rennes'
+            });
+      }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIyk34t3LjsAXYoq912qTIQoBz1QWfNp0&callback=initMap"
+        async defer>
+
+    </script>
+}

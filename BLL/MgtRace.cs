@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Extensions;
 
 
 namespace BLL
@@ -54,6 +55,13 @@ namespace BLL
         {
             return this._uow.RaceRepo.GetById(id);
         }
+
+        public List<Race> GetRaceByTownAndDate(string ville, DateTime dateDebut, DateTime dateFin)
+        {
+            return this._uow.RaceRepo.Where(r => r.Town == ville).Where(r => r.DateStart >= dateDebut).ToList().ToBos();
+        }
+
+
 
         public bool UpdateRace(Race race)
         {

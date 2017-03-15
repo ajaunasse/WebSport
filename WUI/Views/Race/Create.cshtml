@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WUI.Models.RaceModel
+@{
     ViewBag.Title = "Création d'une course";
 }
 @section AdditionalMeta
@@ -13,35 +14,44 @@
             <div class="headerJumbotron">
                 <h3>Création d'une nouvelle course</h3>
             </div>
-            <div class="container">
 
-                <form class="form">
-                    <div class="form-group row">
-                        <div class="col-3">
-                            <label for="exampleInputEmail1">Où ?</label>
-                            <input type="text" class="form-control" id="where" placeholder="Saisissez une ville">
+            @using (Html.BeginForm()) {
+                <div class="container">
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-4">
+                                @Html.LabelFor(m => m.Title)
+                                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Saisissez un titre de course" })
+                                @Html.ValidationMessageFor(m => m.Title)
+                            </div>
+
+                            <div class="col-4">
+                                @Html.LabelFor(m => m.DateStart)
+                                @Html.TextBoxFor(m => m.DateStart, new { type = "date", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.DateStart)
+                            </div>
+
+                            <div class="col-4">
+                                @Html.LabelFor(m => m.DateEnd)
+                                @Html.TextBoxFor(m => m.DateEnd, new { type = "date", @class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.DateEnd)
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <label for="exampleInputEmail1">Quoi ?</label>
-                            <select class="form-control" id="inlineFormCustomSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">Running</option>
-                                <option value="2">Cyclisme</option>
-                                <option value="3">Natation</option>
-                            </select>
-                        </div>
-                        <div class="col-3">
-                            <label for="exampleInputEmail1">Quand ?</label>
-                            <input type="date" class="form-control" id="where">
-                        </div>
-                        <div class="col-3">
-                            <button type="submit" class="btn btn-outline-primary" id="searchButton"> <i class="material-icons">search</i> Valider</button>
+                        <div class="row">
+                            <div class="col-8 offset-2">
+                                @Html.LabelFor(m => m.Description)
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Description)
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-outline-primary align-middle" id="searchButton"> <i class="material-icons">search</i> Valider</button>
+                            </div>
                         </div>
                     </div>
-
-
-                </form>
-            </div>
+                </div>
+            }
         </div>
 
     </div>
