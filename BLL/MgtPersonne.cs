@@ -54,6 +54,9 @@ namespace BLL
 
         public PersonEntity BoToEntity(Personne personne)
         {
+
+            WebSportEntities context = new WebSportEntities();
+
             PersonEntity bo = new PersonEntity();
             bo.Mail = personne.Email;
             bo.Lastname = personne.Nom;
@@ -69,9 +72,7 @@ namespace BLL
             
             bo.Password = personne.Password;
             bo.Phone = personne.Phone;
-            bo.webpages_Roles = new List<webpages_Roles>();
-            bo.webpages_Roles.Add(new webpages_Roles() { RoleId = personne.Role });
-
+            
             return bo;
         }
 
@@ -81,6 +82,9 @@ namespace BLL
             {
                 PersonEntity entity = BoToEntity(personne);
                 WebSportEntities context = new WebSportEntities();
+                webpages_Roles role = context.webpages_Roles.FirstOrDefault(r => r.RoleId == personne.Role);
+                entity.webpages_Roles.Add(role);
+                role.Personnes.Add(entity);
                 context.PersonEntities.Add(entity);
                 context.SaveChanges();
 
