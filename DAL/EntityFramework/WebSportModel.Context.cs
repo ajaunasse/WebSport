@@ -31,6 +31,6 @@ namespace DAL.EntityFramework
         public DbSet<CategorieEntity> CategorieEntities { get; set; }
         public DbSet<POIEntity> POIEntities { get; set; }
         public DbSet<PointEntity> PointEntities { get; set; }
-        public DbSet<RoleEntity> RoleEntities { get; set; }
+        public DbSet<webpages_Roles> webpages_Roles { get; set; }
     }
 }

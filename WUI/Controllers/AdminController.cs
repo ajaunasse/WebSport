@@ -10,7 +10,7 @@ namespace WUI.Controllers
     {
         //
         // GET: /Admin/
-
+        
         public ActionResult Index()
         {
             return View();

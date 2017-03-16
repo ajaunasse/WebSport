@@ -49,7 +49,15 @@ namespace WUI.Controllers
             }
             if (model != null)
             {
-                return View("Connect", model);
+                if (model.Role == 1)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                {
+                    return View("Connect", model);
+                }
+                
             }
 
 

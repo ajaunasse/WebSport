@@ -17,6 +17,7 @@ namespace DAL.EntityFramework
         public PersonEntity()
         {
             this.Contributors = new HashSet<ContributorEntity>();
+            this.webpages_Roles = new HashSet<webpages_Roles>();
         }
     
         public int Id { get; set; }
@@ -29,6 +30,6 @@ namespace DAL.EntityFramework
         public int Role { get; set; }
     
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
-        public virtual RoleEntity Role1 { get; set; }
+        public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
     }
 }

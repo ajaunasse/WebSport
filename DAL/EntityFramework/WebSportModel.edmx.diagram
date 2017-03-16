@@ -17,8 +17,8 @@
         <AssociationConnector Association="BddLoginModel.FK_POI_Point" />
         <AssociationConnector Association="BddLoginModel.FK_POI_Course" />
         <AssociationConnector Association="BddLoginModel.FK_Point_Course" />
-        <EntityTypeShape EntityType="BddLoginModel.RoleEntity" Width="1.5" PointX="7.875" PointY="1.625" />
-        <AssociationConnector Association="BddLoginModel.FK_Personne_Role" />
+        <EntityTypeShape EntityType="BddLoginModel.webpages_Roles" Width="1.5" PointX="10.125" PointY="1.5" />
+        <AssociationConnector Association="BddLoginModel.webpages_UsersInRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

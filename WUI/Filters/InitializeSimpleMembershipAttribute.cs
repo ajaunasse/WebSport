@@ -38,7 +38,7 @@ namespace WUI.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("SqlAdoCs", "UserTable", "Id", "Name", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("SqlAdoCs", "Personne", "Id", "Nom", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

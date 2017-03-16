@@ -12,15 +12,15 @@ namespace DAL.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class RoleEntity
+    public partial class webpages_Roles
     {
-        public RoleEntity()
+        public webpages_Roles()
         {
             this.Personnes = new HashSet<PersonEntity>();
         }
     
-        public int Id { get; set; }
-        public string Titre { get; set; }
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
     
         public virtual ICollection<PersonEntity> Personnes { get; set; }
     }
