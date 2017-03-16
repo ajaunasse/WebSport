@@ -81,7 +81,7 @@ namespace BLL
             }
             catch (Exception)
             {
-
+                string t = ex.ToString();
                 return null;
             }
 
