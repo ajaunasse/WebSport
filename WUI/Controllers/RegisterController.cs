@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -25,10 +26,13 @@ namespace WUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(PersonneModel personne)
         {
-            if (personne.Phone.Length != 10)
+            int outPhone = 0;
+            if (!String.IsNullOrEmpty(personne.Phone) && personne.Phone.Length != 10 && !int.TryParse(personne.Phone,out outPhone))
             {
-                
+                        ViewBag.MessageErreurPhone = "le numéro de téléphone doit comporter 10 chiffres sans espace";
+                        return View();
             }
+            
 
             if (personne != null)
             {
