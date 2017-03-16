@@ -17,6 +17,7 @@ namespace DAL.EntityFramework
         public PersonEntity()
         {
             this.Contributors = new HashSet<ContributorEntity>();
+            this.webpages_Roles = new HashSet<webpages_Roles>();
         }
     
         public int Id { get; set; }
@@ -27,11 +28,7 @@ namespace DAL.EntityFramework
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Password { get; set; }
     
-        // suppression role
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
-
-
-
     }
 }
