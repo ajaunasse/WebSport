@@ -355,13 +355,9 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Page404.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\Connect.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
-=======
-    <Content Include="Views\Account\Connect.cshtml" />
     <Content Include="Views\Race\AddPoint.cshtml" />
->>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />

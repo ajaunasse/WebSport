@@ -1,4 +1,5 @@
 ﻿using BLL;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,8 @@ namespace WUI.Controllers
         [AllowAnonymous]
         public ActionResult AddPoint()
         {
-            return View();
+            List<Point> points =  MgtPoint.GetInstance().GetAllItems();
+            return View(points);
         }
 
         //

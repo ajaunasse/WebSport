@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace WUI.Models
     public abstract class PointModel : PositionModel
     {
         public Guid Id { get; set; }
+
+        public List<Point> Points { get; set; }
     }
 }

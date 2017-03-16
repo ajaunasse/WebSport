@@ -185,28 +185,28 @@ namespace WUI.Extensions
             };
         }
 
-        public static PoiModel ToModel(this Poi bo)
-        {
-            if (bo == null) return null;
+        //public static PoiModel ToModel(this Poi bo)
+        //{
+        //    if (bo == null) return null;
 
-            return new PoiModel
-            {
-                Id = bo.Id,
-                GpsCoordinates = new CoordGpsModel
-                {
-                    Accuracy = bo.Accuracy,
-                    Altitude = bo.Altitude,
-                    AltitudeAccuracy = bo.AltitudeAccuracy,
-                    Latitude = bo.Latitude,
-                    Longitude = bo.Longitude
-                },
-                Category = bo.Category.ToModel(),
-                Heading = bo.Heading,
-                Speed = bo.Speed,
-                Timestamp = bo.Timestamp,
-                Title = bo.Title
-            };
-        }
+        //    return new PoiModel
+        //    {
+        //        Id = bo.Id,
+        //        GpsCoordinates = new CoordGpsModel
+        //        {
+        //            Accuracy = bo.Accuracy,
+        //            Altitude = bo.Altitude,
+        //            AltitudeAccuracy = bo.AltitudeAccuracy,
+        //            Latitude = bo.Latitude,
+        //            Longitude = bo.Longitude
+        //        },
+        //        Category = bo.Category.ToModel(),
+        //        Heading = bo.Heading,
+        //        Speed = bo.Speed,
+        //        Timestamp = bo.Timestamp,
+        //        Title = bo.Title
+        //    };
+        //}
 
         public static UnitDistanceModel ToModel(this UnitDistance bo)
         {

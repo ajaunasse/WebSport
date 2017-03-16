@@ -36,6 +36,17 @@ namespace Repository
             }
         }
 
+        private PointRepository _pointRepo;
+        public PointRepository PointRepo
+        {
+            get
+            {
+                if (_pointRepo == null)
+                    _pointRepo = new PointRepository(this.context);
+                return _pointRepo;
+            }
+        }
+
         private GenericRepository<ContributorEntity> _contributorRepo;
         public GenericRepository<ContributorEntity> ContributorRepo
         {

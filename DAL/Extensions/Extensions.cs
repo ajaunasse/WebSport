@@ -71,6 +71,57 @@ namespace DAL.Extensions
 
         #endregion
 
+        #region Point
+
+        public static List<Point> ToBos(this List<PointEntity> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToBo(withJoin)).ToList()
+                : null;
+        }
+
+        public static Point ToBo(this PointEntity bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new Point
+            {
+                Id = bo.Id,
+                Longitude = bo.Longitude,
+                Latitude = bo.Latitude,
+                Altitude = bo.Altitude
+
+            };
+        }
+
+        public static PointEntity ToDataEntity(this Point model)
+        {
+            if (model == null) return null;
+
+            return new PointEntity
+            {
+                Id = model.Id,
+                Longitude = model.Longitude,
+                Latitude = model.Latitude,
+                Altitude = model.Altitude
+            };
+        }
+
+
+        //public static Point ToBo(this GetPointById_Result entity)
+        //{
+        //    if (entity == null) return null;
+
+        //    return new Point
+        //    {
+        //        Longitude = entity.Longitude,
+        //        Latitude = entity.Latitude,
+        //        Altitude = entity.Altitude
+        //    };
+        //}
+
+        #endregion
+
         #region Competitor
 
         public static List<Competitor> ToCompetitorBos(this List<ContributorEntity> bos)
