@@ -1,4 +1,4 @@
-﻿@model WUI.Models.PositionModel
+﻿@model WUI.Models.PointModel
 @{
     ViewBag.Title = "Ajouter les points d'une course";
 }
@@ -31,6 +31,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach(var item in Model)
+                            {
+                                <tr>
+                                    <td>@Model.Id</td>
+                                    <td>@Model.GpsCoordinates.Latitude</td>
+                                    <td>@Model.GpsCoordinates.Longitude</td>
+                                    <td>@Model.GpsCoordinates.Altitude</td>
+                                    <td></td>
+                                </tr>
+                            }
 
                         </tbody>
                     </table>

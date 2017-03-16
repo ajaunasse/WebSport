@@ -10,8 +10,27 @@ namespace BO
     /// <summary>
     /// Classe mère pour sauvegarder une position 
     /// </summary>
-    public abstract class Point : Position
+    public class Point
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the latitude.
+        /// </summary>
+        /// <value>The latitude.</value>
+        public double Latitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the longitude.
+        /// </summary>
+        /// <value>The longitude.</value>
+        public double Longitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the altitude in meters relative to sea level.
+        /// </summary>
+        /// <value>The altitude.</value>
+        public double Altitude { get; set; }
+
     }
 }

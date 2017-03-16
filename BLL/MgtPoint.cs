@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Extensions;
+using DAL.EntityFramework;
 
 namespace BLL
 {
@@ -28,12 +29,36 @@ namespace BLL
             _uow = new UnitOfWork();
         }
 
-        public bool AddPoint(Point point)
+        public Point AddPoint(Point point)
         {
-            if (point != null)
+            try
             {
-                int lastId = this._uow.PointRepo.Add
+                PointEntity entity = EntityToBo(point);
+                WebSportEntities context = new WebSportEntities();
+                context.PointEntities.Add(entity);
+                context.SaveChanges();
+
+                return point;
             }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public List<Point> GetAllItems()
+        {
+            return _uow.PointRepo.GetAllItems();
+        }
+
+        private PointEntity EntityToBo(Point point)
+        {
+            PointEntity bo = new PointEntity();
+            bo.Altitude = point.Altitude;
+            bo.Latitude = point.Latitude;
+            bo.Longitude = point.Longitude;
+
+            return bo;
         }
     }
 }

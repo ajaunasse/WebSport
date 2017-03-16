@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,7 +47,7 @@ namespace BLL
             bo.DateNaissance = personne.BirthDate;
             bo.Password = personne.Password;
             bo.Phone = personne.Phone;
-            bo.Role = personne.webpages_Roles.First().RoleId;
+            bo.Role = personne.Role;
 
             return bo;
         }
@@ -63,7 +62,7 @@ namespace BLL
             bo.BirthDate = personne.DateNaissance;
             bo.Password = personne.Password;
             bo.Phone = personne.Phone;
-            bo.webpages_Roles.Add(new webpages_Roles() {RoleId = personne.Role}); 
+            bo.Role = personne.Role;
 
             return bo;
         }
@@ -73,18 +72,14 @@ namespace BLL
             try
             {
                 PersonEntity entity = BoToEntity(personne);
-
                 WebSportEntities context = new WebSportEntities();
-                //webpages_Roles role = context.webpages_Roles.Single(r => r.RoleId == entity.Role);
-                //entity.webpages_Roles.Add(role);
                 context.PersonEntities.Add(entity);
-                
                 context.SaveChanges();
 
                 return EntityToBO(entity);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return null;
