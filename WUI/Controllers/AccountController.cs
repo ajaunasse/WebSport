@@ -51,10 +51,12 @@ namespace WUI.Controllers
             {
                 if (model.Role == 1)
                 {
+                    Session.Add("user", model);
                     return RedirectToAction("Index", "Admin");
                 }
                 else
                 {
+                    Session.Add("user", model);
                     return View("Connect", model);
                 }
                 
