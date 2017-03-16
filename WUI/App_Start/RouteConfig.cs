@@ -21,7 +21,7 @@ namespace WUI
                 name: "list_course",
                 url: "Admin/Course/Index",
                 defaults: new { controller = "Race", action = "Index", id = UrlParameter.Optional }
-                );
+             );
             routes.MapRoute(
                 name: "add_course",
                 url: "Admin/Course/Create",
@@ -31,6 +31,11 @@ namespace WUI
                 name: "edit_course",
                 url: "Admin/Course/Edit/{id}",
                 defaults: new { controller = "Race", action = "Edit", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "statistiques",
+                url: "Admin/Stats/Index",
+                defaults: new { controller = "Statistique", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "Configuration",
