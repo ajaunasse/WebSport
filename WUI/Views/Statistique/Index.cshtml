@@ -3,11 +3,11 @@
     Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
 
-<div class="row">
+<div class="row adminContent">
     <div class="col-lg-6">
 
 
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        <div id="container"></div>
     </div>
 </div>
 @section scripts {
@@ -22,10 +22,10 @@
                 type: 'column'
             },
             title: {
-                text: 'Monthly Average Rainfall'
+                text: 'Nombre participants par marathon'
             },
             subtitle: {
-                text: 'Source: WorldClimate.com'
+                text: 'Saison 2017'
             },
             xAxis: {
                 categories: [
@@ -41,13 +41,13 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Nombre participants par marathons'
+                    text: ''
                 }
             },
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -59,7 +59,7 @@
                 }
             },
             series: [{
-                name: 'Tokyo',
+                name: 'Total Participants',
                 data: [92158,15221,12084,11804,48281,62484]
 
             }],
