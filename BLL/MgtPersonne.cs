@@ -56,12 +56,20 @@ namespace BLL
         {
             PersonEntity bo = new PersonEntity();
             bo.Mail = personne.Email;
-            bo.Id = personne.Id;
             bo.Lastname = personne.Nom;
             bo.Firstname = personne.Prenom;
-            bo.BirthDate = personne.DateNaissance;
+            if (personne.DateNaissance == DateTime.MinValue)
+            {
+                bo.BirthDate = null;
+            }
+            else
+            {
+                bo.BirthDate = personne.DateNaissance;
+            }
+            
             bo.Password = personne.Password;
             bo.Phone = personne.Phone;
+            bo.webpages_Roles = new List<webpages_Roles>();
             bo.webpages_Roles.Add(new webpages_Roles() { RoleId = personne.Role });
 
             return bo;

@@ -27,6 +27,7 @@ namespace DAL.EntityFramework
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Password { get; set; }
     
+        // suppression role
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
 
