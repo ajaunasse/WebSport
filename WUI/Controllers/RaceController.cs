@@ -68,6 +68,29 @@ namespace WUI.Controllers
         }
 
         //
+        // POST: /Race/AddPoint
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AddPoint(PointModel point)
+        {
+            try
+            {
+                if (MgtRace.GetInstance().AddPoint(point.ToBo()))
+                {
+                    return RedirectToAction("Edit");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch(Exception e)
+            {
+                return View();
+            }
+        }
+
+        //
         // POST: /Race/Create
         [HttpPost]
         [RoleFilter(idRole = 1)]
@@ -117,6 +140,7 @@ namespace WUI.Controllers
         {
             try
             {
+                race.Points.Add(race.point);
                 var result = MgtRace.GetInstance().UpdateRace(race.ToBo());
                 if (result)
                 {

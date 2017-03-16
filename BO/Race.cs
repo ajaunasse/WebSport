@@ -30,6 +30,8 @@ namespace BO
 
         public virtual List<Poi> Pois { get; set; }
 
+        public virtual List<Point> Points { get; set; }
+
 
         public int CompareTo(Race otherRace)
         {

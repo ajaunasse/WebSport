@@ -45,6 +45,21 @@ namespace BLL
             return false;
         }
 
+        public bool AddPoint(Point point)
+        {
+            if(point != null)
+            {
+                int lastId = this._uow.PointRepo.Add(point);
+                if(lastId > 0)
+                {
+                    point.Id = lastId;
+                }
+                return true;
+            }
+
+            return false;
+        }
+
         public List<Race> GetAllItems()
         {
             return this._uow.RaceRepo.GetAllItems();

@@ -40,12 +40,15 @@ namespace WUI.Models
         [Required(ErrorMessage = "La {0} est requise")]
         public string Town { get; set; }
 
+        public PointModel point { get; set; }
 
         public List<CompetitorModel> Competitors { get; set; }
 
         public List<OrganizerModel> Organisers { get; set; }
 
         public List<PoiModel> Pois { get; set; }
+
+        public List<PointModel> Points { get; set; }
 
     }
 }
