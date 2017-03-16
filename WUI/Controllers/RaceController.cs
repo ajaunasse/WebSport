@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WUI.Extensions;
+using WUI.Filters;
 using WUI.Models;
 
 namespace WUI.Controllers
 {
     // Pour appeler n'importe quelle méthode, l'utilisateur doit être connecté
     // Sauf si une méthode lève la condition avec : [AllowAnonymous]
-    [Authorize]
+   
     public class RaceController : Controller
     {
 
@@ -28,7 +29,7 @@ namespace WUI.Controllers
         //
         // GET: /Race/
         // Tous les utilisateurs peuvent visionnés la liste
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult Index()
         {
             var result = MgtRace.GetInstance().GetAllItems().ToModels();
@@ -37,7 +38,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Details/5
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult Details(int id)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel();
@@ -51,14 +52,14 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Create
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult Create()
         {
             return View();
         }
 
         //GET: /Race/AddPoint
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult AddPoint()
         {
            // var result = MgtPoint.GetInstance().GetAllItems.ToModels();
@@ -69,7 +70,7 @@ namespace WUI.Controllers
         //
         // POST: /Race/Create
         [HttpPost]
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         // Le flag ci-dessus permet de préciser à l'action Create qu'il faut vérifier
         // si le token issu du cookie d'authentification a été bien été défini dans
         // la requête HTTP POST pour l'envoi du formulaire
@@ -95,7 +96,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Edit/5
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult Edit(int id = 0)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel(true);
@@ -111,7 +112,7 @@ namespace WUI.Controllers
         // POST: /Race/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult Edit(RaceModel race)
         {
             try
@@ -134,7 +135,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Delete/5
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult Delete(int id)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel();
@@ -151,7 +152,7 @@ namespace WUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AllowAnonymous]
+        [RoleFilter(idRole = 1)]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
