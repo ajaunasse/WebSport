@@ -184,7 +184,7 @@ namespace WUI.Extensions
                 DateNaissance = bo.DateNaissance,
                 Email = bo.Email,
                 Phone = bo.Phone,
-
+                Role = bo.Role,
                 //DisplayConfigurations = bo.DisplayConfigurations.Select(x => x.ToModel()).ToList()
             };
         }
