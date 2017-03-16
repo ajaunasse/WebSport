@@ -47,7 +47,7 @@ namespace BLL
             bo.DateNaissance = personne.BirthDate;
             bo.Password = personne.Password;
             bo.Phone = personne.Phone;
-            bo.Role = personne.Role;
+            bo.Role = personne.webpages_Roles.First().RoleId;
 
             return bo;
         }
@@ -62,7 +62,7 @@ namespace BLL
             bo.BirthDate = personne.DateNaissance;
             bo.Password = personne.Password;
             bo.Phone = personne.Phone;
-            bo.Role = personne.Role;
+            bo.webpages_Roles.Add(new webpages_Roles() { RoleId = personne.Role });
 
             return bo;
         }
@@ -79,7 +79,7 @@ namespace BLL
                 return EntityToBO(entity);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 string t = ex.ToString();
                 return null;
