@@ -61,6 +61,7 @@ namespace WUI.Controllers
         [AllowAnonymous]
         public ActionResult AddPoint()
         {
+            var result = MgtPoint.GetInstance().GetAllItems.ToModels();
             List<Point> points =  MgtPoint.GetInstance().GetAllItems();
             return View(points);
         }

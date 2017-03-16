@@ -104,6 +104,45 @@ namespace WUI.Extensions
 
         #endregion
 
+        #region Point
+
+        public static List<PointModel> ToModels(this List<Point> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToModel(withJoin)).ToList()
+                : null;
+        }
+
+        public static PointModel ToModel(this Point bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new PointModel
+            {
+                Id = bo.Id,
+                Latitude = bo.Latitude,
+                Longitude = bo.Longitude,
+                Altitude = bo.Altitude
+
+                //Pois = bo.Pois.Select(x => x.ToModel()).ToList(),
+            };
+        }
+
+        public static Point ToBo(this PointModel model)
+        {
+            if (model == null) return null;
+
+            return new Point
+            {
+                Id = model.Id,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude,
+                Altitude = model.Altitude
+            };
+        }
+
+        #endregion
+
         #region DisplayConfiguration
 
         public static List<DisplayConfigurationModel> ToModels(this List<DisplayConfiguration> bos)

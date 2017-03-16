@@ -48,7 +48,7 @@ namespace BLL
 
         public List<Point> GetAllItems()
         {
-            return _uow.PointRepo.GetAllItems();
+            return this._uow.PointRepo.GetAllItems();
         }
 
         private PointEntity EntityToBo(Point point)
