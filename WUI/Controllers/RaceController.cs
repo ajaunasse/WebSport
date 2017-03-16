@@ -28,7 +28,7 @@ namespace WUI.Controllers
         //
         // GET: /Race/
         // Tous les utilisateurs peuvent visionnés la liste
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var result = MgtRace.GetInstance().GetAllItems().ToModels();
@@ -37,7 +37,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Details/5
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel();
@@ -51,7 +51,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Create
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
@@ -68,7 +68,7 @@ namespace WUI.Controllers
         //
         // POST: /Race/Create
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         // Le flag ci-dessus permet de préciser à l'action Create qu'il faut vérifier
         // si le token issu du cookie d'authentification a été bien été défini dans
         // la requête HTTP POST pour l'envoi du formulaire
@@ -94,7 +94,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Edit/5
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public ActionResult Edit(int id = 0)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel();
@@ -110,7 +110,7 @@ namespace WUI.Controllers
         // POST: /Race/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public ActionResult Edit(RaceModel race)
         {
             try
@@ -133,7 +133,7 @@ namespace WUI.Controllers
 
         //
         // GET: /Race/Delete/5
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public ActionResult Delete(int id)
         {
             var result = MgtRace.GetInstance().GetRace(id).ToModel();
@@ -150,7 +150,7 @@ namespace WUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

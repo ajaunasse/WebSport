@@ -6,7 +6,6 @@ using System.Web.Mvc;
 
 namespace WUI.Controllers
 {
-    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         //
