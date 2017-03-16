@@ -7,12 +7,18 @@
 
 <div class="row adminContent">
     <div class="col-lg-12">
-        <h3 class="titlePage">Edition de la course n°@Model.Id</h3>
-        <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modalParticipant">Liste des participants </a>
-        <hr />
+        <div class="entete">
+            <h3 class="titlePage">Edition de la course n°@Model.Id</h3>
+            <div class="button-group pull-right">
+                <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalResultat"><i class="material-icons">list</i> Résultat </a>
+                <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalParticipant"> <i class="material-icons">group</i> Participants </a>
+                <a href="#" class="btn btn-success withIcon" data-toggle="modal" data-target="#modalParticipant"> <i class="material-icons">edit_location</i> Itinéraire </a>
+            </div>           
+         </div>
+         <hr />
         <div class="card">
             <div class="card-header">
-                Organisateur
+                Organisateurs
             </div>
             <div class="card-block">
                 @if (Model.Organisers != null)
@@ -31,7 +37,7 @@
                             {
                             <tr>
                                 <td>@item.Id</td>
-                                <td>@item.Nom item.Prenom</td>
+                                <td>@item.Nom @item.Prenom</td>
                                 <td>@item.Email</td>
                                 <td>@item.Phone</td>
                             </tr>
@@ -73,12 +79,12 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.DateStart)
-                        @Html.TextBoxFor(m => m.DateStart, new { type = "date", @class = "form-control" })
+                        @Html.TextBoxFor(m => m.DateStart, new { @type = "date", @Value = Model.DateStart.ToString("yyyy-MM-dd"), @class="form-control" })
                         @Html.ValidationMessageFor(m => m.DateStart)
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.DateEnd)
-                        @Html.TextBoxFor(m => m.DateEnd, new { type = "date", @class = "form-control" })
+                        @Html.TextBoxFor(m => m.DateEnd, new { @type = "date", @Value = Model.DateEnd.ToString("yyyy-MM-dd"), @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.DateEnd)
                     </div>
                     <div class="form-group">
@@ -96,7 +102,7 @@
 
 <!-- Modal Participant-->
 <div class="modal fade" id="modalParticipant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Participant à la course</h5>
@@ -107,6 +113,29 @@
             <div class="modal-body">
                 @if (Model.Competitors != null)
                 {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom complet</th>
+                                <th>Date de naissance</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Competitors)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Nom @item.Prenom</td>
+                                    <td>@item.DateNaissance</td>
+                                    <td>@item.Email</td>
+                                    <td><a href="#" class="btn btn-danger">Désinscrire</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 } else
                 {
                     <div class="alert alert-info">
@@ -115,13 +144,63 @@
                 }
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
 </div>
+<!-- END MODAL -->
 
+<!-- Modal Resultaat-->
+<div class="modal fade" id="modalResultat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Résultat de la course</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Dossard</th>
+                            <th>Courreurs</th>
+                            <th>Rang</th>
+                            <th>Temps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1511</td>
+                            <td>Usain Bolt</td>
+                            <td>1</td>
+                            <td>3h 04m 35s</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Zizou</td>
+                            <td>2</td>
+                            <td>3h 35m 35s</td>
+                        </tr>
+                        <tr>
+                            <td>878</td>
+                            <td>Moi même</td>
+                            <td>3</td>
+                            <td>5h 04m 35s</td>
+                        </tr>
 
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL -->
 
  

@@ -61,7 +61,7 @@ namespace WUI.Controllers
         [AllowAnonymous]
         public ActionResult AddPoint()
         {
-            var result = MgtPoint.GetInstance().GetAllItems.ToModels();
+           // var result = MgtPoint.GetInstance().GetAllItems.ToModels();
             List<Point> points =  MgtPoint.GetInstance().GetAllItems();
             return View(points);
         }
@@ -98,7 +98,7 @@ namespace WUI.Controllers
         [AllowAnonymous]
         public ActionResult Edit(int id = 0)
         {
-            var result = MgtRace.GetInstance().GetRace(id).ToModel();
+            var result = MgtRace.GetInstance().GetRace(id).ToModel(true);
             if (result == null)
             {
                 return HttpNotFound();

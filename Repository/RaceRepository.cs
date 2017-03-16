@@ -42,7 +42,7 @@ namespace Repository
         public Race GetById(int id)
         {
             var race = this.GetByIdPrivate(id);
-            return race != null ? race.ToBo() : null;
+            return race != null ? race.ToBo(true) : null;
         }
 
         private RaceEntity GetByIdPrivate(int id)
