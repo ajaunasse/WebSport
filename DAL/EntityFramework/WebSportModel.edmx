@@ -297,7 +297,6 @@
           <Property Name="BirthDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Contributors" Relationship="BddLoginModel.FK_Competiteur_Personne" FromRole="Person" ToRole="Contributor" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Role" Type="Int32" Nullable="false" />
           <NavigationProperty Name="webpages_Roles" Relationship="BddLoginModel.webpages_UsersInRoles" FromRole="PersonEntity" ToRole="webpages_Roles" />
         </EntityType>
         <Association Name="FK_Competiteur_Course">
