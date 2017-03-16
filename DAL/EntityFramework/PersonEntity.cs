@@ -27,7 +27,6 @@ namespace DAL.EntityFramework
         public string Phone { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Password { get; set; }
-        public int Role { get; set; }
     
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
