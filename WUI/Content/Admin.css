@@ -26,6 +26,7 @@ ul:not(.browser-default) li {
     list-style-type: none;
 }
 
+
 .navbar-right li {
     float: none;
     line-height: 48px;
