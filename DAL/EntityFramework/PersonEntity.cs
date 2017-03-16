@@ -28,9 +28,6 @@ namespace DAL.EntityFramework
         public string Password { get; set; }
     
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
-        public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
-
-
-
+        public virtual RoleEntity Role1 { get; set; }
     }
 }
