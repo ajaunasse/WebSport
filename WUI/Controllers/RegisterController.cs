@@ -42,6 +42,7 @@ namespace WUI.Controllers
                 personne = Extensions.Extensions.ToModel(pers);
                 if (pers != null)
                 {
+                    Session.Add("user",personne);
                     return View("Connect", personne);
                 }
 
@@ -52,6 +53,13 @@ namespace WUI.Controllers
                 return View(personne);
             }
             return null;
+        }
+
+        
+        public ActionResult Edit()
+        {
+            PersonneModel personne = (PersonneModel)HttpContext.Session["user"];
+            return View(personne);
         }
 
     }

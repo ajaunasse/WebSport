@@ -1,0 +1,47 @@
+﻿@model WUI.Models.PersonneModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MenuUser.cshtml";
+}
+
+<div class="container content">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                @using (Html.BeginForm())
+            {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="card-header">
+                        <h2 class="titlePage">Connectez vous</h2>
+                    </div>
+                    <div class="card-block">
+                        @Html.LabelFor(m => m.Nom)
+                        @Html.TextBoxFor(m => m.Nom, new { @class = "form-control", @value = Model.Nom })
+                        <br />
+                        @Html.LabelFor(m => m.Prenom)
+                        @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control", @value = Model.Prenom })
+                        <br/>
+                        @Html.LabelFor(m => m.Email)
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @value = Model.Email })
+                        <br/>
+                        @Html.LabelFor(m => m.Phone)
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @value = Model.Phone })
+                        <br/>
+                        @Html.LabelFor(m => m.DateNaissance)
+                        @Html.TextBoxFor(m => m.DateNaissance, new { @class = "form-control", @value = Model.DateNaissance })
+                        <br/>
+                        @Html.LabelFor(m => m.Password)
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @value = Model.Password })
+                        <br/>
+                        @Html.TextBoxFor(m => m.Role, new { @class = "form-control", @value = Model.Role, @hidden="hidden" })
+                        <br />
+                        <button type="submit" class="btn btn-primary btn-block" id="valider"> Valider</button>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
