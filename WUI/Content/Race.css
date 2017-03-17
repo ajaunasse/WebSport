@@ -2,3 +2,7 @@
     margin: 0 auto;
     width: 40%;
 }
+
+#map{
+    height: 100%;
+}

@@ -217,5 +217,46 @@ namespace WUI.Controllers
                 return View();
             }
         }
+
+
+        
+        [RoleFilter(idRole = 2)]
+        public ActionResult ListRace()
+        {
+            List<Race> races = MgtRace.GetInstance().GetAllItems();
+            
+            return View(races.ToModels());
+
+        }
+
+
+        [HttpGet]
+        [RoleFilter(idRole = 2)]
+        public ActionResult Suscribe(int idRace)
+        {
+            PersonneModel user = (PersonneModel)Session.Contents["User"];
+            List<Race> races = MgtRace.GetInstance().SuscribeRace(user.ToBo(), idRace);
+            return View("MyRaces",races.ToModels());
+
+        }
+
+        public ActionResult MyRaces()
+        {
+            PersonneModel user = (PersonneModel)Session.Contents["User"];
+            List<Race> races = MgtRace.GetInstance().MyRaces(user.Id);
+            if (races == null)
+            {
+                return View();
+            }
+            return View(races.ToModels());
+        }
+
+
+        public ActionResult Unsubscribe(int idrace)
+        {
+            PersonneModel user = (PersonneModel)Session.Contents["User"];
+            List<Race> races = MgtRace.GetInstance().Unsubscribe(user.Id, idrace);
+            return View("MyRaces", races.ToModels());
+        }
     }
 }
