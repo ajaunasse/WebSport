@@ -214,34 +214,34 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Longitude</th>
-                            <th>Latitude</th>
-                            <th>Altitude</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Points)
-                        {
-                            <tr>
-                                <td>@item.Id</td>
-                                <td>@item.Latitude</td>
-                                <td>@item.Longitude</td>
-                                <td>@item.Altitude</td>
-                                <td></td>
-                            </tr>
-                        }
-                    </tbody>
-
-                </table>
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("AddPoint", "Race", FormMethod.Post, new { id = "formID" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Longitude</th>
+                                <th>Latitude</th>
+                                <th>Altitude</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            @foreach (var item in Model.Points)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Latitude</td>
+                                    <td>@item.Longitude</td>
+                                    <td>@item.Altitude</td>
+                                    <td><a href="@Url.Action("DeletePoint", new { id = @item.Id, idRace = @Model.Id })"class="btn btn-danger delete">Supprimer</a></td>
+                                </tr>
+                                }
+                        </tbody>
+
+                    </table>
 
                     <div class="form-group">
                         <div class="row new_form">
@@ -260,9 +260,9 @@
                                 @Html.TextBoxFor(m => m.point.Altitude, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.point.Altitude)
                             </div>
-                            @*@Html.TextBoxFor(m => m.point.)*@
+                            @Html.TextBoxFor(m => m.Id, new { type = "hidden", })
                             <div class="col-3">
-                                <button type="submit" class="btn btn-default add" value="Ajouter">Ajouter le point</button>
+                                <button type="submit" class="btn btn-default add" name="add" style="margin-top:17%;" value="Ajouter">Ajouter le point</button>
                             </div>
                         </div>
                     </div>
@@ -277,4 +277,56 @@
 <!-- END MODAL -->
 
 
- 
+@section scripts {  
+     <script>
+         $(function () {
+             $("#formID").submit(function (e) {
+                 console.log("toto");
+                 e.preventDefault();
+                 var dataToSend = $('#formID').serialize();
+                 var MyUrl = {
+                     MyUseFulUrl: '@Url.Action("AddPoint", "Race")'
+                 };
+                 $.ajax({
+                     type: "POST",
+                     url: MyUrl.MyUseFulUrl,
+                     data: dataToSend,
+                     success: function (data) {
+                         console.log(data);
+                         var point = data.Points[data.Points.length - 1];
+                         var url = '@Url.Action("DeletePoint", new { id = "__param1__", idRace = "__param2__" })';
+                         var url1 = url.replace("__param1__", encodeURIComponent(point.Id));
+                         var url2 = url1.replace("__param2__", encodeURIComponent(data.Id));
+
+                         var html = '<tr>';
+                         html += '<td>' + point.Id + '</td>';
+                         html += '<td>' + point.Longitude + '</td>';
+                         html += '<td>' + point.Latitude + '</td>';
+                         html += '<td>' + point.Altitude + '</td>';
+                         html += "<td><a href='" + url2 + "' class='btn btn-danger delete'>Supprimer</a></td>"
+                         html += '</tr>';
+                         $('#tbody').append(html);
+                     }
+
+                 })
+             });
+
+             $("#formID").on("click", ".delete", function (e) {
+                 console.log("toto");
+                 e.preventDefault();
+                 var url = $(this).attr('href');
+                 var $self = $(this);
+                 $.ajax({
+                     type: "GET",
+                     url: url,
+                     success: function () {
+                         $self.parent().parent().remove();
+                     }
+                 })
+             });
+
+             
+         });
+
+     </script>
+}

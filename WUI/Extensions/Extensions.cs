@@ -99,6 +99,7 @@ namespace WUI.Extensions
                 DateStart = model.DateStart,
                 DateEnd = model.DateEnd,
                 Town = model.Town,
+                Points = model.Points.Select(x => x.ToBo()).ToList()
             };
         }
 

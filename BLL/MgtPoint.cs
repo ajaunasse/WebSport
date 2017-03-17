@@ -45,6 +45,22 @@ namespace BLL
                 return null;
             }
         }
+        public Point GetPoint(int idPoint)
+        {
+            return this._uow.PointRepo.GetById(idPoint);
+        }
+
+
+        public bool DeletePoint(int idPoint)
+        {
+            if (idPoint > 0)
+            {
+                this._uow.PointRepo.Remove(idPoint);
+                this._uow.Save();
+                return true;
+            }
+            return false;
+        }
 
         public List<Point> GetAllItems()
         {

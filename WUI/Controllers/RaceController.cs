@@ -59,25 +59,45 @@ namespace WUI.Controllers
         }
 
         //GET: /Race/AddPoint
-        [RoleFilter(idRole = 1)]
-        public ActionResult AddPoint()
-        {
-           // var result = MgtPoint.GetInstance().GetAllItems.ToModels();
-            List<Point> points =  MgtPoint.GetInstance().GetAllItems();
-            return View(points);
-        }
-
-        //
-        // POST: /Race/AddPoint
         [HttpPost]
-        [AllowAnonymous]
-        public ActionResult AddPoint(PointModel point)
+        [ValidateAntiForgeryToken]
+        [RoleFilter(idRole = 1)]
+        public ActionResult AddPoint(RaceModel race)
         {
             try
             {
-                if (MgtRace.GetInstance().AddPoint(point.ToBo()))
+                RaceModel newRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
+                newRace.Points = new List<PointModel>();
+                newRace.Points.Add(race.point);
+                
+                var result = MgtRace.GetInstance().UpdateRace(newRace.ToBo());
+                RaceModel reloadRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
+                if (result)
                 {
-                    return RedirectToAction("Edit");
+                    return Json(reloadRace);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception e)
+            {
+                return View();
+            }
+        }
+
+        //
+        // POST: /Race/DeletePoint
+        [HttpGet]
+        [RoleFilter(idRole = 1)]
+        public ActionResult DeletePoint(int id)
+        {
+            try
+            {
+                if (MgtPoint.GetInstance().DeletePoint(id))
+                {
+                    return Json("ok", JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -122,7 +142,7 @@ namespace WUI.Controllers
         [RoleFilter(idRole = 1)]
         public ActionResult Edit(int id = 0)
         {
-            var result = MgtRace.GetInstance().GetRace(id).ToModel(true);
+            var result = new MgtRace().GetRace(id).ToModel(true);
             if (result == null)
             {
                 return HttpNotFound();
@@ -140,6 +160,7 @@ namespace WUI.Controllers
         {
             try
             {
+                race.Points = new List<PointModel>();
                 race.Points.Add(race.point);
                 var result = MgtRace.GetInstance().UpdateRace(race.ToBo());
                 if (result)
@@ -151,7 +172,7 @@ namespace WUI.Controllers
                     return View();
                 }
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

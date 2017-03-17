@@ -25,7 +25,7 @@ namespace BLL
 
         private UnitOfWork _uow { get; set; }
 
-        private MgtRace()
+        public MgtRace()
         {
             _uow = new UnitOfWork();
         }
