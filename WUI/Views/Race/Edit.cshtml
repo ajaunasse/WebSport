@@ -113,7 +113,7 @@
             <div class="modal-body">
                 @if (Model.Competitors != null)
                 {
-                    <table class="table">
+                    <table class="table table-responsive">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -162,7 +162,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table">
+                <table class="table table-responsive">
                     <thead>
                         <tr>
                             <th>Dossard</th>
@@ -218,7 +218,7 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
-                    <table class="table">
+                    <table class="table table-responsive">
                         <thead>
                             <tr>
                                 <th>#</th>
