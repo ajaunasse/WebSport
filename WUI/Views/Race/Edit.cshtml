@@ -214,6 +214,9 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                <div class="col-12" id="map"></div>
+
                 @using (Html.BeginForm("AddPoint", "Race", FormMethod.Post, new { id = "formID" }))
                 {
                     @Html.AntiForgeryToken()

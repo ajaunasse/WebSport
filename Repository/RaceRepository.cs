@@ -52,6 +52,7 @@ namespace Repository
 
         public void Update(Race element)
         {
+            //test
             RaceEntity race = context.RaceEntities.FirstOrDefault(x => x.Id == element.Id);
             var raceToUpdate = this.GetByIdPrivate(element.Id);
             raceToUpdate.Title = race.Title;
