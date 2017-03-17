@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using BLL;
 using BO;
 using WebMatrix.WebData;
+using WUI.Filters;
 using WUI.Models;
 
 namespace WUI.Controllers
@@ -55,11 +56,58 @@ namespace WUI.Controllers
             return null;
         }
 
-        
+        [RoleFilter(idRole = 2)]
         public ActionResult Edit()
         {
             PersonneModel personne = (PersonneModel)HttpContext.Session["user"];
             return View(personne);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [RoleFilter(idRole = 2)]
+        public ActionResult Edit(PersonneModel model)
+        {
+            if (model.Nom == null)
+            {
+                ViewBag.MessageErreurNom = "Un nom doit être renseigné";
+                return View("Edit", model);
+            }
+            if (model.Prenom == null)
+            {
+                ViewBag.MessageErreurPrenom = "Un prénom doit être renseigné";
+                return View("Edit", model);
+            }
+
+            if (model.Email == null)
+            {
+                ViewBag.MessageErreurEmail = "Un email doit être renseigné";
+                return View("Edit", model);
+            }
+
+            if (model.Password == null)
+            {
+                ViewBag.MessageErreurPass = "Un mot de passe doit être renseigné";
+                return View("Edit", model);
+            }
+
+            int outPhone = 0;
+
+            if (!String.IsNullOrEmpty(model.Phone) && model.Phone.Length != 10 && !int.TryParse(model.Phone, out outPhone))
+            {
+                ViewBag.MessageErreurPhone = "le numéro de téléphone doit comporter 10 chiffres sans espace";
+                return View("Edit", model);
+            }
+
+
+            Personne pers = Extensions.Extensions.ToBo(model);
+            MgtPersonne mgt = new MgtPersonne();
+            pers = mgt.UpdatePersonne(pers);
+            model = Extensions.Extensions.ToModel(pers);
+
+            Session.Add("user", model);
+            return View("Connect", model);
         }
 
     }

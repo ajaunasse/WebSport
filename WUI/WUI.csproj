@@ -369,6 +369,8 @@
     <Content Include="Views\Statistique\Index.cshtml" />
     <Content Include="Views\Shared\_MenuUser.cshtml" />
     <Content Include="Views\Register\Edit.cshtml" />
+    <Content Include="Views\Race\ListRace.cshtml" />
+    <Content Include="Views\Race\MyRaces.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />
