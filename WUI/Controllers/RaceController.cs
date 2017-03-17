@@ -223,9 +223,11 @@ namespace WUI.Controllers
         [RoleFilter(idRole = 2)]
         public ActionResult ListRace()
         {
-            List<Race> races = MgtRace.GetInstance().GetAllItems();
+            PersonneModel user = (PersonneModel)Session.Contents["user"];
+            //List<Race> races = MgtRace.GetInstance().GetAllItems();
+            List<Race> racesDispo = MgtRace.GetInstance().getRacebyUser(user.Id);
             
-            return View(races.ToModels());
+            return View(racesDispo.ToModels());
 
         }
 

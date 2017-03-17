@@ -160,5 +160,20 @@ namespace BLL
 
             return races.ToBos();
         }
+
+        public List<Race> getRacebyUser(int idUser)
+        {
+            WebSportEntities context = new WebSportEntities();
+            List<Race> races = GetAllItems();
+            List<int> idRaceUser =
+                context.ContributorEntities.Where(c => c.PersonId == idUser).Select(c => c.RaceId).ToList();
+            foreach (int id in idRaceUser)
+            {
+                Race r = races.Find(c => c.Id == id);
+                races.Remove(r);
+            }
+
+            return races;
+        }
     }
 }
