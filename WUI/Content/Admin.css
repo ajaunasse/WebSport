@@ -89,7 +89,28 @@ li.logo:hover {
     color: #fff;
 }
 }
+/* MODAL ADMIN */
+.modal .modal-content .modal-header {
+    background-color: #455a64;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+}
+.modal .modal-content .modal-header h5.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    margin-left: 35%;
 
+}
+
+.modal .modal-content .modal-header button.close {
+    color: #fff ;
+    opacity: 0.9;
+    font-weight: normal;
+}
 
 /* ADMIN CONTENT STYLE */
 .adminContent {

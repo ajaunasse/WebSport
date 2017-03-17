@@ -1,10 +1,11 @@
 ﻿using BO;
+using DAL.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using DAL.Extensions;
 
 namespace BLL
 {
@@ -12,6 +13,13 @@ namespace BLL
     {
         private List<Competitor> _competitors;
 
+        private static MgtCompetitor _instance;
+        public static MgtCompetitor GetInstance()
+        {
+            if (_instance == null)
+                _instance = new MgtCompetitor();
+            return _instance;
+        }
 
         public MgtCompetitor()
         {
@@ -59,5 +67,7 @@ namespace BLL
         {
             return _competitors.Find(x => x.Id == id);
         }
+
+
     }
 }
