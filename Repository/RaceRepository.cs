@@ -52,13 +52,14 @@ namespace Repository
 
         public void Update(Race element)
         {
+            RaceEntity race = context.RaceEntities.FirstOrDefault(x => x.Id == element.Id);
             var raceToUpdate = this.GetByIdPrivate(element.Id);
-            raceToUpdate.Title = element.Title;
-            raceToUpdate.Description = element.Description;
-            raceToUpdate.DateStart = element.DateStart;
-            raceToUpdate.DateEnd = element.DateEnd;
-            raceToUpdate.Town = element.Town;
-            raceToUpdate.Points = element.Points;
+            raceToUpdate.Title = race.Title;
+            raceToUpdate.Description = race.Description;
+            raceToUpdate.DateStart = race.DateStart;
+            raceToUpdate.DateEnd = race.DateEnd;
+            raceToUpdate.Town = race.Town;
+            raceToUpdate.Points.Add(element.Points.Select(x => x.ToDataEntity()).First());
             base.Update(raceToUpdate);
         }
 

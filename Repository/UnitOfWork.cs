@@ -71,7 +71,7 @@ namespace Repository
                 context.SaveChanges();
                 return true;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }

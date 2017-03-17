@@ -140,6 +140,7 @@ namespace WUI.Controllers
         {
             try
             {
+                race.Points = new List<PointModel>();
                 race.Points.Add(race.point);
                 var result = MgtRace.GetInstance().UpdateRace(race.ToBo());
                 if (result)
@@ -151,7 +152,7 @@ namespace WUI.Controllers
                     return View();
                 }
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }

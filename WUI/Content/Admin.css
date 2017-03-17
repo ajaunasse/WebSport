@@ -2,6 +2,9 @@
     font-family: 'Roboto' ;
    
 }
+.add{
+    margin-top:12%;
+}
 /* NAV BAR STYLE*/
 .navbar-right {
     height: 100%;

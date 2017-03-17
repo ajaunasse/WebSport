@@ -23,6 +23,8 @@ namespace BLL
         {
             WebSportEntities context = new WebSportEntities();
 
+            var test = context.PersonEntities.Where(p => p.Mail == pers.Email);
+
             PersonEntity entity = context.PersonEntities.Single(p =>p.Mail == pers.Email);
 
             if (entity.Password == pers.Password)
