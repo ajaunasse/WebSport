@@ -58,7 +58,7 @@ namespace Repository
             raceToUpdate.DateStart = element.DateStart;
             raceToUpdate.DateEnd = element.DateEnd;
             raceToUpdate.Town = element.Town;
-            raceToUpdate.Points = element.Points;
+            raceToUpdate.Points.Add(element.Points.Select(x => x.ToDataEntity()).First());
             base.Update(raceToUpdate);
         }
 

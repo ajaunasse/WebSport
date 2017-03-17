@@ -1,9 +1,6 @@
 ﻿@model WUI.Models.PersonneModel
 
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_MenuUser.cshtml";
-}
+
 
 <div class="container content">
     <div class="row">
@@ -19,23 +16,29 @@
                     <div class="card-block">
                         @Html.LabelFor(m => m.Nom)
                         @Html.TextBoxFor(m => m.Nom, new { @class = "form-control", @value = Model.Nom })
+                        <span style="color:red">@ViewBag.MessageErreurNom</span>
                         <br />
                         @Html.LabelFor(m => m.Prenom)
                         @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control", @value = Model.Prenom })
+                        <span style="color:red">@ViewBag.MessageErreurPrenom</span>
                         <br/>
                         @Html.LabelFor(m => m.Email)
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @value = Model.Email })
+                        <span style="color:red">@ViewBag.MessageErreurEmail</span>
                         <br/>
                         @Html.LabelFor(m => m.Phone)
                         @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @value = Model.Phone })
+                        <span style="color:red">@ViewBag.MessageErreurPhone</span>
                         <br/>
                         @Html.LabelFor(m => m.DateNaissance)
-                        @Html.TextBoxFor(m => m.DateNaissance, new { @class = "form-control", @value = Model.DateNaissance })
+                        @Html.TextBoxFor(m => m.DateNaissance, new { @class = "form-control", @value = Model.DateNaissance, type="date" })
                         <br/>
                         @Html.LabelFor(m => m.Password)
                         @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @value = Model.Password })
+                        <span style="color:red">@ViewBag.MessageErreurPass</span>
                         <br/>
                         @Html.TextBoxFor(m => m.Role, new { @class = "form-control", @value = Model.Role, @hidden="hidden" })
+                        @Html.TextBoxFor(m => m.Id, new { @class = "form-control", @value = Model.Id, @hidden = "hidden" })
                         <br />
                         <button type="submit" class="btn btn-primary btn-block" id="valider"> Valider</button>
                     </div>

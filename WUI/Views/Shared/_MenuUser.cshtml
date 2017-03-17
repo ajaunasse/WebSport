@@ -15,7 +15,15 @@
                     </li>
 
                     <li class="nav-item">
-                        @Html.ActionLink("Editer profil", "Edit", "Register", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                        @Html.ActionLink("Editer profil", "Edit", "Register", routeValues: null, htmlAttributes: new {@class = "nav-link"})
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Liste courses", "ListRace", "Race", routeValues: null, htmlAttributes: new {@class = "nav-link"})
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("mes courses", "MyRaces", "Race", routeValues: null, htmlAttributes: new { @class = "nav-link" })
                     </li>
 
                     <li class="nav-item">

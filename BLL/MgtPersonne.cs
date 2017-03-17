@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,6 +99,41 @@ namespace BLL
             }
 
             
+        }
+
+        public Personne UpdatePersonne(Personne personne)
+        {
+            try
+            {
+                PersonEntity entity = BoToEntity(personne);
+                WebSportEntities context = new WebSportEntities();
+                entity = context.PersonEntities.Single(p => p.Id == personne.Id);
+                entity.Firstname = personne.Prenom;
+                entity.Lastname = personne.Nom;
+                entity.Mail = personne.Email;
+                entity.Phone = personne.Phone;
+                if (personne.DateNaissance == DateTime.MinValue)
+                {
+                    entity.BirthDate = null;
+                }
+                else
+                {
+                    entity.BirthDate = personne.DateNaissance;
+                }
+                entity.Password = personne.Password;
+                
+                context.SaveChanges();
+
+                return EntityToBO(entity);
+
+            }
+            catch (Exception ex)
+            {
+                string t = ex.ToString();
+                return null;
+            }
+
+
         }
 
         // CREATE

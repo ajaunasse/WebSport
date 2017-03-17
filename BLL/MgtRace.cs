@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.EntityFramework;
 using DAL.Extensions;
 
 
@@ -97,5 +98,67 @@ namespace BLL
             return true;
         }
 
+        public List<Race> SuscribeRace(Personne user, int idrace)
+        {
+            
+            WebSportEntities context = new WebSportEntities();
+            ContributorEntity join = new ContributorEntity();
+            join.RaceId = idrace;
+            join.PersonId = user.Id;
+            if (user.Role == 1)
+            {
+                join.IsOrganiser = true;
+            }
+            else
+            {
+                join.IsCompetitor = true;
+            }
+
+            context.ContributorEntities.Add(join);
+            context.SaveChanges();
+
+            List<int> idRaces = context.ContributorEntities.Where(c => c.PersonId == user.Id).Select(c => c.RaceId).ToList();
+            List<RaceEntity> races = new List<RaceEntity>();
+            foreach (int race in idRaces)
+            {
+                races.Add(context.RaceEntities.Single(r => r.Id == race));
+            }
+
+            return races.ToBos();
+        }
+
+
+        public List<Race> MyRaces(int idUser)
+        {
+            WebSportEntities context = new WebSportEntities();
+            List<int> idRaces = context.ContributorEntities.Where(c => c.PersonId == idUser).Select(c => c.RaceId).ToList();
+            if (idRaces == null)
+            {
+                return null;
+            }
+            List<RaceEntity> races = new List<RaceEntity>();
+            foreach (int race in idRaces)
+            {
+                races.Add(context.RaceEntities.Single(r => r.Id == race));
+            }
+
+            return races.ToBos();
+        }
+
+        public List<Race> Unsubscribe(int idUser, int idRace)
+        {
+            WebSportEntities context = new WebSportEntities();
+            ContributorEntity join = context.ContributorEntities.Single(j => j.PersonId == idUser && j.RaceId == idRace);
+            context.ContributorEntities.Remove(join);
+            context.SaveChanges();
+            List<int> idRaces = context.ContributorEntities.Where(c => c.PersonId == idUser).Select(c => c.RaceId).ToList();
+            List<RaceEntity> races = new List<RaceEntity>();
+            foreach (int race in idRaces)
+            {
+                races.Add(context.RaceEntities.Single(r => r.Id == race));
+            }
+
+            return races.ToBos();
+        }
     }
 }
