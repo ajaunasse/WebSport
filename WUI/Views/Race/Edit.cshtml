@@ -12,7 +12,7 @@
             <div class="button-group pull-right">
                 <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalResultat"><i class="material-icons">list</i> Résultat </a>
                 <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalParticipant"> <i class="material-icons">group</i> Participants </a>
-                <a href="#" onclick="initMap()" class="btn btn-success withIcon" data-toggle="modal" data-target="#listePoints"> <i class="material-icons">edit_location</i> Itinéraire </a>
+                <a href="#" class="btn btn-success withIcon" data-toggle="modal" data-target="#listePoints"> <i class="material-icons">edit_location</i> Itinéraire </a>
             </div>           
          </div>
          <hr />
@@ -286,20 +286,35 @@
 
 @section scripts {  
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIyk34t3LjsAXYoq912qTIQoBz1QWfNp0"
-        async defer></script>
-    <script>
 
+    <script>
+       
         function initMap() {
-            console.log("coucou");
+        
+        console.log("init")
             var myLatLng = { lat: 47.2262079, lng: -1.6202498 };
-            var map;
+            // Create a map object and specify the DOM element for display.
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
                 center: myLatLng
             });
-        };
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Campus Nantes'
+            });
+        }
+
+
         $(function () {
+
+
+            $('#listePoints').on('shown.bs.modal', function (e) {
+                console.log("listPoints show")
+                google.maps.event.trigger(map, "resize");
+            });
+           
+
                  $("#formID").submit(function (e) {
                      console.log("toto");
                      e.preventDefault();
@@ -350,4 +365,8 @@
 
      </script>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIyk34t3LjsAXYoq912qTIQoBz1QWfNp0&callback=initMap"
+        async defer>
+
+</script>
 }
