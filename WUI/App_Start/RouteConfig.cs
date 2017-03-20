@@ -42,6 +42,11 @@ namespace WUI
                 url: "Configuration/{PersonneId}/{action}/{id}",
                 defaults: new { controller = "DisplayConfiguration", PersonneId = "1", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "deconnect",
+                url: "Logout",
+                defaults: new { controller = "Register", action = "Logout", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "Default",

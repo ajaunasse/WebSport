@@ -110,5 +110,10 @@ namespace WUI.Controllers
             return View("Connect", model);
         }
 
+        public ActionResult Logout()
+        {
+            Session.Remove("user");
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
