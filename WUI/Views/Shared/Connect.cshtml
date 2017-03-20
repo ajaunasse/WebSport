@@ -3,10 +3,25 @@
 @model WUI.Models.PersonneModel
 
 
+@section AdditionalMeta
+{
+    @Styles.Render("~/Content/Home.css")
 
+}
+<div class="container content">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+            
+                    <div class="card-header">
+                        <h2 class="titlePage">Bonjour @Model.Prenom !!</h2>
+                    </div>
+                    <div class="card-block">
+                        Voici l'interface qui vous sera utile pour gérer vos courses.
+                    </div>
 
-
-<h2>Bonjour @Model.Nom
-    
-    
-    </h2>
+                
+            </div>
+        </div>
+    </div>
+</div>

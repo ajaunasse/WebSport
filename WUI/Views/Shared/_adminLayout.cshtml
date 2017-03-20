@@ -31,11 +31,13 @@
 
 
     @Scripts.Render("~/Scripts/jquery-1.10.2.js")
-    @Scripts.Render("~/Scripts/Bootstrap/bootstrap.min.js")
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   
+
+    @Scripts.Render("~/Scripts/Bootstrap/bootstrap.min.js")
+
     @RenderSection("scripts", false)
 
 </body>

@@ -115,5 +115,10 @@ namespace WUI.Controllers
             Session.Remove("user");
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Connect(PersonneModel personneModel)
+        {
+            return View(personneModel);
+        }
     }
 }

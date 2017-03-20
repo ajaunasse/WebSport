@@ -57,7 +57,8 @@ namespace WUI.Controllers
                 else
                 {
                     Session.Add("user", model);
-                    return View("Connect", model);
+                    return RedirectToAction("Connect","Register", model);
+                    //return Redirect("~/Views/Shared/Connect.cshtml");
                 }
                 
             }
@@ -427,5 +428,6 @@ namespace WUI.Controllers
             }
         }
         #endregion
+
     }
 }
