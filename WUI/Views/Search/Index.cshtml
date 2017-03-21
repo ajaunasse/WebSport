@@ -3,25 +3,76 @@
 @{
     ViewBag.Title = "Index";
 }
+@section AdditionalMeta
+{
+    @Styles.Render("~/Content/Search.css")
+}
 
-<div class="row">
+<div class="row content">
     @if (Model != null)
-    {
+    {   <div class="col-lg-12">
+            <h3 class="titlePage"> 
+                Liste des événements Pour @Request.Params["ville"]
+                @if(Request.Params["dateDebut"] != null)
+                {
+
+                    <span>Du @Request.Params["dateDebut"]</span>
+                }
+                @if (Request.Params["dateFin"] != null)
+                {
+                    <span>Au @Request.Params["dateFin"]</span>
+                }
+            </h3>
+            <hr />
+        </div>
         foreach (var item in Model)
         {
-            <div class="col-lg-6">
-                <div class="card">
+            <div class="col-lg-6 resize">
+                <div class="card fullHeight">
+                    <div class="card-header">
+                        <h3 class="titlePage">@item.Title </h3>
+                    </div>
                     <div class="card-block">
-                        <h4 class="card-title">@item.Title</h4>
-                        <p class="card-text">@item.Description</p>
-                        <p class="card-text"><b>Date : </b>@item.DateStart au @item.DateEnd</p>
-                        <a href="#" class="btn btn-primary">S'inscrire</a>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="card-text">
+                                    <b>Description : </b><br />
+                                    @item.Description
+                                </p>
+                            </div>
+                            <div class="col-lg-6">
+                                <p class="card-text">
+                                    <b>Date de l'épreuve : </b><br />
+                                    @item.DateStart.ToString("dd/MM/yyyy")
+                                </p>
+                            </div>
+                            <div class="col-lg-6">
+
+                                <p class="card-text">
+                                    <b>Date de fin d'inscription : </b><br />
+                                    @item.DateEnd.ToString("dd/MM/yyyy")
+                                </p>
+                            </div>
+                            <div class="col-lg-6">
+                                <p class="card-text">
+                                    <b> Ville : </b><br />
+                                    @item.Town
+                                </p>
+                            </div>
+                            <div class="col-lg-6">
+                                <p class="card-text">
+                                    <b> Distance : </b><br />
+                                    42.2 km
+                                </p>
+                            </div>
+                            <a href="@Url.Action("Suscribe", "Race", new { idRace = item.Id})" class="btn btn-primary btn-block">S'inscrire</a>
+                        </div>
                     </div>
                 </div>
 
             </div>
             <div class="col-lg-6">
-                <div id="map" style="height: 500px ; width:500px;"></div>
+                <div  id="@item.Id" class="map" data-value="@item.Points" data-key="@item.Id" onLoad="initMap" style="height: 100% ; width:100%;"></div>
             </div>
         }
     }
@@ -29,30 +80,66 @@
 </div>
 @section scripts {
 <script>
-        function initMap() {
-            var myLatLng = { lat: 47.2262079, lng: -1.6202498 };
-            var myLatLng2 = { lat: 48.0389214, lng: -1.6923924 };
-        // Create a map object and specify the DOM element for display.
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: myLatLng
-            });
-            var map2 = new google.maps.Map(document.getElementById('map2'), {
-                zoom: 12,
-                center: myLatLng2
-            });
 
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Campus Nantes'
+    var races = @(new HtmlString(Json.Encode(Model)));
+
+
+    function initMap() {
+        $.each(races, function(key, value) {
+
+            var markers = []
+            var center = {lat: value.Points[0].Latitude, lng: value.Points[0].Longitude}
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+
+            var map = new google.maps.Map(document.getElementById(value.Id), {
+                zoom: 12,
+                center: center
             });
-            var marker2 = new google.maps.Marker({
-                position: myLatLng2,
-                map: map2,
-                title: 'Campus Rennes'
+            
+
+            $.each(value.Points, function(k, v) {
+                var position = {lat: v.Latitude, lng: v.Longitude} ;
+                markers.push(position)
+                var marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                });
             });
-      }
+           
+            directionsDisplay.setMap(map);
+            calculateAndDisplayRoute(directionsService, directionsDisplay, markers);
+
+
+        });
+    }
+
+    function calculateAndDisplayRoute(directionsService, directionsDisplay, markers) {
+        var waypts = [];
+        var startPos = new google.maps.LatLng(markers[0].lat, markers[0].lng)
+        var endPos = new google.maps.LatLng(markers[markers.length - 1].lat, markers[markers.length - 1].lng)
+     
+        for (var i = 0; i < markers.length; i++) {
+            var position = new google.maps.LatLng(markers[i].lat,markers[i].lng) ;
+            waypts.push({
+                location: position,
+            });
+        }
+        directionsService.route({
+            origin: startPos,
+            destination: endPos,
+            waypoints: waypts,
+            optimizeWaypoints: true,
+            travelMode: google.maps.TravelMode.DRIVING
+        }, function(response, status) {
+            console.log()
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            }
+        });
+        
+    }
+      
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIyk34t3LjsAXYoq912qTIQoBz1QWfNp0&callback=initMap"

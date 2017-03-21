@@ -224,6 +224,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Race.css" />
     <Content Include="Content\Home.css" />
+    <Content Include="Content\Search.css" />
     <Content Include="Content\User.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -373,7 +374,6 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\Connect.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
-    <Content Include="Views\Race\AddPoint.cshtml" />
     <Content Include="Views\Shared\_adminLayout.cshtml" />
     <Content Include="Views\Shared\_adminMenu.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
