@@ -1,0 +1,56 @@
+﻿@model PagedList.IPagedList<WUI.Models.PersonneModel>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Liste Personne";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+@section AdditionalMeta
+{
+    @Styles.Render("~/Content/PagedList.css")
+}
+
+
+<div class="row adminContent">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="titlePage">Liste des personnes inscrites</h3>
+            </div>
+            <div class="col-lg-8 offset-lg-4">
+                <hr />
+            </div>
+            <div class="col-lg-2">
+                 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            </div>
+            <div class="col-lg-10">
+                <nav class="pull-right">
+                    @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                </nav>
+            </div>
+            <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th> Nom complet </th>
+                            <th> Date de naissance</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Nom) @Html.DisplayFor(modelItem => item.Prenom)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DateNaissance)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                            </tr>
+                        }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>

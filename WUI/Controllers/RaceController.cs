@@ -275,7 +275,7 @@ namespace WUI.Controllers
         {
 
             PersonneModel user = (PersonneModel)Session.Contents["User"];
-            
+            return View();   
         }
     }
 }
