@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="BddLoginModel.PersonEntity" Width="1.5" PointX="5.625" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="BddLoginModel.FK_Competiteur_Course" ManuallyRouted="false" />
         <AssociationConnector Association="BddLoginModel.FK_Competiteur_Personne" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="BddLoginModel.CategorieEntity" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="BddLoginModel.CategorieEntity" Width="1.5" PointX="7.375" PointY="4.875" />
         <EntityTypeShape EntityType="BddLoginModel.POIEntity" Width="1.5" PointX="3.125" PointY="4.75" />
         <EntityTypeShape EntityType="BddLoginModel.PointEntity" Width="1.5" PointX="5.25" PointY="5" />
         <AssociationConnector Association="BddLoginModel.FK_POI_Categorie" />

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace WUI.Models
 {
@@ -15,6 +16,10 @@ namespace WUI.Models
     {
         public string Title { get; set; }
 
-        public CategoryModel Category { get; set; }
+        public IEnumerable<CategoryModel> Category { get; set; }
+        
+        private IEnumerable<SelectListItem> selectListCategory;
+
+        public IEnumerable<SelectListItem> SelectlistCategory { get; set; }
     }
 }

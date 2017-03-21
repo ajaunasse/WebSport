@@ -23,7 +23,11 @@
                     </li>
 
                     <li class="nav-item">
-                        @Html.ActionLink("mes courses", "MyRaces", "Race", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                        @Html.ActionLink("mes courses", "MyRaces", "Race", routeValues: null, htmlAttributes: new {@class = "nav-link"})
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("mes resultats", "resultatByUser", "Race", routeValues: null, htmlAttributes: new { @class = "nav-link" })
                     </li>
 
                     <li class="nav-item">
