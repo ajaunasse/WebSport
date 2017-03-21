@@ -270,5 +270,12 @@ namespace WUI.Controllers
             List<Race> races = MgtRace.GetInstance().Unsubscribe(user.Id, idrace);
             return View("MyRaces", races.ToModels());
         }
+
+        public ActionResult ResultatByUser()
+        {
+
+            PersonneModel user = (PersonneModel)Session.Contents["User"];
+            
+        }
     }
 }
