@@ -31,6 +31,37 @@ namespace WUI.Extensions
 
         #endregion
 
+        #region resultat
+
+        public static ResultatModel ToModel(this Resultat bo)
+        {
+            if (bo == null) return null;
+
+            return new ResultatModel
+            {
+                IdPersonne = bo.PersonneID,
+                Race = bo.Race.ToModel(),
+                Classement = bo.PersonneID,
+                TempsDeCourse = bo.TempsDeCourse,
+            };
+        }
+
+        public static Resultat ToBo(this ResultatModel model)
+        {
+            if (model == null) return null;
+
+            return new Resultat
+            {
+                PersonneID = model.IdPersonne,
+                Race = model.Race.ToBo(),
+                Classement = model.Classement,
+                TempsDeCourse = model.TempsDeCourse,
+            };
+        }
+
+
+        #endregion
+
         #region Competitor
 
         public static List<CompetitorModel> ToModels(this List<Competitor> bos)
@@ -45,7 +76,7 @@ namespace WUI.Extensions
             if (bo == null) return null;
 
             return new CompetitorModel
-            {   
+            {
                 Id = bo.Id,
                 Nom = bo.Nom,
                 Prenom = bo.Prenom,

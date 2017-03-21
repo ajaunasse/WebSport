@@ -175,5 +175,19 @@ namespace DAL.Extensions
         }
 
         #endregion
+
+        public static Resultat ToBo(this ResultatEntity bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            Resultat result = new Resultat();
+            result.Race = bo.Course.ToBo();
+            result.PersonneID = bo.PersonneId;
+            if (bo.HeureArrive != null) result.HeureArrivee = (TimeSpan)bo.HeureArrive;
+            if (bo.HeureDepart != null) result.HeureDebut = (TimeSpan)bo.HeureDepart;
+
+            return result;
+        }
+
     }
 }

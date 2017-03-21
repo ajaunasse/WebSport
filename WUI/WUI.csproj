@@ -199,6 +199,7 @@
     <Compile Include="Models\PointModel.cs" />
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\RaceModel.cs" />
+    <Compile Include="Models\ResultatModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
