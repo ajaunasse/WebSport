@@ -1,4 +1,5 @@
-﻿@model List<WUI.Models.ResultatModel>
+﻿@using System.Collections
+@model List<WUI.Models.ResultatModel>
 
 @{
     ViewBag.Title = "ResultatByUser";
@@ -6,96 +7,103 @@
 
 <h2>Les Courses Terminées</h2>
 
+<div>
+    @{
+        int i = 0;
+        ArrayList courses = new ArrayList();
+        ArrayList temps = new ArrayList();
 
-@*@foreach (var course in Model)
-{
-    <h3>@course.Race.Title</h3>
+        foreach (var course in Model)
+        {
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ResultRace">
+                @course.Race.Title @course.Race.Town
+            </button>
 
-    <h4>@course.TempsDeCourse</h4>
+            <!-- Modal -->
+            <div class="modal fade" id="ResultRace" tabindex="-1" role="dialog" aria-labelledby="ResultRaceLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ResultRaceLabel">Resultat de la course @course.Race.Title @course.Race.Town</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
 
-    <h4>@course.HeureDebut</h4>
+                            <label>TempsDeCourse : </label>
+                            <p>
+                                <b>@course.TempsDeCourse</b>
+                            </p>
 
-    <h4>@course.HeureArrivee</h4>
+                            <label>Heure de départ : </label>
+                            <p>
+                                <b>@course.HeureDebut</b>
+                            </p>
 
-
-}*@
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#StatRace">
-    Statitistique de vos courses
-</button>
-
-
-<div class="modal fade" id="StatRace" tabindex="-1" role="dialog" aria-labelledby="StatRaceLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="StatRaceLabel">STATISTIQUE</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-
-                <div class="row">
-                    <div class="col-12">
-                        <div id="graph" style="padding: auto"></div>
+                            <label>Heure d'arrivée : </label>
+                            <p>
+                                <b>@course.HeureArrivee</b>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            <br/>
+
+            courses.Add(course.Race.Town);
+
+            temps.Add(course.TempsDeCourse.TotalMinutes);
+            
+        }
+    }
+</div>
+<br />
+<div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#StatRace">
+        Statistique de vos courses
+    </button>
+
+
+    <div class="modal fade" id="StatRace" tabindex="-1" role="dialog" aria-labelledby="StatRaceLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="StatRaceLabel">STATISTIQUE</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="graph"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
+
+
 </div>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ResultRace">
-    Maraton
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="ResultRace" tabindex="-1" role="dialog" aria-labelledby="ResultRaceLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ResultRaceLabel">Resultat de la course Marathon</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <h5>TempsDeCourse</h5>
-
-                <h5>HeureDebut</h5>
-
-                <h5>HeureArrivee</h5>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="row adminContent">
-    <div class="col-lg-6">
-
-
-        <div id="container"></div>
-    </div>
-    
-</div>
 @section scripts {
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script>
-        
+
         var colors = ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee']
 
         Highcharts.theme = {
@@ -173,11 +181,20 @@
             },
         };
 
+
+
+
         // Apply the theme
         Highcharts.setOptions(Highcharts.theme);
 
 
+
         //Stats 1
+        var Ville = @(new HtmlString(Json.Encode(courses)));
+        var temps = @(new HtmlString(Json.Encode(temps)));
+
+        console.log(Ville);
+        console.log(temps);
 
         Highcharts.chart('graph', {
             chart: {
@@ -191,10 +208,7 @@
             },
 
             xAxis: {
-                categories: [
-                    'Paris',
-                    'Nantes'
-                ],
+                categories: Ville,
                 color: "#fff",
                 crosshair: true
             },
@@ -219,8 +233,8 @@
                 }
             },
             series: [{
-                name: 'Total Participants',
-                data: [124, 121]
+                name: 'Temps de course (en minute)',
+                data: temps
 
             }],
         });

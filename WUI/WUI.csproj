@@ -202,6 +202,7 @@
     <Compile Include="Models\CoordGpsModel.cs" />
     <Compile Include="Models\DisplayConfigurationModel.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\OrganizerModel.cs" />
     <Compile Include="Models\PersonneModel.cs" />
     <Compile Include="Models\PointModel.cs" />
@@ -385,6 +386,7 @@
     <Content Include="Views\Race\MyRaces.cshtml" />
     <Content Include="Views\Personne\Index.cshtml" />
     <Content Include="Views\Race\ResultatByUser.cshtml" />
+    <Content Include="Views\Race\Importresult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />
