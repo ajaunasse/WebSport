@@ -9,60 +9,15 @@
 
         <div id="container"></div>
     </div>
+    <div class="col-lg-6">
+
+
+        <div id="container2"></div>
+    </div>
 </div>
 @section scripts {
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-    <script>
-
-        Highcharts.chart('container', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Nombre participants par marathon'
-            },
-            subtitle: {
-                text: 'Saison 2017'
-            },
-            xAxis: {
-                categories: [
-                    'Paris',
-                    'Nantes',
-                    'Bordeaux',
-                    'Lille',
-                    'Marseille',
-                    'Lyon'
-                ],
-                crosshair: true
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: ''
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: 'Total Participants',
-                data: [92158,15221,12084,11804,48281,62484]
-
-            }],
-        });
-    </script>
+    @Scripts.Render("~/Scripts/stats.js")    
 }
