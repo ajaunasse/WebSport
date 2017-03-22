@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using DAL.EntityFramework;
+using Repository;
 
 namespace BLL
 {
@@ -19,6 +20,12 @@ namespace BLL
             if (_instance == null)
                 _instance = new MgtPersonne();
             return _instance;
+        }
+        private UnitOfWork _uow { get; set; }
+
+        public MgtPersonne()
+        {
+            _uow = new UnitOfWork();
         }
         public Personne ValidateConnection(Personne pers)
         {
@@ -99,8 +106,10 @@ namespace BLL
                 string t = ex.ToString();
                 return null;
             }
+        }
 
-            
+        public List<Personne> GetAllItems() {
+            return this._uow.PersonneRepo.GetAllItems();
         }
 
         public Personne UpdatePersonne(Personne personne)

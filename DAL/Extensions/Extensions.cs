@@ -235,5 +235,47 @@ namespace DAL.Extensions
         }
 
         #endregion
+
+        public static Resultat ToBo(this ResultatEntity bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            Resultat result = new Resultat();
+            result.Race = bo.Course.ToBo();
+            result.PersonneID = bo.PersonneId;
+            if (bo.HeureArrive != null) result.HeureArrivee = (TimeSpan)bo.HeureArrive;
+            if (bo.HeureDepart != null) result.HeureDebut = (TimeSpan)bo.HeureDepart;
+
+            return result;
+        }
+
+
+        #region Personne
+        public static List<Personne> ToBos(this List<PersonEntity> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToBo(withJoin)).ToList()
+                : null;
+        }
+
+
+        public static Personne ToBo(this PersonEntity bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new Personne
+            {
+                Id = bo.Id,
+                Prenom = bo.Firstname,
+                Nom = bo.Lastname,
+                DateNaissance = bo.BirthDate,
+                Email = bo.Mail,
+                Phone = bo.Phone,
+            };
+        }
+
+
+        #endregion
     }
+
 }

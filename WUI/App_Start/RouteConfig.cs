@@ -38,6 +38,11 @@ namespace WUI
                 defaults: new { controller = "Statistique", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+                name: "list_personne",
+                url: "Admin/Personne/Index",
+                defaults: new { controller = "Personne", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "Configuration",
                 url: "Configuration/{PersonneId}/{action}/{id}",
                 defaults: new { controller = "DisplayConfiguration", PersonneId = "1", action = "Index", id = UrlParameter.Optional }

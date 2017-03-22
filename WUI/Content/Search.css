@@ -1,0 +1,8 @@
+﻿.card .card-header {
+     background-color: #455a64;
+     color: #fff;
+}
+.card .card-text:last-child {
+    margin-bottom: 15px;
+
+}
