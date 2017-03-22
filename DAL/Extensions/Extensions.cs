@@ -245,6 +245,7 @@ namespace DAL.Extensions
             result.PersonneID = bo.PersonneId;
             if (bo.HeureArrive != null) result.HeureArrivee = (TimeSpan)bo.HeureArrive;
             if (bo.HeureDepart != null) result.HeureDebut = (TimeSpan)bo.HeureDepart;
+            result.TempsDeCourse = result.HeureArrivee - result.HeureDebut;
 
             return result;
         }

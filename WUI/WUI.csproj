@@ -385,6 +385,7 @@
     <Content Include="Views\Race\ListRace.cshtml" />
     <Content Include="Views\Race\MyRaces.cshtml" />
     <Content Include="Views\Personne\Index.cshtml" />
+    <Content Include="Views\Race\ResultatByUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />

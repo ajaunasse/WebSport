@@ -20,13 +20,9 @@ namespace BO
 
         public int Classement { get; set; }
 
-        private TimeSpan _tempsDeCourse;
+        public TimeSpan TempsDeCourse { get; set; }
 
-        public TimeSpan TempsDeCourse
-        {
-            get { return _tempsDeCourse; }
-            set { _tempsDeCourse = HeureArrivee - HeureDebut; }
-        }
+       
 
     }
 }

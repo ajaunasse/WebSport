@@ -1,0 +1,19 @@
+﻿@model List<WUI.Models.ResultatModel>
+
+@{
+    ViewBag.Title = "ResultatByUser";
+}
+
+<h2>Les Courses Terminées</h2>
+
+
+@foreach (var course in Model)
+{
+    <h3>@course.Race.Title</h3>
+
+    <h4>@course.TempsDeCourse</h4>
+
+}
+
+
+
