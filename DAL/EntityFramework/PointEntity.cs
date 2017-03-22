@@ -14,18 +14,16 @@ namespace DAL.EntityFramework
     
     public partial class PointEntity
     {
-        public PointEntity()
-        {
-            this.POIs = new HashSet<POIEntity>();
-        }
-    
         public int Id { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
         public Nullable<int> CourseId { get; set; }
+        public Nullable<bool> isPoi { get; set; }
+        public string title { get; set; }
+        public Nullable<int> CategorieId { get; set; }
     
-        public virtual ICollection<POIEntity> POIs { get; set; }
         public virtual RaceEntity Course { get; set; }
+        public virtual CategorieEntity Categorie { get; set; }
     }
 }

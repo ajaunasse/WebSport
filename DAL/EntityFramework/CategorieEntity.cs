@@ -16,12 +16,12 @@ namespace DAL.EntityFramework
     {
         public CategorieEntity()
         {
-            this.POIs = new HashSet<POIEntity>();
+            this.Points = new HashSet<PointEntity>();
         }
     
         public int Id { get; set; }
         public string Titre { get; set; }
     
-        public virtual ICollection<POIEntity> POIs { get; set; }
+        public virtual ICollection<PointEntity> Points { get; set; }
     }
 }

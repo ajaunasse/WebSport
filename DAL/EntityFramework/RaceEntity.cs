@@ -17,7 +17,6 @@ namespace DAL.EntityFramework
         public RaceEntity()
         {
             this.Contributors = new HashSet<ContributorEntity>();
-            this.POIs = new HashSet<POIEntity>();
             this.Points = new HashSet<PointEntity>();
             this.Resultats = new HashSet<ResultatEntity>();
         }
@@ -30,7 +29,6 @@ namespace DAL.EntityFramework
         public string Town { get; set; }
     
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
-        public virtual ICollection<POIEntity> POIs { get; set; }
         public virtual ICollection<PointEntity> Points { get; set; }
         public virtual ICollection<ResultatEntity> Resultats { get; set; }
     }

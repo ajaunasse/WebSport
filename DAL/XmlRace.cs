@@ -394,7 +394,7 @@ namespace DAL
                             Phone = "0678154578"
                         }
                     },
-                    Pois = null
+      
                 },
                 new Race
                 {
@@ -438,7 +438,7 @@ namespace DAL
                             Phone = "0678541020"
                         }
                     },
-                    Pois = null
+              
                 },
                 new Race
                 {
@@ -462,7 +462,7 @@ namespace DAL
                             Phone = "0678548596"
                         }
                     },
-                    Pois = null
+               
                 },
             };
 

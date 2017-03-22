@@ -18,8 +18,7 @@ namespace BLL
 
         public static MgtRace GetInstance()
         {
-            if (_instance == null)
-                _instance = new MgtRace();
+            _instance = new MgtRace();
             return _instance;
         }
 

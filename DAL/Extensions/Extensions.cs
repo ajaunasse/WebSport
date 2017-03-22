@@ -33,7 +33,6 @@ namespace DAL.Extensions
                 DateEnd = bo.DateEnd,
                 Town = bo.Town,
                 Points = bo.Points.ToList().ToBos(),
-                Pois = bo.POIs.ToList().ToBos(),
 
                 Organisers = withJoin && bo.Contributors != null ? bo.Contributors.Where(x => x.IsOrganiser).Select(x => x.ToOrganiserBo()).ToList() : null,
                 Competitors = withJoin && bo.Contributors != null ? bo.Contributors.Where(x => x.IsCompetitor).Select(x => x.ToCompetitorBo()).ToList() : null
@@ -91,7 +90,10 @@ namespace DAL.Extensions
                 Id = bo.Id,
                 Longitude = bo.Longitude,
                 Latitude = bo.Latitude,
-                Altitude = bo.Altitude
+                Altitude = bo.Altitude,
+                categorie = bo.Categorie.ToBo(),
+                isPoi = (bool) bo.isPoi,
+                titre = bo.title,
 
             };
         }
@@ -100,65 +102,29 @@ namespace DAL.Extensions
         {
             if (model == null) return null;
 
-            return new PointEntity
+
+
+            PointEntity pts =  new PointEntity
             {
                 Id = model.Id,
                 Longitude = model.Longitude,
                 Latitude = model.Latitude,
                 Altitude = model.Altitude,
+                isPoi = model.isPoi,
+                title = model.titre,
+
             };
+            if(model.categorie != null)
+            {
+                pts.CategorieId = model.categorie.Id;
+            }
+
+            return pts;
         }
 
         #endregion
 
         #region poi
-
-        public static POIEntity ToDataEntity(this Poi model, WebSportEntities context)
-        {
-            if (model == null) return null;
-
-            POIEntity poiEnt = new POIEntity();
-            PointEntity newPoint = new PointEntity();
-
-            newPoint.Latitude = model.Latitude;
-            newPoint.Longitude = model.Longitude;
-
-            poiEnt.Id = model.Id;
-            poiEnt.Point = newPoint;
-            poiEnt.Titre = model.Title;
-            try
-            {
-                poiEnt.Categorie = context.CategorieEntities.Where(x => x.Id == model.idCategory).FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-            return poiEnt;
-        }
-
-        public static Poi ToBo(this POIEntity bo, bool withJoin = false)
-        {
-            if (bo == null) return null;
-
-            return new Poi
-            {
-                Id = bo.Id,
-                Title = bo.Titre,
-                Latitude = bo.Point.Latitude,
-                Longitude = bo.Point.Longitude,
-                idPoint = bo.Point.Id
-            };
-        }
-
-        public static List<Poi> ToBos(this List<POIEntity> bos, bool withJoin = false)
-        {
-            return bos != null
-                ? bos.Where(x => x != null).Select(x => x.ToBo(withJoin)).ToList()
-                : null;
-        }
 
         #endregion
 
@@ -179,6 +145,17 @@ namespace DAL.Extensions
             {
                 Id = bo.Id,
                 Title = bo.Titre
+            };
+        }
+
+        public static CategorieEntity ToDataEntity(this Category model)
+        {
+            if (model == null) return null;
+
+            return new CategorieEntity
+            {
+                Id = model.Id,
+                Titre = model.Title,
             };
         }
         #endregion

@@ -73,6 +73,9 @@ namespace BLL
             bo.Altitude = point.Altitude;
             bo.Latitude = point.Latitude;
             bo.Longitude = point.Longitude;
+            bo.isPoi = point.isPoi;
+            bo.title = point.titre;
+            bo.Categorie = point.categorie.ToDataEntity();
 
             return bo;
         }

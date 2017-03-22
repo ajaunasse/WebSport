@@ -67,36 +67,23 @@ namespace WUI.Controllers
             try
             {
                 RaceModel newRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
+                newRace.Points = new List<PointModel>();
                 var check = Request.Form["checkbox"];
                 if (check == null)
                 {
-                    newRace.Points = new List<PointModel>();
-                    newRace.Points.Add(race.point);
+                    race.point.isPoi = false;
+                    race.point.Category = null;
                 }
                 else
                 {
-                    race.poi.Latitude = race.point.Latitude;
-                    race.poi.Longitude = race.point.Longitude;
-                    newRace.Pois = new List<PoiModel>();
-                    newRace.Pois.Add(race.poi);
+                    race.point.isPoi = true;
                 }
-                
+                newRace.Points.Add(race.point);
                 var result = MgtRace.GetInstance().UpdateRace(newRace.ToBo());
                 RaceModel reloadRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
                 if (result)
                 {
-                    if(check != null)
-                    {
-                        return Json(race.poi);
-                    }
-                    else
-                    {
-                        PoiModel poi = new PoiModel();
-                        poi.Latitude = race.point.Latitude;
-                        poi.Longitude = race.point.Longitude;
-                        poi.Title = "";
-                        return Json(poi);
-                    }
+                    return Json(reloadRace);
                         
                 }
                 else

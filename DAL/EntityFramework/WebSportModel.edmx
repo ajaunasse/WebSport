@@ -45,16 +45,6 @@
           <Property Name="DateNaissance" Type="datetime" />
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="POI">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Titre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CategorieId" Type="int" Nullable="false" />
-          <Property Name="PointId" Type="int" Nullable="false" />
-          <Property Name="CourseId" Type="int" />
-        </EntityType>
         <EntityType Name="Point">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +54,9 @@
           <Property Name="Longitude" Type="float" Nullable="false" />
           <Property Name="Altitude" Type="float" Nullable="false" />
           <Property Name="CourseId" Type="int" />
+          <Property Name="isPoi" Type="bit" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" />
+          <Property Name="CategorieId" Type="int" />
         </EntityType>
         <EntityType Name="Resultat">
           <Key>
@@ -115,39 +108,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_POI_Categorie">
-          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
-          <End Role="POI" Type="Self.POI" Multiplicity="*" />
+        <Association Name="FK_Point_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="0..1" />
+          <End Role="Point" Type="Self.Point" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categorie">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="POI">
+            <Dependent Role="Point">
               <PropertyRef Name="CategorieId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_POI_Course">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
-          <End Role="POI" Type="Self.POI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Course">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="POI">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_POI_Point">
-          <End Role="Point" Type="Self.Point" Multiplicity="1" />
-          <End Role="POI" Type="Self.POI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Point">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="POI">
-              <PropertyRef Name="PointId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -216,7 +185,6 @@
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Personne" EntityType="Self.Personne" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="POI" EntityType="Self.POI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Point" EntityType="Self.Point" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resultat" EntityType="Self.Resultat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
@@ -229,17 +197,9 @@
             <End Role="Personne" EntitySet="Personne" />
             <End Role="Participant" EntitySet="Participant" />
           </AssociationSet>
-          <AssociationSet Name="FK_POI_Categorie" Association="Self.FK_POI_Categorie">
+          <AssociationSet Name="FK_Point_Categorie" Association="Self.FK_Point_Categorie">
             <End Role="Categorie" EntitySet="Categorie" />
-            <End Role="POI" EntitySet="POI" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POI_Course" Association="Self.FK_POI_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="POI" EntitySet="POI" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POI_Point" Association="Self.FK_POI_Point">
             <End Role="Point" EntitySet="Point" />
-            <End Role="POI" EntitySet="POI" />
           </AssociationSet>
           <AssociationSet Name="FK_Point_Course" Association="Self.FK_Point_Course">
             <End Role="Course" EntitySet="Course" />
@@ -279,20 +239,7 @@
             <End Role="Contributor" EntitySet="ContributorEntities" />
           </AssociationSet>
           <EntitySet Name="CategorieEntities" EntityType="BddLoginModel.CategorieEntity" />
-          <EntitySet Name="POIEntities" EntityType="BddLoginModel.POIEntity" />
           <EntitySet Name="PointEntities" EntityType="BddLoginModel.PointEntity" />
-          <AssociationSet Name="FK_POI_Categorie" Association="BddLoginModel.FK_POI_Categorie">
-            <End Role="Categorie" EntitySet="CategorieEntities" />
-            <End Role="POI" EntitySet="POIEntities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POI_Point" Association="BddLoginModel.FK_POI_Point">
-            <End Role="Point" EntitySet="PointEntities" />
-            <End Role="POI" EntitySet="POIEntities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POI_Course" Association="BddLoginModel.FK_POI_Course">
-            <End Role="RaceEntity" EntitySet="RaceEntities" />
-            <End Role="POIEntity" EntitySet="POIEntities" />
-          </AssociationSet>
           <AssociationSet Name="FK_Point_Course" Association="BddLoginModel.FK_Point_Course">
             <End Role="RaceEntity" EntitySet="RaceEntities" />
             <End Role="PointEntity" EntitySet="PointEntities" />
@@ -311,6 +258,10 @@
             <End Role="PersonEntity" EntitySet="PersonEntities" />
             <End Role="Resultat" EntitySet="ResultatEntities" />
           </AssociationSet>
+          <AssociationSet Name="FK_Point_Categorie" Association="BddLoginModel.FK_Point_Categorie">
+            <End Role="CategorieEntity" EntitySet="CategorieEntities" />
+            <End Role="PointEntity" EntitySet="PointEntities" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="RaceEntity">
           <Key>
@@ -323,7 +274,6 @@
           <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Town" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Contributors" Relationship="BddLoginModel.FK_Competiteur_Course" FromRole="Race" ToRole="Contributor" />
-          <NavigationProperty Name="POIs" Relationship="BddLoginModel.FK_POI_Course" FromRole="RaceEntity" ToRole="POIEntity" />
           <NavigationProperty Name="Points" Relationship="BddLoginModel.FK_Point_Course" FromRole="RaceEntity" ToRole="PointEntity" />
           <NavigationProperty Name="Resultats" Relationship="BddLoginModel.FK_Resultat_Course" FromRole="RaceEntity" ToRole="Resultat" />
         </EntityType>
@@ -384,20 +334,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Titre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="POIs" Relationship="BddLoginModel.FK_POI_Categorie" FromRole="Categorie" ToRole="POI" />
-        </EntityType>
-        <EntityType Name="POIEntity">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Titre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CategorieId" Type="Int32" Nullable="false" />
-          <Property Name="PointId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Categorie" Relationship="BddLoginModel.FK_POI_Categorie" FromRole="POI" ToRole="Categorie" />
-          <NavigationProperty Name="Point" Relationship="BddLoginModel.FK_POI_Point" FromRole="POI" ToRole="Point" />
-          <Property Name="CourseId" Type="Int32" />
-          <NavigationProperty Name="Course" Relationship="BddLoginModel.FK_POI_Course" FromRole="POIEntity" ToRole="RaceEntity" />
+          <NavigationProperty Name="Points" Relationship="BddLoginModel.FK_Point_Categorie" FromRole="CategorieEntity" ToRole="PointEntity" />
         </EntityType>
         <EntityType Name="PointEntity">
           <Key>
@@ -407,46 +344,13 @@
           <Property Name="Latitude" Type="Double" Nullable="false" />
           <Property Name="Longitude" Type="Double" Nullable="false" />
           <Property Name="Altitude" Type="Double" Nullable="false" />
-          <NavigationProperty Name="POIs" Relationship="BddLoginModel.FK_POI_Point" FromRole="Point" ToRole="POI" />
           <Property Name="CourseId" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="BddLoginModel.FK_Point_Course" FromRole="PointEntity" ToRole="RaceEntity" />
+          <Property Name="isPoi" Type="Boolean" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategorieId" Type="Int32" />
+          <NavigationProperty Name="Categorie" Relationship="BddLoginModel.FK_Point_Categorie" FromRole="PointEntity" ToRole="CategorieEntity" />
         </EntityType>
-        <Association Name="FK_POI_Categorie">
-          <End Type="BddLoginModel.CategorieEntity" Role="Categorie" Multiplicity="1" />
-          <End Type="BddLoginModel.POIEntity" Role="POI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categorie">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="POI">
-              <PropertyRef Name="CategorieId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_POI_Point">
-          <End Type="BddLoginModel.PointEntity" Role="Point" Multiplicity="1" />
-          <End Type="BddLoginModel.POIEntity" Role="POI" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Point">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="POI">
-              <PropertyRef Name="PointId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_POI_Course">
-          <End Type="BddLoginModel.RaceEntity" Role="RaceEntity" Multiplicity="0..1" />
-          <End Type="BddLoginModel.POIEntity" Role="POIEntity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RaceEntity">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="POIEntity">
-              <PropertyRef Name="CourseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Point_Course">
           <End Type="BddLoginModel.RaceEntity" Role="RaceEntity" Multiplicity="0..1" />
           <End Type="BddLoginModel.PointEntity" Role="PointEntity" Multiplicity="*" />
@@ -508,6 +412,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Point_Categorie">
+          <End Type="BddLoginModel.CategorieEntity" Role="CategorieEntity" Multiplicity="0..1" />
+          <End Type="BddLoginModel.PointEntity" Role="PointEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategorieEntity">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PointEntity">
+              <PropertyRef Name="CategorieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -557,20 +473,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="POIEntities">
-            <EntityTypeMapping TypeName="BddLoginModel.POIEntity">
-              <MappingFragment StoreEntitySet="POI">
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="PointId" ColumnName="PointId" />
-                <ScalarProperty Name="CategorieId" ColumnName="CategorieId" />
-                <ScalarProperty Name="Titre" ColumnName="Titre" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PointEntities">
             <EntityTypeMapping TypeName="BddLoginModel.PointEntity">
               <MappingFragment StoreEntitySet="Point">
+                <ScalarProperty Name="CategorieId" ColumnName="CategorieId" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="isPoi" ColumnName="isPoi" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
                 <ScalarProperty Name="Altitude" ColumnName="Altitude" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />

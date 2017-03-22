@@ -32,5 +32,12 @@ namespace BO
         /// <value>The altitude.</value>
         public double Altitude { get; set; }
 
+        public bool isPoi { get; set; }
+
+        public string titre { get; set; }
+
+        public Category categorie { get; set;}
+
+
     }
 }

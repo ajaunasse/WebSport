@@ -111,26 +111,12 @@ namespace WUI.Extensions
             raceModel.DateStart = bo.DateStart;
             raceModel.DateEnd = bo.DateEnd;
             raceModel.Town = bo.Town;
-            //raceModel.Points = bo.Points.ToModels();
-            raceModel.Pois = bo.Pois.ToModels();
-            List<int> idPois = bo.Pois.Select(x => x.idPoint).ToList();
+            raceModel.Points = bo.Points.ToModels();
                         
             raceModel.Organisers = withJoin && bo.Organisers != null ? bo.Organisers.Select(x => x.ToModel()).ToList() : null;
             raceModel.Competitors = withJoin && bo.Competitors != null ? bo.Competitors.Select(x => x.ToModel()).ToList() : null;
             
-            
-            foreach(var point in bo.Points)
-            {
-                if (idPois.Contains(point.Id)) { continue; }
-                    PoiModel poi = new PoiModel();
-                    poi.Latitude = point.Latitude;
-                    poi.Longitude = point.Longitude;
-                    poi.Title = "";
-                    poi.Points = new List<Point>();
-                    poi.Points.Add(point);
-                                          
-                    raceModel.Pois.Add(poi);
-            }
+           
 
             return raceModel;
         }
@@ -148,9 +134,11 @@ namespace WUI.Extensions
             newRace.DateEnd = model.DateEnd;
             newRace.Town = model.Town;
             if(model.Points != null)
+            {
                 newRace.Points = model.Points.Select(x => x.ToBo()).ToList();
-            if(model.Pois != null)
-                newRace.Pois = model.Pois.Select(x => x.ToBo()).ToList();
+            }
+               
+
 
             return newRace;
         }
@@ -175,7 +163,10 @@ namespace WUI.Extensions
                 Id = bo.Id,
                 Latitude = bo.Latitude,
                 Longitude = bo.Longitude,
-                Altitude = bo.Altitude                
+                Altitude = bo.Altitude,
+                titre = bo.titre,
+                isPoi = bo.isPoi,
+                Category = bo.categorie,
             };
         }
 
@@ -183,55 +174,27 @@ namespace WUI.Extensions
         {
             if (model == null) return null;
 
-            return new Point
+            Point pts =  new Point
             {
                 Id = model.Id,
                 Latitude = model.Latitude,
                 Longitude = model.Longitude,
-                Altitude = model.Altitude
+                Altitude = model.Altitude,
+                titre = model.titre,
+                isPoi = model.isPoi,
             };
+
+            if(model.Category != null)
+            {
+                pts.categorie = model.Category;
+            }
+
+            return pts;
         }
 
         #endregion
 
         #region poi
-
-        public static Poi ToBo(this PoiModel model)
-        {
-            if (model == null) return null;
-
-            return new Poi
-            {
-                Id = model.Id,
-                Title = model.Title,
-                Latitude = model.Latitude,
-                Longitude = model.Longitude,
-                Altitude = model.Altitude,
-                idCategory = model.idCategory
-            };
-        }
-
-        public static PoiModel ToModel(this Poi bo, bool withJoin = false)
-        {
-            if (bo == null) return null;
-
-            return new PoiModel
-            {
-                Id = bo.Id,
-                Title = bo.Title,
-                Latitude = bo.Latitude,
-                Longitude = bo.Longitude,
-                Altitude = bo.Altitude
-            };
-        }
-
-        public static List<PoiModel> ToModels(this List<Poi> bos, bool withJoin = false)
-        {
-            return bos != null
-                ? bos.Where(x => x != null).Select(x => x.ToModel(withJoin)).ToList()
-                : null;
-        }
-
         #endregion
 
         #region DisplayConfiguration

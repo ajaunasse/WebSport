@@ -42,13 +42,9 @@ namespace WUI.Models
 
         public PointModel point { get; set; }
 
-        public PoiModel poi { get; set; }
-
         public List<CompetitorModel> Competitors { get; set; }
 
         public List<OrganizerModel> Organisers { get; set; }
-
-        public List<PoiModel> Pois { get; set; }
 
         public List<PointModel> Points { get; set; }
 

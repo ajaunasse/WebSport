@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace WUI.Models
 {
@@ -15,7 +16,6 @@ namespace WUI.Models
     {
         public int Id { get; set; }
 
-        public List<Point> Points { get; set; }
         /// <summary>
         /// Gets or sets the latitude.
         /// </summary>
@@ -34,7 +34,16 @@ namespace WUI.Models
         /// <value>The altitude.</value>
         public double Altitude { get; set; }
 
-        public List<Poi> pois { get; set; }
+        public Boolean isPoi { get; set; }
+
+        public string titre { get; set; }
+        public Category Category{ get; set; }
+
+        public IEnumerable<CategoryModel> Categories { get; set; }
+
+        public List<SelectListItem> SelectlistCategory { get; set; }
+
+
 
     }
 }

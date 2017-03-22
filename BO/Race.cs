@@ -28,7 +28,6 @@ namespace BO
 
         public virtual List<Organizer> Organisers { get; set; }
 
-        public virtual List<Poi> Pois { get; set; }
 
         public virtual List<Point> Points { get; set; }
 

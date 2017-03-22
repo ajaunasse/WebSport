@@ -99,9 +99,6 @@
     <Compile Include="EntityFramework\PersonEntity.cs">
       <DependentUpon>WebSportModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\POIEntity.cs">
-      <DependentUpon>WebSportModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="EntityFramework\PointEntity.cs">
       <DependentUpon>WebSportModel.tt</DependentUpon>
     </Compile>

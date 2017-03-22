@@ -28,7 +28,9 @@
 ul:not(.browser-default) li {
     list-style-type: none;
 }
-
+.modal-dialog.modal-lg {
+    max-width: 90%;
+}
 
 .navbar-right li {
     float: none;

@@ -204,7 +204,6 @@
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\OrganizerModel.cs" />
     <Compile Include="Models\PersonneModel.cs" />
-    <Compile Include="Models\PoiModel.cs" />
     <Compile Include="Models\PointModel.cs" />
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\RaceModel.cs" />

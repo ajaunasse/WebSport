@@ -230,33 +230,52 @@
                                         <th>Longitude</th>
                                         <th>Latitude</th>
                                         <th>Point d'intêret</th>
+                                        <th>Titre</th>
+                                        <th>Categorie</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    @{
-                                        List<int> listPOIs = new List<int>();
-                                    }
-                                    @foreach(var item in Model.Pois)
+                                    @foreach(var item in Model.Points)
                                     {
                                         if (item != null)
                                         {
                                             <tr>
                                                 <td>@item.Latitude</td>
                                                 <td>@item.Longitude</td>
-                                                <td>@item.Title</td>
-                                                @{
-                                                    int myId = 0;
-                                                    if (item.Points != null)
+                                                <td>
+                                                    @if (item.isPoi)
                                                     {
-                                                        myId = item.Points.Select(x => x.Id).SingleOrDefault();
+                                                        <span class="badge badge-success">OUI</span>
                                                     }
                                                     else
                                                     {
-                                                        myId = item.idPoint;
+                                                        <span class="badge badge-success">NON</span>
                                                     }
-                                                }
-                                                <td><a href="@Url.Action("DeletePoint", new { idPoint = myId, idRace = Model.Id })" class="btn btn-danger delete">Supprimer</a></td>
+                                                </td>
+                                                <td>
+                                                    @if (item.titre == null)
+                                                    {
+                                                        <span class="badge badge-default">NULL</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.titre
+                                                    }
+                                                
+                                                </td>
+                                                <td>
+                                                    @if (item.Category == null)
+                                                    {
+                                                        <span class="badge badge-default">NULL</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Category.Title
+                                                    }
+
+                                                </td>
+                                                <td><a href="@Url.Action("DeletePoint", new { idPoint = item.Id, idRace = Model.Id })" class="btn btn-danger delete">Supprimer</a></td>
                                             </tr>
                                         }
                                         //listPOIs.Add(poi.Points.Select(x => x.Id).First());
@@ -291,12 +310,12 @@
                                 <div class="row">
                                     <div class="col-5">
                                         <label for="poi_Title">Titre</label>
-                                        @Html.TextBoxFor(m => m.poi.Title, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.poi.Title)
+                                        @Html.TextBoxFor(m => m.point.titre, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.point.titre)
                                     </div>
                                     <div class="col-5">
                                         <label for="poi_Title">Catégorie</label>
-                                        @Html.DropDownListFor(m => m.poi.idCategory, cats, new { @class = "form-control" })
+                                        @Html.DropDownListFor(m => m.point.Category.Id, cats, new { @class = "form-control" })
 
                                     </div>
                                 </div>
@@ -326,8 +345,7 @@
             if(typeof newPoints !== 'undefined'){
                 var points = newPoints
             } else {
-                var points = @(new HtmlString(Json.Encode(Model.Pois)));
-                console.log(points);
+                var points = @(new HtmlString(Json.Encode(Model.Points)));
             }
             var myLatLng = { lat: 47.2262079, lng: -1.6202498 };
 
@@ -336,7 +354,6 @@
                 zoom: 12,
                 center: myLatLng
             });
-            console.log(points);
             for(var i = 0 ; i < points.length ; i ++){
                     addMarker(points[i].Latitude,points[i].Longitude)
             }
@@ -346,7 +363,6 @@
                     position: e.latLng,
                     map: map
                 });
-                console.log(e);
                 var latitude = e.latLng.lat().toString();
                 var longitude = e.latLng.lng().toString();
                 $("#latitude").val(latitude.replace(".",","));
@@ -369,13 +385,11 @@
             });
 
             $('#listePoints').on('shown.bs.modal', function (e) {
-                console.log("listPoints show")
                 google.maps.event.trigger(map, "resize");
             });
 
 
                  $("#formID").submit(function (e) {
-                     console.log("toto");
                      e.preventDefault();
                      var dataToSend = $('#formID').serialize();
                      var MyUrl = {
@@ -386,25 +400,39 @@
                      url: MyUrl.MyUseFulUrl,
                      data: dataToSend,
                      success: function (data) {
-                         console.log(data);
+                         var point = data.Points[data.Points.length - 1]
+                         console.log(point);
                          var url = '@Url.Action("DeletePoint", new { idPoint = "__param1__", idRace = "__param2__" })';
-                         var url1 = url.replace("__param1__", encodeURIComponent(data.idPoint));
+                         var url1 = url.replace("__param1__", encodeURIComponent(point.Id));
                          var url2 = url1.replace("__param2__", encodeURIComponent(data.Id));
                          var html = '<tr>';
-                         html += '<td>' + data.Latitude + '</td>';
-                         html += '<td>' + data.Longitude + '</td>';
-                         html += '<td>' + data.Title + '</td>';
+                         html += '<td>' + point.Latitude + '</td>';
+                         html += '<td>' + point.Longitude + '</td>';
+                         if(point.isPoi) {
+                             html +='<td><span class="badge badge-success">OUI</span></td>'
+                         } else {
+                             html +='<td><span class="badge badge-danger">NON</span></td>'
+                         }
+                         if(point.titre !== null) {
+                             html += '<td>' + point.titre + '</td>'
+                         } else {
+                             html +='<td><span class="badge badge-default">NULL</span></td>'
+                         }
+                         if(point.Category !== null) {
+                             html += '<td>' + point.Category.Title + '</td>'
+                         } else {
+                             html +='<td><span class="badge badge-default">NULL</span></td>'
+                         }
                          html += "<td><a href='" + url2 + "' class='btn btn-danger delete'>Supprimer</a></td>"
                          html += '</tr>';
                          $('#tbody').append(html);
-                         addMarker(data.Latitude, data.Longitude)
+                         addMarker(point.Latitude, point.Longitude)
                      }
 
                  })
              });
 
              $("#formID").on("click", ".delete", function (e) {
-                 console.log("toto");
                  e.preventDefault();
                  var url = $(this).attr('href');
                  var $self = $(this);
