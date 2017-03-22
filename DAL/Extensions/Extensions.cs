@@ -189,5 +189,33 @@ namespace DAL.Extensions
             return result;
         }
 
+
+        #region Personne
+        public static List<Personne> ToBos(this List<PersonEntity> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToBo(withJoin)).ToList()
+                : null;
+        }
+
+
+        public static Personne ToBo(this PersonEntity bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new Personne
+            {
+                Id = bo.Id,
+                Prenom = bo.Firstname,
+                Nom = bo.Lastname,
+                DateNaissance = bo.BirthDate,
+                Email = bo.Mail,
+                Phone = bo.Phone,
+            };
+        }
+
+
+        #endregion
     }
+
 }
