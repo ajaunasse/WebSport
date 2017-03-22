@@ -344,23 +344,53 @@
     <script>
         var markers = [] ;
         var map ;
+        var pointDepart = null;
+        var pointArrivee = null;
+        var waypts = [];
+        var directionsService;
+        var directionsDisplay;
 
-        function initMap(newPoints) {
+        function initMap() {
+            var myLatLng =  {lat:47.217469436263684, lng:-1.5532457828521729};
+            directionsService = new google.maps.DirectionsService;
+            directionsDisplay = new google.maps.DirectionsRenderer;
          
             if(typeof newPoints !== 'undefined'){
                 var points = newPoints
             } else {
                 var points = @(new HtmlString(Json.Encode(Model.Points)));
             }
-            var myLatLng = { lat: 47.2262079, lng: -1.6202498 };
 
             // Create a map object and specify the DOM element for display.
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
                 center: myLatLng
             });
+            
             for(var i = 0 ; i < points.length ; i ++){
-                    addMarker(points[i].Latitude,points[i].Longitude)
+                if(points[i].isPoi){
+                    if(points[i].Category.Id === 1) {
+                        pointDepart = new google.maps.LatLng(points[i].Latitude, points[i].Longitude );
+                    }else if(points[i].Category.Id === 2){
+                        pointArrivee = new google.maps.LatLng(points[i].Latitude, points[i].Longitude );
+                    }else{
+                        addMarker(points[i].Latitude,points[i].Longitude);
+                        var position = new google.maps.LatLng(points[i].Latitude,points[i].Longitude);
+                        waypts.push({
+                            location: position
+                        });
+                    }
+                }else{
+                    var position = new google.maps.LatLng(points[i].Latitude, points[i].Longitude);
+                    waypts.push({
+                        location: position
+                    });
+                }
+            }
+            if((pointDepart != null) && (pointArrivee != null))
+            {
+                directionsDisplay.setMap(map);
+                calculateAndDisplayRoute(directionsService, directionsDisplay);
             }
 
             google.maps.event.addListener(map, "click", function (e) {
@@ -372,6 +402,23 @@
                 var longitude = e.latLng.lng().toString();
                 $("#latitude").val(latitude.replace(".",","));
                 $("#longitude").val(longitude.replace(".",","));
+            });
+        }
+
+        function calculateAndDisplayRoute(directionService, directionDisplay){
+            directionService.route({
+                origin: pointDepart,
+                destination: pointArrivee,
+                waypoints: waypts,
+                optimizeWaypoints: true,
+                travelMode: google.maps.TravelMode.WALKING
+            }, function(response, status){
+                if(status === google.maps.DirectionsStatus.OK ){
+                    directionDisplay.setOptions({ preserveViewport: true });
+                    directionDisplay.setDirections(response);
+                }else{
+                    console.log("La requête de la direction à échoué : " + status);
+                }
             });
         }
 
@@ -431,7 +478,13 @@
                          html += "<td><a href='" + url2 + "' class='btn btn-danger delete'>Supprimer</a></td>"
                          html += '</tr>';
                          $('#tbody').append(html);
-                         addMarker(point.Latitude, point.Longitude)
+                         addMarker(point.Latitude, point.Longitude);
+                         var position = new google.maps.LatLng(point.Latitude, point.longitude);
+                         waypts.push({
+                             location: position
+                         });
+                         initMap();
+                         console.log(waypts);
                      }
 
                  })
