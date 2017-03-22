@@ -203,7 +203,12 @@ namespace WUI.Extensions
 
         #endregion
 
-
+        public static List<PersonneModel> ToModels(this List<Personne> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToModel()).ToList()
+                : null;
+        }
         public static PersonneModel ToModel(this Personne bo)
         {
             if (bo == null) return null;

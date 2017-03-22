@@ -143,6 +143,16 @@ namespace WUI.Controllers
         public ActionResult Edit(int id = 0)
         {
             var result = new MgtRace().GetRace(id).ToModel(true);
+            result.poi.SelectlistCategory = new SelectListItem[] { };
+            //foreach (CategoryModel cat in Category)
+            //{
+            //    SelectListItem slc = new SelectListItem();
+
+            //    slc.Text = cat.Title;
+            //    slc.Value = cat.Id.ToString();
+
+            //}
+
             if (result == null)
             {
                 return HttpNotFound();

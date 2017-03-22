@@ -252,22 +252,34 @@
                                 <div class="row new_form">
                                     <div class="col-3">
                                         @Html.LabelFor(m => m.point.Latitude)
-                                        @Html.TextBoxFor(m => m.point.Latitude, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.point.Latitude, new { @class = "form-control", id = "latitude" })
                                         @Html.ValidationMessageFor(m => m.point.Latitude)
                                     </div>
                                     <div class="col-3">
                                         @Html.LabelFor(m => m.point.Longitude)
-                                        @Html.TextBoxFor(m => m.point.Longitude, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.point.Longitude, new { @class = "form-control", id = "longitude" })
                                         @Html.ValidationMessageFor(m => m.point.Longitude)
                                     </div>
                                     <div class="col-3">
-                                        @Html.LabelFor(m => m.point.Altitude)
-                                        @Html.TextBoxFor(m => m.point.Altitude, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.point.Altitude)
+                                        <label for="POIs">Point d'intêret ?</label>
+                                        <input type="checkbox" id="POIs" class="form-control" />
                                     </div>
                                     @Html.TextBoxFor(m => m.Id, new { type = "hidden", })
                                     <div class="col-3">
                                         <button type="submit" class="btn btn-default add" name="add" style="margin-top:17%;" value="Ajouter">Ajouter le point</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group poi_info" style="display: none;">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <label for="poi_Title">Titre</label>
+                                        @Html.TextBoxFor(m => m.poi.Title, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.poi.Title)
+                                    </div>
+                                    <div class="col-5">
+                                        <label for="poi_Title">Catégorie</label>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -288,32 +300,62 @@
 
 
     <script>
-       
-        function initMap() {
-        
-        console.log("init")
+        var markers = [] ;
+        var map ;
+
+        function initMap(newPoints) {
+         
+            if(typeof newPoints !== 'undefined'){
+                var points = newPoints
+            } else {
+                var points = @(new HtmlString(Json.Encode(Model.Points)));
+            }
+            console.log("init")
             var myLatLng = { lat: 47.2262079, lng: -1.6202498 };
+
+            console.log(markers);
             // Create a map object and specify the DOM element for display.
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
                 center: myLatLng
             });
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Campus Nantes'
+
+            for(var i = 0 ; i < points.length ; i ++){
+                    addMarker(points[i].Latitude,points[i].Longitude)
+            }
+
+            google.maps.event.addListener(map, "click", function (e) {
+                var marker_man = new google.maps.Marker({
+                    position: e.latLng,
+                    map: map
+                });
+                console.log(e);
+                var latitude = e.latLng.lat().toString();
+                var longitude = e.latLng.lng().toString();
+                $("#latitude").val(latitude.replace(".",","));
+                $("#longitude").val(longitude.replace(".",","));
             });
         }
 
+        function addMarker(lat, long) {
+            var marker = new google.maps.Marker({
+                position: {lat: lat, lng: long},
+                map: map
+            });
+            markers.push(marker)
+        }
 
         $(function () {
 
+            $("#POIs").on("click", function(){
+                $(".poi_info").toggle();
+            });
 
             $('#listePoints').on('shown.bs.modal', function (e) {
                 console.log("listPoints show")
                 google.maps.event.trigger(map, "resize");
             });
-           
+
 
                  $("#formID").submit(function (e) {
                      console.log("toto");
@@ -335,12 +377,13 @@
 
                          var html = '<tr>';
                          html += '<td>' + point.Id + '</td>';
-                         html += '<td>' + point.Longitude + '</td>';
                          html += '<td>' + point.Latitude + '</td>';
+                         html += '<td>' + point.Longitude + '</td>';
                          html += '<td>' + point.Altitude + '</td>';
                          html += "<td><a href='" + url2 + "' class='btn btn-danger delete'>Supprimer</a></td>"
                          html += '</tr>';
                          $('#tbody').append(html);
+                         addMarker(point.Latitude, point.Longitude)
                      }
 
                  })
@@ -356,11 +399,12 @@
                      url: url,
                      success: function () {
                          $self.parent().parent().remove();
+                         initMap();
                      }
                  })
              });
 
-             
+
          });
 
      </script>
