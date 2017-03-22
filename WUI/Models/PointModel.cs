@@ -34,5 +34,7 @@ namespace WUI.Models
         /// <value>The altitude.</value>
         public double Altitude { get; set; }
 
+        public List<Poi> pois { get; set; }
+
     }
 }

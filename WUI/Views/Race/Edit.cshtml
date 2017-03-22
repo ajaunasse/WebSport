@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
+    List<SelectListItem> cats = ViewBag.Categories;
     Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
 
@@ -226,24 +227,54 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>Longitude</th>
                                         <th>Latitude</th>
-                                        <th>Altitude</th>
+                                        <th>Point d'intêret</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    @foreach (var item in Model.Points)
+                                    @{
+                                        List<int> listPOIs = new List<int>();
+                                    }
+                                    @foreach(var item in Model.Pois)
                                     {
+                                        if (item != null)
+                                        {
+                                            <tr>
+                                                <td>@item.Latitude</td>
+                                                <td>@item.Longitude</td>
+                                                <td>@item.Title</td>
+                                                @{
+                                                    int myId = 0;
+                                                    if (item.Points != null)
+                                                    {
+                                                        myId = item.Points.Select(x => x.Id).SingleOrDefault();
+                                                    }
+                                                    else
+                                                    {
+                                                        myId = item.idPoint;
+                                                    }
+                                                }
+                                                <td><a href="@Url.Action("DeletePoint", new { idPoint = myId, idRace = Model.Id })" class="btn btn-danger delete">Supprimer</a></td>
+                                            </tr>
+                                        }
+                                        //listPOIs.Add(poi.Points.Select(x => x.Id).First());
+                                    }
+
+                                    @*@foreach (var item in Model.Points)
+                                    {
+                                        if (!listPOIs.Contains(item.Id))
+                                        {
                                         <tr>
-                                            <td>@item.Id</td>
                                             <td>@item.Latitude</td>
                                             <td>@item.Longitude</td>
-                                            <td>@item.Altitude</td>
+                                            <td></td>
                                             <td><a href="@Url.Action("DeletePoint", new { id = @item.Id, idRace = @Model.Id })" class="btn btn-danger delete">Supprimer</a></td>
-                                        </tr>
-                                    }
+
+                                         </tr>
+                                        }
+                                    }*@
                                 </tbody>
 
                             </table>
@@ -262,7 +293,7 @@
                                     </div>
                                     <div class="col-3">
                                         <label for="POIs">Point d'intêret ?</label>
-                                        <input type="checkbox" id="POIs" class="form-control" />
+                                        <input type="checkbox" name="checkbox" id="POIs" class="form-control" />
                                     </div>
                                     @Html.TextBoxFor(m => m.Id, new { type = "hidden", })
                                     <div class="col-3">
@@ -279,7 +310,7 @@
                                     </div>
                                     <div class="col-5">
                                         <label for="poi_Title">Catégorie</label>
-                                        @Html.DropDownListFor(m => m.poi.Category, Model.poi.SelectlistCategory)
+                                        @Html.DropDownListFor(m => m.poi.idCategory, cats, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>

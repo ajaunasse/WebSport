@@ -100,6 +100,9 @@
     <Compile Include="EntityFramework\RaceEntity.cs">
       <DependentUpon>WebSportModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\ResultatEntity.cs">
+      <DependentUpon>WebSportModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\webpages_Roles.cs">
       <DependentUpon>WebSportModel.tt</DependentUpon>
     </Compile>

@@ -25,6 +25,10 @@ namespace BO
             set { _category = value; }
         }
 
+        public int idCategory { get; set; }
+
+        public int idPoint { get; set; }
+
         public Poi()
         {
         }

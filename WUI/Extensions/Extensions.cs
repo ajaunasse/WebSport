@@ -72,35 +72,53 @@ namespace WUI.Extensions
         {
             if (bo == null) return null;
 
-            return new RaceModel
+            RaceModel raceModel = new RaceModel();
+            
+            raceModel.Id = bo.Id;
+            raceModel.Title = bo.Title;
+            raceModel.Description = bo.Description;
+            raceModel.DateStart = bo.DateStart;
+            raceModel.DateEnd = bo.DateEnd;
+            raceModel.Town = bo.Town;
+            //raceModel.Points = bo.Points.ToModels();
+            raceModel.Pois = bo.Pois.ToModels();
+            
+            raceModel.Organisers = withJoin && bo.Organisers != null ? bo.Organisers.Select(x => x.ToModel()).ToList() : null;
+            raceModel.Competitors = withJoin && bo.Competitors != null ? bo.Competitors.Select(x => x.ToModel()).ToList() : null;
+            
+            
+            foreach(var point in bo.Points)
             {
-                Id = bo.Id,
-                Title = bo.Title,
-                Description = bo.Description,
-                DateStart = bo.DateStart,
-                DateEnd = bo.DateEnd,
-                Town = bo.Town,
-                Points = bo.Points.ToModels(),
+                PoiModel poi = new PoiModel();
+                poi.Latitude = point.Latitude;
+                poi.Longitude = point.Longitude;
+                poi.Title = "";
+                poi.Points = new List<Point>();
+                poi.Points.Add(point);
+                                          
+                raceModel.Pois.Add(poi);
+            }
 
-                Organisers = withJoin && bo.Organisers != null ? bo.Organisers.Select(x => x.ToModel()).ToList() : null,
-                Competitors = withJoin && bo.Competitors != null ? bo.Competitors.Select(x => x.ToModel()).ToList() : null
-            };
+            return raceModel;
         }
 
         public static Race ToBo(this RaceModel model)
         {
             if (model == null) return null;
 
-            return new Race
-            {
-                Id = model.Id,
-                Title = model.Title,
-                Description = model.Description,
-                DateStart = model.DateStart,
-                DateEnd = model.DateEnd,
-                Town = model.Town,
-                Points = model.Points.Select(x => x.ToBo()).ToList()
-            };
+            Race newRace = new Race();
+            
+            newRace.Id = model.Id;
+            newRace.Title = model.Title;
+            newRace.Description = model.Description;
+            newRace.DateStart = model.DateStart;
+            newRace.DateEnd = model.DateEnd;
+            newRace.Town = model.Town;
+            newRace.Points = model.Points.Select(x => x.ToBo()).ToList();
+            if(model.Pois != null)
+                newRace.Pois = model.Pois.Select(x => x.ToBo()).ToList();
+
+            return newRace;
         }
 
         #endregion
@@ -123,9 +141,7 @@ namespace WUI.Extensions
                 Id = bo.Id,
                 Latitude = bo.Latitude,
                 Longitude = bo.Longitude,
-                Altitude = bo.Altitude
-
-                //Pois = bo.Pois.Select(x => x.ToModel()).ToList(),
+                Altitude = bo.Altitude                
             };
         }
 
@@ -140,6 +156,46 @@ namespace WUI.Extensions
                 Longitude = model.Longitude,
                 Altitude = model.Altitude
             };
+        }
+
+        #endregion
+
+        #region poi
+
+        public static Poi ToBo(this PoiModel model)
+        {
+            if (model == null) return null;
+
+            return new Poi
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude,
+                Altitude = model.Altitude,
+                idCategory = model.idCategory
+            };
+        }
+
+        public static PoiModel ToModel(this Poi bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new PoiModel
+            {
+                Id = bo.Id,
+                Title = bo.Title,
+                Latitude = bo.Latitude,
+                Longitude = bo.Longitude,
+                Altitude = bo.Altitude
+            };
+        }
+
+        public static List<PoiModel> ToModels(this List<Poi> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToModel(withJoin)).ToList()
+                : null;
         }
 
         #endregion
@@ -224,30 +280,7 @@ namespace WUI.Extensions
                 DisplayConfigurations = bo.DisplayConfigurations.Select(x => x.ToModel()).ToList()
             };
         }
-
-        //public static PoiModel ToModel(this Poi bo)
-        //{
-        //    if (bo == null) return null;
-
-        //    return new PoiModel
-        //    {
-        //        Id = bo.Id,
-        //        GpsCoordinates = new CoordGpsModel
-        //        {
-        //            Accuracy = bo.Accuracy,
-        //            Altitude = bo.Altitude,
-        //            AltitudeAccuracy = bo.AltitudeAccuracy,
-        //            Latitude = bo.Latitude,
-        //            Longitude = bo.Longitude
-        //        },
-        //        Category = bo.Category.ToModel(),
-        //        Heading = bo.Heading,
-        //        Speed = bo.Speed,
-        //        Timestamp = bo.Timestamp,
-        //        Title = bo.Title
-        //    };
-        //}
-
+        
         public static UnitDistanceModel ToModel(this UnitDistance bo)
         {
             UnitDistanceModel result;

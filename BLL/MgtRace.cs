@@ -27,7 +27,7 @@ namespace BLL
 
         public MgtRace()
         {
-            _uow = new UnitOfWork();
+            _uow = new UnitOfWork();                        
         }
 
         public bool AddRace(Race race)
@@ -64,6 +64,11 @@ namespace BLL
         public List<Race> GetAllItems()
         {
             return this._uow.RaceRepo.GetAllItems();
+        }
+
+        public List<Category> getAllCategory()
+        {
+            return this._uow.RaceRepo.getAllCategory();
         }
 
 

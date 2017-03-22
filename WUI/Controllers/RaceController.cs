@@ -67,8 +67,19 @@ namespace WUI.Controllers
             try
             {
                 RaceModel newRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
-                newRace.Points = new List<PointModel>();
-                newRace.Points.Add(race.point);
+                var check = Request.Form["checkbox"];
+                if (check == null)
+                {
+                    newRace.Points = new List<PointModel>();
+                    newRace.Points.Add(race.point);
+                }
+                else
+                {
+                    race.poi.Latitude = race.point.Latitude;
+                    race.poi.Longitude = race.point.Longitude;
+                    newRace.Pois = new List<PoiModel>();
+                    newRace.Pois.Add(race.poi);
+                }
                 
                 var result = MgtRace.GetInstance().UpdateRace(newRace.ToBo());
                 RaceModel reloadRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
@@ -91,11 +102,11 @@ namespace WUI.Controllers
         // POST: /Race/DeletePoint
         [HttpGet]
         [RoleFilter(idRole = 1)]
-        public ActionResult DeletePoint(int id)
+        public ActionResult DeletePoint(int idPoint)
         {
             try
             {
-                if (MgtPoint.GetInstance().DeletePoint(id))
+                if (MgtPoint.GetInstance().DeletePoint(idPoint))
                 {
                     return Json("ok", JsonRequestBehavior.AllowGet);
                 }
@@ -143,15 +154,21 @@ namespace WUI.Controllers
         public ActionResult Edit(int id = 0)
         {
             var result = new MgtRace().GetRace(id).ToModel(true);
-            //result.poi.SelectlistCategory = new SelectListItem[] { };
-            //foreach (CategoryModel cat in Category)
-            //{
-            //    SelectListItem slc = new SelectListItem();
 
-            //    slc.Text = cat.Title;
-            //    slc.Value = cat.Id.ToString();
+            List<CategoryModel> categories = new MgtRace().getAllCategory().ToModels() ;
+            List<SelectListItem> cats = new List<SelectListItem>();
 
-            //}
+            foreach(CategoryModel cat in categories)
+            {
+                SelectListItem slc = new SelectListItem();
+
+                slc.Text = cat.Title;
+                slc.Value = cat.Id.ToString();
+
+                cats.Add(slc);
+            }
+
+            ViewBag.Categories = cats;            
 
             if (result == null)
             {
@@ -275,6 +292,8 @@ namespace WUI.Controllers
         {
 
             PersonneModel user = (PersonneModel)Session.Contents["User"];
+
+            return null;
             
         }
     }

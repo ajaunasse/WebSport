@@ -60,6 +60,8 @@ namespace Repository
             raceToUpdate.DateEnd = race.DateEnd;
             raceToUpdate.Town = race.Town;
             raceToUpdate.Points.Add(element.Points.Select(x => x.ToDataEntity()).First());
+            if(element.Pois != null)
+                raceToUpdate.POIs.Add(element.Pois.Select(x => x.ToDataEntity(context)).First());
             base.Update(raceToUpdate);
         }
 
@@ -72,6 +74,12 @@ namespace Repository
         public List<Race> GetAllItems()
         {
             return base.GetAll().ToBos();
+        }
+
+        public List<Category> getAllCategory()
+        {
+            List<Category> cats = context.CategorieEntities.ToList().ToBos();
+            return cats;
         }
 
         public Task<List<Race>> GetAllItemsAsync()

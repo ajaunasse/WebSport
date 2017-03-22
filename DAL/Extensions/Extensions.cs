@@ -33,6 +33,7 @@ namespace DAL.Extensions
                 DateEnd = bo.DateEnd,
                 Town = bo.Town,
                 Points = bo.Points.ToList().ToBos(),
+                Pois = bo.POIs.ToList().ToBos(),
 
                 Organisers = withJoin && bo.Contributors != null ? bo.Contributors.Where(x => x.IsOrganiser).Select(x => x.ToOrganiserBo()).ToList() : null,
                 Competitors = withJoin && bo.Contributors != null ? bo.Contributors.Where(x => x.IsCompetitor).Select(x => x.ToCompetitorBo()).ToList() : null
@@ -104,23 +105,82 @@ namespace DAL.Extensions
                 Id = model.Id,
                 Longitude = model.Longitude,
                 Latitude = model.Latitude,
-                Altitude = model.Altitude
+                Altitude = model.Altitude,
             };
         }
 
+        #endregion
 
-        //public static Point ToBo(this GetPointById_Result entity)
-        //{
-        //    if (entity == null) return null;
+        #region poi
 
-        //    return new Point
-        //    {
-        //        Longitude = entity.Longitude,
-        //        Latitude = entity.Latitude,
-        //        Altitude = entity.Altitude
-        //    };
-        //}
+        public static POIEntity ToDataEntity(this Poi model, WebSportEntities context)
+        {
+            if (model == null) return null;
 
+            POIEntity poiEnt = new POIEntity();
+            PointEntity newPoint = new PointEntity();
+
+            newPoint.Latitude = model.Latitude;
+            newPoint.Longitude = model.Longitude;
+
+            poiEnt.Id = model.Id;
+            poiEnt.Point = newPoint;
+            poiEnt.Titre = model.Title;
+            try
+            {
+                poiEnt.Categorie = context.CategorieEntities.Where(x => x.Id == model.idCategory).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return poiEnt;
+        }
+
+        public static Poi ToBo(this POIEntity bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new Poi
+            {
+                Id = bo.Id,
+                Title = bo.Titre,
+                Latitude = bo.Point.Latitude,
+                Longitude = bo.Point.Longitude,
+                idPoint = bo.Point.Id
+            };
+        }
+
+        public static List<Poi> ToBos(this List<POIEntity> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToBo(withJoin)).ToList()
+                : null;
+        }
+
+        #endregion
+
+        #region category
+
+        public static List<Category> ToBos(this List<CategorieEntity> bos, bool withJoin = false)
+        {
+            return bos != null
+                ? bos.Where(x => x != null).Select(x => x.ToBo(withJoin)).ToList()
+                : null;
+        }
+
+        public static Category ToBo(this CategorieEntity bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new Category
+            {
+                Id = bo.Id,
+                Title = bo.Titre
+            };
+        }
         #endregion
 
         #region Competitor

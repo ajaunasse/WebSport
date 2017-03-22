@@ -16,10 +16,12 @@ namespace WUI.Models
     {
         public string Title { get; set; }
 
+        public int idCategory { get; set; }
+
+        public int idPoint { get; set; }
+
         public IEnumerable<CategoryModel> Category { get; set; }
         
-        private IEnumerable<SelectListItem> selectListCategory;
-
-        public IEnumerable<SelectListItem> SelectlistCategory { get; set; }
+        public List<SelectListItem> SelectlistCategory { get; set; }
     }
 }
