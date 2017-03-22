@@ -113,21 +113,23 @@ namespace WUI.Extensions
             raceModel.Town = bo.Town;
             //raceModel.Points = bo.Points.ToModels();
             raceModel.Pois = bo.Pois.ToModels();
-            
+            List<int> idPois = bo.Pois.Select(x => x.idPoint).ToList();
+                        
             raceModel.Organisers = withJoin && bo.Organisers != null ? bo.Organisers.Select(x => x.ToModel()).ToList() : null;
             raceModel.Competitors = withJoin && bo.Competitors != null ? bo.Competitors.Select(x => x.ToModel()).ToList() : null;
             
             
             foreach(var point in bo.Points)
             {
-                PoiModel poi = new PoiModel();
-                poi.Latitude = point.Latitude;
-                poi.Longitude = point.Longitude;
-                poi.Title = "";
-                poi.Points = new List<Point>();
-                poi.Points.Add(point);
+                if (idPois.Contains(point.Id)) { continue; }
+                    PoiModel poi = new PoiModel();
+                    poi.Latitude = point.Latitude;
+                    poi.Longitude = point.Longitude;
+                    poi.Title = "";
+                    poi.Points = new List<Point>();
+                    poi.Points.Add(point);
                                           
-                raceModel.Pois.Add(poi);
+                    raceModel.Pois.Add(poi);
             }
 
             return raceModel;
@@ -145,7 +147,8 @@ namespace WUI.Extensions
             newRace.DateStart = model.DateStart;
             newRace.DateEnd = model.DateEnd;
             newRace.Town = model.Town;
-            newRace.Points = model.Points.Select(x => x.ToBo()).ToList();
+            if(model.Points != null)
+                newRace.Points = model.Points.Select(x => x.ToBo()).ToList();
             if(model.Pois != null)
                 newRace.Pois = model.Pois.Select(x => x.ToBo()).ToList();
 

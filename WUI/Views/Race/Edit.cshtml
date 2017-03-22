@@ -261,20 +261,6 @@
                                         }
                                         //listPOIs.Add(poi.Points.Select(x => x.Id).First());
                                     }
-
-                                    @*@foreach (var item in Model.Points)
-                                    {
-                                        if (!listPOIs.Contains(item.Id))
-                                        {
-                                        <tr>
-                                            <td>@item.Latitude</td>
-                                            <td>@item.Longitude</td>
-                                            <td></td>
-                                            <td><a href="@Url.Action("DeletePoint", new { id = @item.Id, idRace = @Model.Id })" class="btn btn-danger delete">Supprimer</a></td>
-
-                                         </tr>
-                                        }
-                                    }*@
                                 </tbody>
 
                             </table>
@@ -340,18 +326,17 @@
             if(typeof newPoints !== 'undefined'){
                 var points = newPoints
             } else {
-                var points = @(new HtmlString(Json.Encode(Model.Points)));
+                var points = @(new HtmlString(Json.Encode(Model.Pois)));
+                console.log(points);
             }
-            console.log("init")
             var myLatLng = { lat: 47.2262079, lng: -1.6202498 };
 
-            console.log(markers);
             // Create a map object and specify the DOM element for display.
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
                 center: myLatLng
             });
-
+            console.log(points);
             for(var i = 0 ; i < points.length ; i ++){
                     addMarker(points[i].Latitude,points[i].Longitude)
             }
@@ -402,20 +387,17 @@
                      data: dataToSend,
                      success: function (data) {
                          console.log(data);
-                         var point = data.Points[data.Points.length - 1];
-                         var url = '@Url.Action("DeletePoint", new { id = "__param1__", idRace = "__param2__" })';
-                         var url1 = url.replace("__param1__", encodeURIComponent(point.Id));
+                         var url = '@Url.Action("DeletePoint", new { idPoint = "__param1__", idRace = "__param2__" })';
+                         var url1 = url.replace("__param1__", encodeURIComponent(data.idPoint));
                          var url2 = url1.replace("__param2__", encodeURIComponent(data.Id));
-
                          var html = '<tr>';
-                         html += '<td>' + point.Id + '</td>';
-                         html += '<td>' + point.Latitude + '</td>';
-                         html += '<td>' + point.Longitude + '</td>';
-                         html += '<td>' + point.Altitude + '</td>';
+                         html += '<td>' + data.Latitude + '</td>';
+                         html += '<td>' + data.Longitude + '</td>';
+                         html += '<td>' + data.Title + '</td>';
                          html += "<td><a href='" + url2 + "' class='btn btn-danger delete'>Supprimer</a></td>"
                          html += '</tr>';
                          $('#tbody').append(html);
-                         addMarker(point.Latitude, point.Longitude)
+                         addMarker(data.Latitude, data.Longitude)
                      }
 
                  })

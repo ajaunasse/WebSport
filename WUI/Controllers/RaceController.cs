@@ -85,7 +85,19 @@ namespace WUI.Controllers
                 RaceModel reloadRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
                 if (result)
                 {
-                    return Json(reloadRace);
+                    if(check != null)
+                    {
+                        return Json(race.poi);
+                    }
+                    else
+                    {
+                        PoiModel poi = new PoiModel();
+                        poi.Latitude = race.point.Latitude;
+                        poi.Longitude = race.point.Longitude;
+                        poi.Title = "";
+                        return Json(poi);
+                    }
+                        
                 }
                 else
                 {
