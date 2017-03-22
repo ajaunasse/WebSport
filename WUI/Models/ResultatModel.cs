@@ -12,6 +12,10 @@ namespace WUI.Models
 
         public TimeSpan TempsDeCourse { get; set; }
 
+        public TimeSpan HeureDebut { get; set; }
+
+        public TimeSpan HeureArrivee { get; set; }
+
         
         public int Classement { get; set; }
 

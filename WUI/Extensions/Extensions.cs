@@ -43,6 +43,8 @@ namespace WUI.Extensions
                 Race = bo.Race.ToModel(),
                 Classement = bo.PersonneID,
                 TempsDeCourse = bo.TempsDeCourse,
+                HeureArrivee = bo.HeureArrivee,
+                HeureDebut = bo.HeureDebut,
             };
         }
 
@@ -56,6 +58,8 @@ namespace WUI.Extensions
                 Race = model.Race.ToBo(),
                 Classement = model.Classement,
                 TempsDeCourse = model.TempsDeCourse,
+                HeureArrivee = model.HeureArrivee,
+                HeureDebut = model.HeureDebut,
             };
         }
 

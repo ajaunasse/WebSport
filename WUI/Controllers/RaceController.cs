@@ -291,13 +291,13 @@ namespace WUI.Controllers
         {
 
             PersonneModel user = (PersonneModel)Session.Contents["User"];
-            
-            List<Resultat> results = new List<Resultat>();
-            results = MgtResultat.GetInstance().GetResultatsById(user.Id);
 
-            List<ResultatModel> resultatModels = results.Select(x => x.ToModel()).ToList();
+            //List<Resultat> results = new List<Resultat>();
+            //results = MgtResultat.GetInstance().GetResultatsById(user.Id);
 
-            return View(resultatModels);
+            //List<ResultatModel> resultatModels = results.Select(x => x.ToModel()).ToList();resultatModels
+
+            return View();
         }
     }
 }

@@ -7,13 +7,222 @@
 <h2>Les Courses Terminées</h2>
 
 
-@foreach (var course in Model)
+@*@foreach (var course in Model)
 {
     <h3>@course.Race.Title</h3>
 
     <h4>@course.TempsDeCourse</h4>
 
+    <h4>@course.HeureDebut</h4>
+
+    <h4>@course.HeureArrivee</h4>
+
+
+}*@
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#StatRace">
+    Statitistique de vos courses
+</button>
+
+
+<div class="modal fade" id="StatRace" tabindex="-1" role="dialog" aria-labelledby="StatRaceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="StatRaceLabel">STATISTIQUE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <div id="graph" style="padding: auto"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ResultRace">
+    Maraton
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="ResultRace" tabindex="-1" role="dialog" aria-labelledby="ResultRaceLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ResultRaceLabel">Resultat de la course Marathon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <h5>TempsDeCourse</h5>
+
+                <h5>HeureDebut</h5>
+
+                <h5>HeureArrivee</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row adminContent">
+    <div class="col-lg-6">
+
+
+        <div id="container"></div>
+    </div>
+    
+</div>
+@section scripts {
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+        
+        var colors = ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee', '#55BF3B', '#DF5353', '#7798BF', '#aaeeee']
+
+        Highcharts.theme = {
+            colors: colors,
+            chart: {
+                backgroundColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                    stops: [
+                       [0, '#2a2a2b'],
+                       [1, '#3e3e40']
+                    ]
+                },
+                style: {
+                    fontFamily: 'Roboto',
+                },
+                plotBorderColor: '#606063'
+            },
+
+            title: {
+                style: {
+                    color: '#E0E0E3',
+                    textTransform: 'uppercase',
+                    fontSize: '20px'
+                }
+            },
+            subtitle: {
+                style: {
+                    color: '#E0E0E3',
+                    textTransform: 'uppercase'
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                style: {
+                    color: '#F0F0F0'
+                }
+            },
+
+            plotOptions: {
+                colorByPoint: true,
+                series: {
+                    dataLabels: {
+                        color: colors
+                    },
+                    marker: {
+                        lineColor: '#333'
+                    }
+                },
+                boxplot: {
+                    fillColor: '#505053'
+                },
+                candlestick: {
+                    lineColor: 'white'
+                },
+                errorbar: {
+                    color: 'white'
+                }
+            },
+            labels: {
+                style: {
+                    color: '#707073'
+                }
+            },
+
+
+            scrollbar: {
+                barBackgroundColor: '#808083',
+                barBorderColor: '#808083',
+                buttonArrowColor: '#CCC',
+                buttonBackgroundColor: '#606063',
+                buttonBorderColor: '#606063',
+                rifleColor: '#FFF',
+                trackBackgroundColor: '#404043',
+                trackBorderColor: '#404043'
+            },
+        };
+
+        // Apply the theme
+        Highcharts.setOptions(Highcharts.theme);
+
+
+        //Stats 1
+
+        Highcharts.chart('graph', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Statistique de vos marathons'
+            },
+            subtitle: {
+                text: 'Saison 2017'
+            },
+
+            xAxis: {
+                categories: [
+                    'Paris',
+                    'Nantes'
+                ],
+                color: "#fff",
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Temps de course (en minutes)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Total Participants',
+                data: [124, 121]
+
+            }],
+        });
+    </script>
 }
-
-
-
