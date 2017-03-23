@@ -47,7 +47,7 @@
         </div>
     <div class="col-lg-6">
         <div class="card register">
-            @using (Html.BeginForm("Account", "Login"))
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)

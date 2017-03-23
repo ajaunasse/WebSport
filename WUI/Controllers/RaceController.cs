@@ -81,6 +81,7 @@ namespace WUI.Controllers
                 }
                 newRace.Points.Add(race.point);
                 var result = MgtRace.GetInstance().UpdateRace(newRace.ToBo());
+                var result2 = MgtRace.GetInstance().UpdateRace(newRace.ToBo());
                 RaceModel reloadRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
                 if (result)
                 {
@@ -270,10 +271,13 @@ namespace WUI.Controllers
 
 
         [HttpGet]
-        [RoleFilter(idRole = 2)]
         public ActionResult Suscribe(int idRace)
         {
             PersonneModel user = (PersonneModel)Session.Contents["User"];
+            if(user == null)
+            {
+                return RedirectToAction("Index", "Register", new { idRace = idRace });
+            }
             List<Race> races = MgtRace.GetInstance().SuscribeRace(user.ToBo(), idRace);
             return View("MyRaces",races.ToModels());
 
