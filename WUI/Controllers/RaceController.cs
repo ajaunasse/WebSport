@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Antlr.Runtime;
+using PagedList;
 using WUI.Extensions;
 using WUI.Filters;
 using WUI.Models;
@@ -345,10 +346,10 @@ namespace WUI.Controllers
             return View();
         }
 
-        public ActionResult Import()
+        public ActionResult Import(int? page = 1)
         {
 
-            
+            PersonneModel personne = (PersonneModel)Session.Contents["user"];
             List<ResultatModel> modelsResult = new List<ResultatModel>();
 
            
@@ -368,8 +369,8 @@ namespace WUI.Controllers
                     ResultatModel model = new ResultatModel();
                     string[] champs = ligne.Split(';');
                     
-                    model.Race = MgtRace.GetInstance().GetRace(int.Parse(champs[0])).ToModel();
-                    model.Personne = MgtPersonne.GetInstance().GetPersonneByID(int.Parse(champs[1])).ToModel();
+                    model.Race = MgtRace.GetInstance().GetRace(int.Parse(champs[1])).ToModel();
+                    model.Personne = MgtPersonne.GetInstance().GetPersonneByID(int.Parse(champs[0])).ToModel();
                     model.Classement = int.Parse(champs[2]);
                     model.TempsDeCourse = TimeSpan.Parse(champs[3]);
                     model.HeureDebut = TimeSpan.Parse(champs[4]);
@@ -378,6 +379,13 @@ namespace WUI.Controllers
                 }
                
             }
+
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            
+            var valRet = modelsResult.ToPagedList(pageNumber, pageSize);
+            return View(valRet);
+
 
             bool res = MgtResultat.GetInstance().Save(modelsResult.Select(x => x.ToBo()).ToList());
 

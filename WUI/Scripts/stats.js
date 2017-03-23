@@ -202,3 +202,43 @@ Highcharts.chart('container2', {
         }]
     }]
 });
+
+
+
+Highcharts.chart('Course', {
+
+    title: {
+        text: 'Solar Employment Growth by Sector, 2010-2016'
+    },
+
+    subtitle: {
+        text: 'Source: thesolarfoundation.com'
+    },
+
+    xAxis: {
+        tickInterval: 1
+    },
+
+    yAxis: {
+        title: {
+            text: 'Number of Employees'
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+        series: {
+            pointStart: 2010
+        }
+    },
+
+    series: [{
+        name: 'Installation',
+        data: ResultatParticipant
+    }]
+
+});

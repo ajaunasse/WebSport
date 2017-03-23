@@ -64,5 +64,12 @@ namespace BLL
             
             
         }
+
+        public List<Resultat> GetResultatsByIdRace(Race idrace)
+        {
+            _context = new WebSportEntities();
+            List < ResultatEntity > liste = _context.ResultatEntities.Where(x => x.CourseId == idrace.Id).OrderByDescending(x =>x.HeureArrive).ToList();
+            return liste.Select(x => x.ToBo()).ToList();
+        }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using BLL;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BO;
 using WUI.Extensions;
 
 namespace WUI.Controllers
@@ -27,6 +29,12 @@ namespace WUI.Controllers
                 villes.Add(race.Town);
                 nbParticipants.Add(race.Competitors.Count());
             }
+
+            var IDNantes = MgtRace.GetInstance().GetRace(1);
+            List<Resultat> temps = MgtResultat.GetInstance().GetResultatsByIdRace(IDNantes);
+
+            ViewBag.TempsCourseNantes = temps.Select(x => x.TempsDeCourse).ToList();
+            ViewBag.idParticipant = temps.Select(x => x.Personne.Id).ToList();
 
             ViewBag.villes = villes;
             ViewBag.nbParticipants = nbParticipants;
