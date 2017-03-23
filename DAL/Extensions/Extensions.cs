@@ -24,7 +24,7 @@ namespace DAL.Extensions
         {
             if (bo == null) return null;
 
-            return new Race
+            Race race = new Race
             {
                 Id = bo.Id,
                 Title = bo.Title,
@@ -32,12 +32,19 @@ namespace DAL.Extensions
                 DateStart = bo.DateStart,
                 DateEnd = bo.DateEnd,
                 Town = bo.Town,
-                Distance = bo.Distance,
                 Points = bo.Points.ToList().ToBos(),
 
                 Organisers = withJoin && bo.Contributors != null ? bo.Contributors.Where(x => x.IsOrganiser).Select(x => x.ToOrganiserBo()).ToList() : null,
                 Competitors = withJoin && bo.Contributors != null ? bo.Contributors.Where(x => x.IsCompetitor).Select(x => x.ToCompetitorBo()).ToList() : null
             };
+            if(bo.Distance == null)
+            {
+                race.Distance = 0;
+            } else
+            {
+                race.Distance = bo.Distance;
+            }
+            return race;
         }
 
         public static RaceEntity ToDataEntity(this Race model)
@@ -69,7 +76,7 @@ namespace DAL.Extensions
                 DateStart = entity.CDateStart,
                 DateEnd = entity.CDateEnd,
                 Town = entity.CVille,
-                Distance = entity.CDistance
+                Distance = (int)entity.CDistance
             };
         }
 

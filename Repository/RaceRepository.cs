@@ -67,6 +67,13 @@ namespace Repository
             base.Update(raceToUpdate);
         }
 
+        public void updateDistance(Race element)
+        {
+            var raceToUpdate = this.GetByIdPrivate(element.Id);
+            raceToUpdate.Distance = element.Distance;
+            base.Update(raceToUpdate);
+        }
+
         public void Remove(int id)
         {
             var raceToDelete = this.GetByIdPrivate(id);

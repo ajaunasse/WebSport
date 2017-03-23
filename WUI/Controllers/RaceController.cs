@@ -81,7 +81,6 @@ namespace WUI.Controllers
                 }
                 newRace.Points.Add(race.point);
                 var result = MgtRace.GetInstance().UpdateRace(newRace.ToBo());
-                var result2 = MgtRace.GetInstance().UpdateRace(newRace.ToBo());
                 RaceModel reloadRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
                 if (result)
                 {
@@ -105,7 +104,7 @@ namespace WUI.Controllers
         {
             Race newRace = MgtRace.GetInstance().GetRace(idRace);
             newRace.Distance = distance;
-            MgtRace.GetInstance().UpdateRace(newRace);
+            MgtRace.GetInstance().UpdateDistance(newRace);
         }
 
         //

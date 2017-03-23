@@ -353,11 +353,13 @@
         var newPoint = false;
         var distance = 0;
         var idRace= @(new HtmlString(Json.Encode(Model.Id)));
-        console.log(idRace) ;
+        var town = @(new HtmlString(Json.Encode(Model.Town)));
         function initMap(newPoint) {
-            var myLatLng =  {lat:47.217469436263684, lng:-1.5532457828521729};
+
+
             directionsService = new google.maps.DirectionsService;
             directionsDisplay = new google.maps.DirectionsRenderer;
+            var geocoder =  new google.maps.Geocoder();
             distance = 0;
 
             if(typeof newPoints !== 'undefined'){
@@ -369,8 +371,11 @@
             // Create a map object and specify the DOM element for display.
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
-                center: myLatLng
             });
+
+
+            var geocoder =  new google.maps.Geocoder();
+            calculCenter(geocoder,town) ;
 
             if(!newPoint){
                 for(var i = 0 ; i < points.length ; i ++){
@@ -412,6 +417,17 @@
             });
         }
 
+        function calculCenter(geocoder, town) {
+            var $self = this
+            geocoder.geocode( { 'address':town}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var center = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()} ;
+                    $self.map.setCenter(center) ;
+                } else {
+                }
+            });
+        }
+
         function calculateAndDisplayRoute(directionService, directionDisplay){
             var $self = this;
             //console.log(waypts);
@@ -429,26 +445,20 @@
                     for(var j = 0 ; j < route.legs.length ; j ++){
                         distance += route.legs[j].distance.value;
                     }
-            
                     var MyUrl = '@Url.Action("UpdateDistance")';
-                    //var url1 = MyUrl.replace("__param1__", encodeURIComponent(distance));
-                    //var url2 = url1.replace("__param2__", encodeURIComponent( $self.idRace));
                     var dataToSend = {distance: distance, idRace: idRace}
                     $.post(MyUrl, dataToSend, function( data ) {
-                        $( ".result" ).html( data );
+                        
                     });
-                    //$.ajax({
-                    //    type: "GET",
-                    //    url: url2
-                    //})
-
-                    //$("#distance").val(distance);
-
-                    console.log(distance);
                 }else{
                     console.log("La requête de la direction à échoué : " + status);
                 }
             });
+        }
+
+
+        function calculDistance() {
+
         }
 
         function addMarker(lat, long) {
@@ -470,26 +480,27 @@
             });
 
 
-                 $("#formID").submit(function (e) {
-                     e.preventDefault();
-                     var dataToSend = $('#formID').serialize();
-                     var MyUrl = {
-                         MyUseFulUrl: '@Url.Action("AddPoint", "Race")'
-                 };
-                 $.ajax({
-                     type: "POST",
-                     url: MyUrl.MyUseFulUrl,
-                     data: dataToSend,
-                     success: function (data) {
-                         var point = data.Points[data.Points.length - 1]
-                         var url = '@Url.Action("DeletePoint", new { idPoint = "__param1__", idRace = "__param2__" })';
-                         var url1 = url.replace("__param1__", encodeURIComponent(point.Id));
-                         var url2 = url1.replace("__param2__", encodeURIComponent(data.Id));
-                         var html = '<tr>';
-                         html += '<td>' + point.Latitude + '</td>';
-                         html += '<td>' + point.Longitude + '</td>';
-                         if(point.isPoi) {
-                             html +='<td><span class="badge badge-success">OUI</span></td>'
+            $("#formID").on('submit',function (e) {
+                e.preventDefault();
+                var dataToSend = $('#formID').serialize();
+                console.log("dataToSend", dataToSend);
+                var MyUrl = {
+                     MyUseFulUrl: '@Url.Action("AddPoint", "Race")'
+                };
+                $.ajax({
+                    type: "POST",
+                    url: MyUrl.MyUseFulUrl,
+                    data: dataToSend,
+                    success: function (data) {
+                        var point = data.Points[data.Points.length - 1]
+                        var url = '@Url.Action("DeletePoint", new { idPoint = "__param1__", idRace = "__param2__" })';
+                        var url1 = url.replace("__param1__", encodeURIComponent(point.Id));
+                        var url2 = url1.replace("__param2__", encodeURIComponent(data.Id));
+                        var html = '<tr>';
+                        html += '<td>' + point.Latitude + '</td>';
+                        html += '<td>' + point.Longitude + '</td>';
+                        if(point.isPoi) {
+                            html +='<td><span class="badge badge-success">OUI</span></td>'
                          } else {
                              html +='<td><span class="badge badge-danger">NON</span></td>'
                          }
@@ -507,11 +518,10 @@
                          html += '</tr>';
                          $('#tbody').append(html);
 
-                         $(":input","#formID")
-                             .val('')
-                             .removeAttr('checked')
-                             .removeAttr('selected');
-
+                         $('.latitude').val('') ;
+                         $('.longitude').val('') ;
+                         $('.titre').val('') ;
+                         $('.categorie').val('');
                          var position = new google.maps.LatLng(point.Latitude, point.Longitude);
                          waypts.push({
                              location: position

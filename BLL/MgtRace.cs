@@ -106,6 +106,14 @@ namespace BLL
             this._uow.Save();
             return true;
         }
+        public bool UpdateDistance(Race race)
+        {
+            if (race == null || race.Id < 1) return false;
+
+            this._uow.RaceRepo.updateDistance(race);
+            this._uow.Save();
+            return true;
+        }
 
         public bool RemoveRace(int id)
         {
