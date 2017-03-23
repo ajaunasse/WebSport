@@ -60,9 +60,9 @@ namespace BLL
             return false;
         }
 
-        public List<Race> GetAllItems()
+        public List<Race> GetAllItems(bool withJoins = false)
         {
-            return this._uow.RaceRepo.GetAllItems();
+            return this._uow.RaceRepo.GetAllItems(withJoins);
         }
 
         public List<Category> getAllCategory()

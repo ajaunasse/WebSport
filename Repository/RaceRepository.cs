@@ -72,9 +72,9 @@ namespace Repository
             base.Remove(raceToDelete);
         }
 
-        public List<Race> GetAllItems()
+        public List<Race> GetAllItems(bool withJoins = false)
         {
-            return base.GetAll().ToBos();
+            return base.GetAll().ToBos(withJoins);
         }
 
         public List<Category> getAllCategory()

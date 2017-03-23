@@ -111,7 +111,6 @@ namespace BLL
         public List<Personne> GetAllItems() {
             return this._uow.PersonneRepo.GetAllItems();
         }
-
         public Personne UpdatePersonne(Personne personne)
         {
             try

@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BLL;
+using System;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WUI.Extensions;
 
 namespace WUI.Controllers
 {
@@ -13,25 +15,28 @@ namespace WUI.Controllers
 
         public ActionResult Index()
         {
+            //Stats Races
+            var races = MgtRace.GetInstance().GetAllItems(true).ToModels(true);
+            ArrayList villes = new ArrayList();
+            ArrayList nbParticipants = new ArrayList();
+
+            //Stats âges
+            var nbPersonne = MgtPersonne.GetInstance().GetAllItems().Count();
+            var nbPersonne = 
+            foreach (var race in races)
+            {
+                villes.Add(race.Town);
+                nbParticipants.Add(race.Competitors.Count());
+            }
+
+            ViewBag.villes = villes;
+            ViewBag.nbParticipants = nbParticipants;
             return View();
         }
 
-        public void Test()
-        {
 
-
-
-            using (System.IO.StreamWriter file =
-                new System.IO.StreamWriter(@"C:\Users\Public\WriteLines.txt"))
-            {
-                for(var i=3; i<500; i++)
-                {
-                    Random rnd = new Random();
-                    var line = "INSERT INTO [Participant] VALUES(" + i + ", 2, 1,0);";
-                    file.WriteLine(line);
-                }
-            }
-        }
 
     }
+
+  
 }

@@ -47,12 +47,12 @@
         </div>
     <div class="col-lg-6">
         <div class="card register">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Account", "Login"))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
                 <div class="card-header">
-                    <h2 class="titlePage">Ou connectez vous</h2>
+                    <h2 class="titlePage">Ou connectez vous.</h2>
                 </div>
                 <div class="card-block">
                     @Html.LabelFor(m => m.Email)

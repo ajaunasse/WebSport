@@ -16,8 +16,14 @@
     </div>
 </div>
 @section scripts {
+    <script>
+        var villes = @(new HtmlString(Json.Encode(ViewBag.villes)));
+        var nbParticipants = @(new HtmlString(Json.Encode(ViewBag.nbParticipants)));
 
+    </script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     @Scripts.Render("~/Scripts/stats.js")    
+
+
 }
