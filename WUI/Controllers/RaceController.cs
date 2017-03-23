@@ -136,6 +136,27 @@ namespace WUI.Controllers
             }
         }
 
+        [HttpGet]
+        [RoleFilter(idRole = 1)]
+        public ActionResult DeleteRace(int idRace)
+        {
+            try
+            {
+                if (MgtRace.GetInstance().RemoveRace(idRace))
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch(Exception e)
+            {
+                return View();
+            }
+        }
+
         //
         // POST: /Race/Create
         [HttpPost]
