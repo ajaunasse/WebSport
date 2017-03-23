@@ -27,6 +27,7 @@ namespace DAL.EntityFramework
         public System.DateTime DateStart { get; set; }
         public System.DateTime DateEnd { get; set; }
         public string Town { get; set; }
+        public Nullable<int> Distance { get; set; }
     
         public virtual ICollection<ContributorEntity> Contributors { get; set; }
         public virtual ICollection<PointEntity> Points { get; set; }

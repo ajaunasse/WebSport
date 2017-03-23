@@ -54,15 +54,23 @@ namespace Repository
         {
             RaceEntity race = context.RaceEntities.FirstOrDefault(x => x.Id == element.Id);
             var raceToUpdate = this.GetByIdPrivate(element.Id);
-            raceToUpdate.Title = race.Title;
-            raceToUpdate.Description = race.Description;
-            raceToUpdate.DateStart = race.DateStart;
-            raceToUpdate.DateEnd = race.DateEnd;
-            raceToUpdate.Town = race.Town;
+            raceToUpdate.Title = element.Title;
+            raceToUpdate.Description = element.Description;
+            raceToUpdate.DateStart = element.DateStart;
+            raceToUpdate.DateEnd = element.DateEnd;
+            raceToUpdate.Distance = element.Distance;
+            raceToUpdate.Town = element.Town;
             if (element.Points != null)
             {
                 raceToUpdate.Points.Add(element.Points.Select(x => x.ToDataEntity()).First());
             }
+            base.Update(raceToUpdate);
+        }
+
+        public void updateDistance(Race element)
+        {
+            var raceToUpdate = this.GetByIdPrivate(element.Id);
+            raceToUpdate.Distance = element.Distance;
             base.Update(raceToUpdate);
         }
 
@@ -72,9 +80,9 @@ namespace Repository
             base.Remove(raceToDelete);
         }
 
-        public List<Race> GetAllItems()
+        public List<Race> GetAllItems(bool withJoins = false)
         {
-            return base.GetAll().ToBos();
+            return base.GetAll().ToBos(withJoins);
         }
 
         public List<Category> getAllCategory()

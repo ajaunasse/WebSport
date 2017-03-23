@@ -19,5 +19,6 @@ namespace DAL.EntityFramework
         public System.DateTime CDateStart { get; set; }
         public System.DateTime CDateEnd { get; set; }
         public string CVille { get; set; }
+        public int? CDistance { get; set; }
     }
 }

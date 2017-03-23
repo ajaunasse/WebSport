@@ -60,9 +60,9 @@ namespace BLL
             return false;
         }
 
-        public List<Race> GetAllItems()
+        public List<Race> GetAllItems(bool withJoins = false)
         {
-            return this._uow.RaceRepo.GetAllItems();
+            return this._uow.RaceRepo.GetAllItems(withJoins);
         }
 
         public List<Category> getAllCategory()
@@ -76,9 +76,24 @@ namespace BLL
             return this._uow.RaceRepo.GetById(id);
         }
 
-        public List<Race> GetRaceByTownAndDate(string ville, DateTime dateDebut, DateTime dateFin)
+        public List<Race> getRacesBySearch(string ville, DateTime? dateDebut, DateTime? dateFin)
         {
-            return this._uow.RaceRepo.Where(r => r.Town == ville).Where(r => r.DateStart >= dateDebut).ToList().ToBos();
+            List<Race> valRet;
+            var repo = this._uow.RaceRepo.GetAll();
+            if(ville != null)
+            {
+                repo = repo.Where(r => r.Town == ville).ToList();
+            }
+            if(dateDebut != null)
+            {
+                repo = repo.Where(r => r.DateStart >= dateDebut).ToList();
+            }
+            if(dateFin != null)
+            {
+                repo = repo.Where(r => r.DateStart <= dateFin).ToList();
+            }
+            valRet = repo.ToBos();
+            return valRet;
         }
 
 
@@ -88,6 +103,14 @@ namespace BLL
             if (race == null || race.Id < 1) return false;
 
             this._uow.RaceRepo.Update(race);
+            this._uow.Save();
+            return true;
+        }
+        public bool UpdateDistance(Race race)
+        {
+            if (race == null || race.Id < 1) return false;
+
+            this._uow.RaceRepo.updateDistance(race);
             this._uow.Save();
             return true;
         }

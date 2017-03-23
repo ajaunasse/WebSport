@@ -22,6 +22,7 @@
           <Property Name="DateStart" Type="datetime" Nullable="false" />
           <Property Name="DateEnd" Type="datetime" Nullable="false" />
           <Property Name="Ville" Type="varchar" MaxLength="100" />
+          <Property Name="Distance" Type="int" />
         </EntityType>
         <EntityType Name="Participant">
           <Key>
@@ -276,6 +277,7 @@
           <NavigationProperty Name="Contributors" Relationship="BddLoginModel.FK_Competiteur_Course" FromRole="Race" ToRole="Contributor" />
           <NavigationProperty Name="Points" Relationship="BddLoginModel.FK_Point_Course" FromRole="RaceEntity" ToRole="PointEntity" />
           <NavigationProperty Name="Resultats" Relationship="BddLoginModel.FK_Resultat_Course" FromRole="RaceEntity" ToRole="Resultat" />
+          <Property Name="Distance" Type="Int32" />
         </EntityType>
         <EntityType Name="ContributorEntity">
           <Key>
@@ -433,6 +435,7 @@
           <EntitySetMapping Name="RaceEntities">
             <EntityTypeMapping TypeName="BddLoginModel.RaceEntity">
               <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Titre" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

@@ -35,7 +35,7 @@ namespace WUI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(PersonneModel model)
+        public ActionResult Login(PersonneModel model, int? idRace)
         {
             bool valide = false;
 
@@ -56,7 +56,16 @@ namespace WUI.Controllers
                 }
                 else
                 {
+
+
                     Session.Add("user", model);
+                    if (Request.QueryString["idRace"] != null)
+                    {
+                        return RedirectToAction("Suscribe", "Race", Request.QueryString["idRace"]);
+                    } else
+                    {
+                        return RedirectToAction("Connect", "Register", model);
+                    }
                     return RedirectToAction("Connect","Register", model);
                     //return Redirect("~/Views/Shared/Connect.cshtml");
                 }
