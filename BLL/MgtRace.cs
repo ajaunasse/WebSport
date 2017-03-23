@@ -76,9 +76,24 @@ namespace BLL
             return this._uow.RaceRepo.GetById(id);
         }
 
-        public List<Race> GetRaceByTownAndDate(string ville, DateTime dateDebut, DateTime dateFin)
+        public List<Race> getRacesBySearch(string ville, DateTime? dateDebut, DateTime? dateFin)
         {
-            return this._uow.RaceRepo.Where(r => r.Town == ville).Where(r => r.DateStart >= dateDebut).ToList().ToBos();
+            List<Race> valRet;
+            var repo = this._uow.RaceRepo.GetAll();
+            if(ville != null)
+            {
+                repo = repo.Where(r => r.Town == ville).ToList();
+            }
+            if(dateDebut != null)
+            {
+                repo = repo.Where(r => r.DateStart >= dateDebut).ToList();
+            }
+            if(dateFin != null)
+            {
+                repo = repo.Where(r => r.DateStart <= dateFin).ToList();
+            }
+            valRet = repo.ToBos();
+            return valRet;
         }
 
 

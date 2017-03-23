@@ -22,7 +22,6 @@ namespace WUI.Controllers
 
             //Stats âges
             var nbPersonne = MgtPersonne.GetInstance().GetAllItems().Count();
-            var nbPersonne = 
             foreach (var race in races)
             {
                 villes.Add(race.Town);

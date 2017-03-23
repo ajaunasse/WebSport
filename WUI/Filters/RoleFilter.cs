@@ -16,12 +16,24 @@ namespace WUI.Filters
             PersonneModel user = (PersonneModel) filterContext.HttpContext.Session["user"];
             if (user == null || user.Role != this.idRole)
             {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary
-                    {
-                        { "controller", "Account" },
-                        { "action", "Login" }
-                    });
+                if(this.idRole == 2 )
+                {
+                    filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary
+                        {
+                            { "controller", "Register" },
+                            { "action", "Index" }
+                        });
+                } else
+                {
+                    filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary
+                        {
+                            { "controller", "Account" },
+                            { "action", "Login" }
+                        });
+                }
+
             } else
             {
                 base.OnActionExecuting(filterContext);
