@@ -39,9 +39,9 @@ namespace WUI.Extensions
 
             return new ResultatModel
             {
-                IdPersonne = bo.PersonneID,
+                Personne = bo.Personne.ToModel(),
                 Race = bo.Race.ToModel(),
-                Classement = bo.PersonneID,
+                Classement = bo.Classement,
                 TempsDeCourse = bo.TempsDeCourse,
                 HeureArrivee = bo.HeureArrivee,
                 HeureDebut = bo.HeureDebut,
@@ -51,16 +51,15 @@ namespace WUI.Extensions
         public static Resultat ToBo(this ResultatModel model)
         {
             if (model == null) return null;
+            Resultat newResultat = new Resultat();
+            newResultat.Personne = model.Personne.ToBo();
+            newResultat.Race = model.Race.ToBo();
+            newResultat.Classement = model.Classement;
+            newResultat.TempsDeCourse = model.TempsDeCourse;
+            newResultat.HeureArrivee = model.HeureArrivee;
+            newResultat.HeureDebut = model.HeureDebut;
 
-            return new Resultat
-            {
-                PersonneID = model.IdPersonne,
-                Race = model.Race.ToBo(),
-                Classement = model.Classement,
-                TempsDeCourse = model.TempsDeCourse,
-                HeureArrivee = model.HeureArrivee,
-                HeureDebut = model.HeureDebut,
-            };
+            return newResultat;
         }
 
 
@@ -108,7 +107,7 @@ namespace WUI.Extensions
             if (bo == null) return null;
 
             RaceModel raceModel = new RaceModel();
-            
+
             raceModel.Id = bo.Id;
             raceModel.Title = bo.Title;
             raceModel.Description = bo.Description;
@@ -116,11 +115,11 @@ namespace WUI.Extensions
             raceModel.DateEnd = bo.DateEnd;
             raceModel.Town = bo.Town;
             raceModel.Points = bo.Points.ToModels();
-                        
+
             raceModel.Organisers = withJoin && bo.Organisers != null ? bo.Organisers.Select(x => x.ToModel()).ToList() : null;
             raceModel.Competitors = withJoin && bo.Competitors != null ? bo.Competitors.Select(x => x.ToModel()).ToList() : null;
-            
-           
+
+
 
             return raceModel;
         }
@@ -130,18 +129,18 @@ namespace WUI.Extensions
             if (model == null) return null;
 
             Race newRace = new Race();
-            
+
             newRace.Id = model.Id;
             newRace.Title = model.Title;
             newRace.Description = model.Description;
             newRace.DateStart = model.DateStart;
             newRace.DateEnd = model.DateEnd;
             newRace.Town = model.Town;
-            if(model.Points != null)
+            if (model.Points != null)
             {
                 newRace.Points = model.Points.Select(x => x.ToBo()).ToList();
             }
-               
+
 
 
             return newRace;
@@ -178,7 +177,7 @@ namespace WUI.Extensions
         {
             if (model == null) return null;
 
-            Point pts =  new Point
+            Point pts = new Point
             {
                 Id = model.Id,
                 Latitude = model.Latitude,
@@ -188,7 +187,7 @@ namespace WUI.Extensions
                 isPoi = model.isPoi,
             };
 
-            if(model.Category != null)
+            if (model.Category != null)
             {
                 pts.categorie = model.Category;
             }
@@ -248,6 +247,7 @@ namespace WUI.Extensions
                 Email = bo.Email,
                 Phone = bo.Phone,
                 Role = bo.Role,
+                Password = bo.Password,
                 //DisplayConfigurations = bo.DisplayConfigurations.Select(x => x.ToModel()).ToList()
             };
         }
@@ -286,7 +286,7 @@ namespace WUI.Extensions
                 DisplayConfigurations = bo.DisplayConfigurations.Select(x => x.ToModel()).ToList()
             };
         }
-        
+
         public static UnitDistanceModel ToModel(this UnitDistance bo)
         {
             UnitDistanceModel result;

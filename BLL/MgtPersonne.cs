@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using DAL.EntityFramework;
+using DAL.Extensions;
 using Repository;
 
 namespace BLL
@@ -152,5 +153,13 @@ namespace BLL
         // UPDATE
 
         // DELETE
+        public Personne GetPersonneByID(int id)
+        {
+            WebSportEntities context = new WebSportEntities();
+
+            PersonEntity entity = context.PersonEntities.Single(x => x.Id == id);
+
+            return entity.ToBo();
+        }
     }
 }

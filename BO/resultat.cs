@@ -10,7 +10,7 @@ namespace BO
     public class Resultat
     {
 
-        public int PersonneID { get; set; }
+        public Personne Personne { get; set; }
 
         public Race Race { get; set; }
 

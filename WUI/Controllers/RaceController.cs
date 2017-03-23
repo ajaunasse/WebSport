@@ -2,11 +2,16 @@
 using BO;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Antlr.Runtime;
 using WUI.Extensions;
 using WUI.Filters;
 using WUI.Models;
@@ -15,7 +20,7 @@ namespace WUI.Controllers
 {
     // Pour appeler n'importe quelle méthode, l'utilisateur doit être connecté
     // Sauf si une méthode lève la condition avec : [AllowAnonymous]
-   
+
     public class RaceController : Controller
     {
 
@@ -84,7 +89,7 @@ namespace WUI.Controllers
                 if (result)
                 {
                     return Json(reloadRace);
-                        
+
                 }
                 else
                 {
@@ -114,7 +119,7 @@ namespace WUI.Controllers
                     return View();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -141,7 +146,7 @@ namespace WUI.Controllers
                 }
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -154,10 +159,10 @@ namespace WUI.Controllers
         {
             var result = new MgtRace().GetRace(id).ToModel(true);
 
-            List<CategoryModel> categories = new MgtRace().getAllCategory().ToModels() ;
+            List<CategoryModel> categories = new MgtRace().getAllCategory().ToModels();
             List<SelectListItem> cats = new List<SelectListItem>();
 
-            foreach(CategoryModel cat in categories)
+            foreach (CategoryModel cat in categories)
             {
                 SelectListItem slc = new SelectListItem();
 
@@ -167,7 +172,7 @@ namespace WUI.Controllers
                 cats.Add(slc);
             }
 
-            ViewBag.Categories = cats;            
+            ViewBag.Categories = cats;
 
             if (result == null)
             {
@@ -198,7 +203,7 @@ namespace WUI.Controllers
                     return View();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -245,14 +250,14 @@ namespace WUI.Controllers
         }
 
 
-        
+
         [RoleFilter(idRole = 2)]
         public ActionResult ListRace()
         {
             PersonneModel user = (PersonneModel)Session.Contents["user"];
             //List<Race> races = MgtRace.GetInstance().GetAllItems();
             List<Race> racesDispo = MgtRace.GetInstance().getRacebyUser(user.Id);
-            
+
             return View(racesDispo.ToModels());
 
         }
@@ -264,7 +269,7 @@ namespace WUI.Controllers
         {
             PersonneModel user = (PersonneModel)Session.Contents["User"];
             List<Race> races = MgtRace.GetInstance().SuscribeRace(user.ToBo(), idRace);
-            return View("MyRaces",races.ToModels());
+            return View("MyRaces", races.ToModels());
 
         }
 
@@ -295,7 +300,7 @@ namespace WUI.Controllers
             List<Resultat> results = new List<Resultat>();
             results = MgtResultat.GetInstance().GetResultatsById(user.Id);
 
-            List<ResultatModel> resultatModels = results.Select(x => x.ToModel()).ToList(); 
+            List<ResultatModel> resultatModels = results.Select(x => x.ToModel()).ToList();
 
             return View(resultatModels);
         }
@@ -307,13 +312,53 @@ namespace WUI.Controllers
 
         public ActionResult Import()
         {
-            var fichier = Request.Form["FileResult"];
+
+            
+            List<ResultatModel> modelsResult = new List<ResultatModel>();
+
+           
+            HttpPostedFileBase fichier = Request.Files["FileResult"];
 
 
+            if (fichier != null)
+            {
+                StreamReader stream = new StreamReader(fichier.InputStream);
+                string chaine = stream.ReadToEnd();
 
-            return View();
+                String[] lignes = chaine.Split('\r', '\n');
+
+                foreach (var ligne in lignes)
+                {
+                    if(String.IsNullOrEmpty(ligne)) { continue;}
+                    ResultatModel model = new ResultatModel();
+                    string[] champs = ligne.Split(';');
+                    
+                    model.Race = MgtRace.GetInstance().GetRace(int.Parse(champs[0])).ToModel();
+                    model.Personne = MgtPersonne.GetInstance().GetPersonneByID(int.Parse(champs[1])).ToModel();
+                    model.Classement = int.Parse(champs[2]);
+                    model.TempsDeCourse = TimeSpan.Parse(champs[3]);
+                    model.HeureDebut = TimeSpan.Parse(champs[4]);
+                    model.HeureArrivee = TimeSpan.Parse(champs[5]);
+                    modelsResult.Add(model);
+                }
+               
+            }
+
+            bool res = MgtResultat.GetInstance().Save(modelsResult.Select(x => x.ToBo()).ToList());
+
+
+            if (res)
+            {
+                return View(modelsResult);
+            }
+            else
+            {
+                return View("Importresult");
+            }
+
+            
         }
 
-
+        
     }
 }

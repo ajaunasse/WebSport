@@ -1,11 +1,11 @@
 ﻿@{
     ViewBag.Title = "Importresult";
-    Layout = "~/Views/Shared/_adminMenu.cshtml";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
 
 <h2>Importer les resultats</h2>
 
-@using (Html.BeginForm("Import", "Race", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Import", "Race", FormMethod.Post,new {enctype="multipart/form-data"}))
 {
     <p>
         <input type="file" id="FileResult" name="FileResult" size="23" />

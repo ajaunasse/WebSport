@@ -1,0 +1,50 @@
+﻿@model List<WUI.Models.ResultatModel>
+
+@{
+    ViewBag.Title = "Import";
+}
+
+<h2>Données sauvegardées</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Participant</th>
+            <th>Course</th>
+            <th>Classement</th>
+            <th>Temps de course</th>
+            <th>Heure Depart</th>
+            <th>Heure arrivée</th>
+        </tr>
+    </thead>
+    <tbody>
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Personne.Nom @item.Personne.Prenom
+                </td>
+                <td>
+                    @item.Race.Title @item.Race.Town
+                </td>
+                <td>
+                    @item.Classement
+                </td>
+                <td>
+                    @item.TempsDeCourse
+                </td>
+                <td>
+                    @item.HeureDebut
+                </td>
+                <td>
+                    @item.HeureArrivee
+                </td>
+
+            </tr>
+             
+            
+        }
+    </tbody>
+</table>

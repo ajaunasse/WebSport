@@ -219,12 +219,28 @@ namespace DAL.Extensions
 
             Resultat result = new Resultat();
             result.Race = bo.Course.ToBo();
-            result.PersonneID = bo.PersonneId;
+            result.Personne = bo.Personne.ToBo();
             if (bo.HeureArrive != null) result.HeureArrivee = (TimeSpan)bo.HeureArrive;
             if (bo.HeureDepart != null) result.HeureDebut = (TimeSpan)bo.HeureDepart;
             result.TempsDeCourse = result.HeureArrivee - result.HeureDebut;
 
             return result;
+        }
+
+        public static ResultatEntity ToEntity(this Resultat bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            
+
+            ResultatEntity entity = new ResultatEntity();
+            entity.CourseId = bo.Race.Id;
+            entity.PersonneId = bo.Personne.Id;
+            if (bo.HeureArrivee != null) entity.HeureArrive = (TimeSpan)bo.HeureArrivee;
+            if (bo.HeureDebut != null) entity.HeureDepart = (TimeSpan)bo.HeureDebut;
+            entity.Classement = bo.Classement;
+
+            return entity;
         }
 
 
@@ -249,6 +265,23 @@ namespace DAL.Extensions
                 DateNaissance = bo.BirthDate,
                 Email = bo.Mail,
                 Phone = bo.Phone,
+                Password = bo.Password,
+            };
+        }
+
+        public static PersonEntity ToEntity(this Personne bo, bool withJoin = false)
+        {
+            if (bo == null) return null;
+
+            return new PersonEntity
+            {
+                Id = bo.Id,
+                Lastname = bo.Prenom,
+                Firstname = bo.Prenom,
+                BirthDate = bo.DateNaissance,
+                Mail = bo.Email,
+                Phone = bo.Phone,
+                Password = bo.Password,
             };
         }
 
