@@ -305,6 +305,7 @@
                                         
                                     </div>
                                     @Html.TextBoxFor(m => m.Id, new { type = "hidden", })
+                                    @*@Html.TextBoxFor(m => m.Distance, new { type = "hidden", id = "distance"})*@
                                     <div class="col-3">
                                         <label>Action</label><br />
                                         <button type="submit" class="btn btn-success add" name="add"  value="Ajouter">Ajouter le point</button>
@@ -315,12 +316,12 @@
                                 <div class="row">
                                     <div class="col-5">
                                         <label for="poi_Title">Titre</label>
-                                        @Html.TextBoxFor(m => m.point.titre, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.point.titre, new { @class = "form-control", id = "titre" })
                                         @Html.ValidationMessageFor(m => m.point.titre)
                                     </div>
                                     <div class="col-5">
                                         <label for="poi_Title">Catégorie</label>
-                                        @Html.DropDownListFor(m => m.point.Category.Id, cats, new { @class = "form-control" })
+                                        @Html.DropDownListFor(m => m.point.Category.Id, cats, new { @class = "form-control", id = "categorie" })
 
                                     </div>
                                 </div>
@@ -349,12 +350,16 @@
         var waypts = [];
         var directionsService;
         var directionsDisplay;
-
-        function initMap() {
+        var newPoint = false;
+        var distance = 0;
+        var idRace= @(new HtmlString(Json.Encode(Model.Id)));
+        console.log(idRace) ;
+        function initMap(newPoint) {
             var myLatLng =  {lat:47.217469436263684, lng:-1.5532457828521729};
             directionsService = new google.maps.DirectionsService;
             directionsDisplay = new google.maps.DirectionsRenderer;
-         
+            distance = 0;
+
             if(typeof newPoints !== 'undefined'){
                 var points = newPoints
             } else {
@@ -366,27 +371,29 @@
                 zoom: 12,
                 center: myLatLng
             });
-            
-            for(var i = 0 ; i < points.length ; i ++){
-                if(points[i].isPoi){
-                    if(points[i].Category.Id === 1) {
-                        pointDepart = new google.maps.LatLng(points[i].Latitude, points[i].Longitude );
-                    }else if(points[i].Category.Id === 2){
-                        pointArrivee = new google.maps.LatLng(points[i].Latitude, points[i].Longitude );
+
+            if(!newPoint){
+                for(var i = 0 ; i < points.length ; i ++){
+                    if(points[i].isPoi){
+                        if(points[i].Category.Id === 1) {
+                            pointDepart = new google.maps.LatLng(points[i].Latitude, points[i].Longitude );
+                        }else if(points[i].Category.Id === 2){
+                            pointArrivee = new google.maps.LatLng(points[i].Latitude, points[i].Longitude );
+                        }else{
+                            var position = new google.maps.LatLng(points[i].Latitude,points[i].Longitude);
+                            waypts.push({
+                                location: position
+                            });
+                        }
                     }else{
-                        addMarker(points[i].Latitude,points[i].Longitude);
-                        var position = new google.maps.LatLng(points[i].Latitude,points[i].Longitude);
+                        var position = new google.maps.LatLng(points[i].Latitude, points[i].Longitude);
                         waypts.push({
                             location: position
                         });
                     }
-                }else{
-                    var position = new google.maps.LatLng(points[i].Latitude, points[i].Longitude);
-                    waypts.push({
-                        location: position
-                    });
                 }
             }
+
             if((pointDepart != null) && (pointArrivee != null))
             {
                 directionsDisplay.setMap(map);
@@ -406,6 +413,8 @@
         }
 
         function calculateAndDisplayRoute(directionService, directionDisplay){
+            var $self = this;
+            //console.log(waypts);
             directionService.route({
                 origin: pointDepart,
                 destination: pointArrivee,
@@ -416,6 +425,26 @@
                 if(status === google.maps.DirectionsStatus.OK ){
                     directionDisplay.setOptions({ preserveViewport: true });
                     directionDisplay.setDirections(response);
+                    var route = response.routes[0];
+                    for(var j = 0 ; j < route.legs.length ; j ++){
+                        distance += route.legs[j].distance.value;
+                    }
+            
+                    var MyUrl = '@Url.Action("UpdateDistance")';
+                    //var url1 = MyUrl.replace("__param1__", encodeURIComponent(distance));
+                    //var url2 = url1.replace("__param2__", encodeURIComponent( $self.idRace));
+                    var dataToSend = {distance: distance, idRace: idRace}
+                    $.post(MyUrl, dataToSend, function( data ) {
+                        $( ".result" ).html( data );
+                    });
+                    //$.ajax({
+                    //    type: "GET",
+                    //    url: url2
+                    //})
+
+                    //$("#distance").val(distance);
+
+                    console.log(distance);
                 }else{
                     console.log("La requête de la direction à échoué : " + status);
                 }
@@ -453,7 +482,6 @@
                      data: dataToSend,
                      success: function (data) {
                          var point = data.Points[data.Points.length - 1]
-                         console.log(point);
                          var url = '@Url.Action("DeletePoint", new { idPoint = "__param1__", idRace = "__param2__" })';
                          var url1 = url.replace("__param1__", encodeURIComponent(point.Id));
                          var url2 = url1.replace("__param2__", encodeURIComponent(data.Id));
@@ -478,13 +506,18 @@
                          html += "<td><a href='" + url2 + "' class='btn btn-danger delete'>Supprimer</a></td>"
                          html += '</tr>';
                          $('#tbody').append(html);
-                         addMarker(point.Latitude, point.Longitude);
-                         var position = new google.maps.LatLng(point.Latitude, point.longitude);
+
+                         $(":input","#formID")
+                             .val('')
+                             .removeAttr('checked')
+                             .removeAttr('selected');
+
+                         var position = new google.maps.LatLng(point.Latitude, point.Longitude);
                          waypts.push({
                              location: position
                          });
-                         initMap();
-                         console.log(waypts);
+                         newPoint = true;
+                         initMap(newPoint);
                      }
 
                  })
@@ -497,9 +530,16 @@
                  $.ajax({
                      type: "GET",
                      url: url,
-                     success: function () {
+                     success: function (latitude) {
                          $self.parent().parent().remove();
-                         initMap();
+                        var index = $.each(waypts, function(key, value){
+                            if(value.location.lat() === latitude) {
+                                return key;
+                            }
+                        });
+                        waypts.splice(index,1) ;
+                        newPoint  = true;
+                         initMap(newPoint);
                      }
                  })
              });

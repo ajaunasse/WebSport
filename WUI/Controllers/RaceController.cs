@@ -68,6 +68,7 @@ namespace WUI.Controllers
             {
                 RaceModel newRace = MgtRace.GetInstance().GetRace(race.Id).ToModel();
                 newRace.Points = new List<PointModel>();
+                newRace.Distance = race.Distance;
                 var check = Request.Form["checkbox"];
                 if (check == null)
                 {
@@ -97,6 +98,15 @@ namespace WUI.Controllers
             }
         }
 
+        [HttpPost]
+        [RoleFilter(idRole = 1)]
+        public void UpdateDistance(int distance, int idRace)
+        {
+            Race newRace = MgtRace.GetInstance().GetRace(idRace);
+            newRace.Distance = distance;
+            MgtRace.GetInstance().UpdateRace(newRace);
+        }
+
         //
         // POST: /Race/DeletePoint
         [HttpGet]
@@ -105,9 +115,10 @@ namespace WUI.Controllers
         {
             try
             {
+                double latitude = MgtPoint.GetInstance().GetPoint(idPoint).Latitude;
                 if (MgtPoint.GetInstance().DeletePoint(idPoint))
                 {
-                    return Json("ok", JsonRequestBehavior.AllowGet);
+                    return Json(latitude, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

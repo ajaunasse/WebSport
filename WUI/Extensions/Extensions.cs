@@ -115,6 +115,7 @@ namespace WUI.Extensions
             raceModel.DateStart = bo.DateStart;
             raceModel.DateEnd = bo.DateEnd;
             raceModel.Town = bo.Town;
+            raceModel.Distance = (int) bo.Distance;
             raceModel.Points = bo.Points.ToModels();
                         
             raceModel.Organisers = withJoin && bo.Organisers != null ? bo.Organisers.Select(x => x.ToModel()).ToList() : null;
@@ -137,6 +138,7 @@ namespace WUI.Extensions
             newRace.DateStart = model.DateStart;
             newRace.DateEnd = model.DateEnd;
             newRace.Town = model.Town;
+            newRace.Distance = model.Distance;
             if(model.Points != null)
             {
                 newRace.Points = model.Points.Select(x => x.ToBo()).ToList();
