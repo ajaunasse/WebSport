@@ -3,14 +3,19 @@
     Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
 
-<h2>Importer les resultats</h2>
+<div class="row">
+    <h2>Importer les resultats</h2>
+</div>
+<br/>
 
-@using (Html.BeginForm("Import", "Race", FormMethod.Post,new {enctype="multipart/form-data"}))
+@using (Html.BeginForm("Import", "Race", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <p>
-        <input type="file" id="FileResult" name="FileResult" size="23" />
-    </p>
-    <p>
-        <input type="submit" value="Upload file" />
-    </p>
+    <div class="row">
+        <input type="file" id="FileResult" name="FileResult" size="23"  />
+    </div>
+    <br/>
+    <div class="row">
+        <input type="submit" value="Upload file" class="btn btn-success" />
+    </div>
 }
+    
