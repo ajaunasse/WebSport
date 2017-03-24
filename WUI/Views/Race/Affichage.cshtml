@@ -5,10 +5,17 @@
     Layout = "~/Views/Shared/_adminLayout.cshtml";
 }
 
-<h2>Liste des courses dont les resultats sont disponibles</h2>
-
-
-@foreach (var item in Model)
-{
-    <a href="@Url.Action("AfficheResult", new {idRace = item.Id })" class="btn btn-info delete">@item.Title @item.Town</a>
-}
+<div class="adminContent">
+    <div class="row">
+        <h2>Liste des courses dont les resultats sont disponibles</h2>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="list-group col-lg-12">
+            @foreach (var item in Model)
+            {
+                <a href="@Url.Action("AfficheResult", new {idRace = item.Id })" class="list-group-item list-group-item-action delete">Afficher @item.Title - @item.Town</a>
+            }
+        </div>
+    </div>
+</div>
