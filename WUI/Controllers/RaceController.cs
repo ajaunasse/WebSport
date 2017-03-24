@@ -438,5 +438,26 @@ namespace WUI.Controllers
         }
 
 
+        public ActionResult ExportResults(int idRace)
+        {
+            List<Resultat> results = MgtResultat.GetInstance().GetResultatsByIdRace(idRace);
+            Race course = MgtRace.GetInstance().GetRace(idRace);
+
+            string lines =  "Id Particpant;IdCourse;Classement;.Temps de course";
+
+            // Write the string to a file.
+            System.IO.StreamWriter file = new System.IO.StreamWriter("D:\\Result" + course.Title+"_" + course.Town +".csv");
+            file.WriteLine(lines);
+
+            foreach (Resultat resultat in results)
+            {
+                string ligne = resultat.Personne.Nom+";"+resultat.Race.Town+";"+resultat.Classement+";"+resultat.TempsDeCourse;
+                file.WriteLine(ligne);
+            }
+
+            file.Close();
+            return RedirectToAction("Index", "Admin");
+
+        }
     }
 }

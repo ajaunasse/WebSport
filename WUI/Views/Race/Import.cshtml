@@ -18,10 +18,17 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="titlePage">@ville</h3>
+                <div class="entete">
+                    <h3 class="titlePage">@ville</h3>
+                    <div class="button-group pull-right">
+                        <a href="@Url.Action("ExportResults", new {idRace = idrace})" class="btn btn-info">Editer en csv</a>
+                    </div>
+                </div>
+                
+                
             </div>
             <div class="col-lg-8 offset-lg-4">
-                <hr />
+                <hr/>
             </div>
             <div class="col-lg-2">
                 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount
@@ -29,47 +36,51 @@
             <div class="col-lg-10">
                 <nav class="pull-right">
                     @Html.PagedListPager(Model, page => Url.Action("AfficheResult",
-                    new { idRace = idrace, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                        new {idRace = idrace, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))
                 </nav>
             </div>
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>Participant</th>
-                        <th>Course</th>
-                        <th>Classement</th>
-                        <th>Temps de course</th>
-                        <th>Heure Depart</th>
-                        <th>Heure arrivée</th>
-                    </tr>
+                <tr>
+                    <th>Participant</th>
+                    <th>Course</th>
+                    <th>Classement</th>
+                    <th>Temps de course</th>
+                    <th>Heure Depart</th>
+                    <th>Heure arrivée</th>
+                </tr>
                 </thead>
                 <tbody>
 
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @item.Personne.Nom @item.Personne.Prenom
-                            </td>
-                            <td>
-                                @item.Race.Title @item.Race.Town
-                            </td>
-                            <td>
-                                @item.Classement
-                            </td>
-                            <td>
-                                @item.TempsDeCourse
-                            </td>
-                            <td>
-                                @item.HeureDebut
-                            </td>
-                            <td>
-                                @item.HeureArrivee
-                            </td>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.Personne.Nom @item.Personne.Prenom
+                        </td>
+                        <td>
+                            @item.Race.Title @item.Race.Town
+                        </td>
+                        <td>
+                            @item.Classement
+                        </td>
+                        <td>
+                            @item.TempsDeCourse
+                        </td>
+                        <td>
+                            @item.HeureDebut
+                        </td>
+                        <td>
+                            @item.HeureArrivee
+                        </td>
 
-                        </tr>
+                    </tr>
 
 
-                    }
+                }
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+            
