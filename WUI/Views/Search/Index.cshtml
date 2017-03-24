@@ -1,7 +1,9 @@
 ﻿@using WUI.Models
+@using System.Collections;
 @model List <BO.Race>
 @{
     ViewBag.Title = "Index";
+    ArrayList listId = ViewBag.racesId;
 }
 @section AdditionalMeta
 {
@@ -69,7 +71,15 @@
                                     }
                                 </p>
                             </div>
-                            <a href="@Url.Action("Suscribe", "Race", new { idRace = item.Id})" class="btn btn-primary btn-block">S'inscrire</a>
+                            @if(listId.Contains(item.Id))
+                            {
+                                <button class="btn btn-success btn-block disabled"> Déjà inscris</button>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Suscribe", "Race", new { idRace = item.Id})" class="btn btn-primary btn-block">S'inscrire</a>
+                            }
+                            
                         </div>
                     </div>
                 </div>
@@ -90,7 +100,6 @@
 
     function initMap() {
         $.each(races, function(key, value) {
-            console.log(value)
             var markers = [] ;
             var map = new google.maps.Map(document.getElementById(value.Id), {
                 zoom: 12,

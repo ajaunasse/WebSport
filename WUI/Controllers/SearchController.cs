@@ -1,5 +1,7 @@
 ﻿using BLL;
+using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,6 +28,8 @@ namespace WUI.Controllers
             string strDateFin = null;
             DateTime? dateDebut = null;
             DateTime? dateFin = null;
+            List<Race> races = new List<Race>();
+            ArrayList listId = new ArrayList();
             if (Request.QueryString["ville"] != "")
             {
                 ville = Request.QueryString["ville"];
@@ -40,7 +44,17 @@ namespace WUI.Controllers
                 strDateFin = Request.QueryString["dateFin"];
                 dateFin = DateTime.Parse(strDateDebut);
             }
-            
+            if(Session.Contents["User"] != null)
+            {
+                PersonneModel user = (PersonneModel)Session.Contents["User"];
+                races = MgtRace.GetInstance().MyRaces(user.Id);
+                foreach(var race in races)
+                {
+                    listId.Add(race.Id);
+                }
+            }
+
+            ViewBag.racesId = listId;
 
             var result = MgtRace.GetInstance().getRacesBySearch(ville, dateDebut, dateFin);
             return View(result);

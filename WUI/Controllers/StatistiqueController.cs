@@ -23,21 +23,13 @@ namespace WUI.Controllers
             ArrayList nbParticipants = new ArrayList();
             string[] tranches = new string[4] { "18-29", "30-39", "40-49", "+50" };
             ArrayList totalByAge = statByAge();
-  
-
             var races = MgtRace.GetInstance().GetAllItems(true).ToModels(true);
             foreach (var race in races)
             {
                 villes.Add(race.Town);
                 nbParticipants.Add(race.Competitors.Count());
             }
-            var IDNantes = MgtRace.GetInstance().GetRace(1);
-            List<Resultat> temps = MgtResultat.GetInstance().GetResultatsByIdRace(IDNantes);
-            
 
-
-            ViewBag.TempsCourseNantes = temps.Select(x => x.TempsDeCourse).ToList();
-            ViewBag.idParticipant = temps.Select(x => x.Personne.Id).ToList();
             ViewBag.villes = villes;
             ViewBag.nbParticipants = nbParticipants;
             ViewBag.totalByAge = totalByAge;

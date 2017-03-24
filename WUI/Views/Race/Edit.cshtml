@@ -387,6 +387,12 @@
             });
             
             var geocoder =  new google.maps.Geocoder();
+            geocoder.geocode( { 'address':town}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()});
+                } else {
+                }
+            });
             var $self = this
 
 
@@ -445,9 +451,7 @@
             });
         }
         function setCenter(LatLng) {
-            console.log("toto") ;
-            center = LatLng ;
-            map.setCenter(center) ;
+
         }
         
 
