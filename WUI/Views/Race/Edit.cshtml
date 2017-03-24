@@ -379,9 +379,7 @@
             
             var geocoder =  new google.maps.Geocoder();
             calculCenter(geocoder,town) ;
-
-            console.log(points);
-
+            
             if(!newPoint){
                 for(var i = 0 ; i < points.length ; i ++){
                     var cat = "";
@@ -529,6 +527,11 @@
                         html += '<td>' + point.Longitude + '</td>';
                         if(point.isPoi) {
                             var cat = point.Category.Title;
+                            if(point.Category.Id == 1){
+                                pointDepart = new google.maps.LatLng(point.Latitude, point.Longitude);
+                            }else if(point.Category.Id == 2){
+                                pointArrivee = new google.maps.LatLng(point.Latitude, point.Longitude);
+                            }
                             html +='<td><span class="badge badge-success">OUI</span></td>'
                         } else {
                             var cat = "";
