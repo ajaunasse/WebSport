@@ -389,6 +389,7 @@
     <Content Include="Views\Race\Importresult.cshtml" />
     <Content Include="Views\Race\Import.cshtml" />
     <Content Include="Views\Race\SaveResult.cshtml" />
+    <Content Include="Views\Race\Affichage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />

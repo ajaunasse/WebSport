@@ -18,7 +18,7 @@ namespace BO
 
         public TimeSpan HeureArrivee { get; set; }
 
-        public int Classement { get; set; }
+        public int? Classement { get; set; }
 
         public TimeSpan TempsDeCourse { get; set; }
 

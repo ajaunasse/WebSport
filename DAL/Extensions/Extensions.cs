@@ -233,6 +233,7 @@ namespace DAL.Extensions
             if (bo.HeureArrive != null) result.HeureArrivee = (TimeSpan)bo.HeureArrive;
             if (bo.HeureDepart != null) result.HeureDebut = (TimeSpan)bo.HeureDepart;
             result.TempsDeCourse = result.HeureArrivee - result.HeureDebut;
+            result.Classement = bo.Classement;
 
             return result;
         }

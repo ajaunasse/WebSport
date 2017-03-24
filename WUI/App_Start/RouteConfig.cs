@@ -23,6 +23,12 @@ namespace WUI
                 defaults: new { controller = "Race", action = "Index", id = UrlParameter.Optional }
              );
             routes.MapRoute(
+                name: "afficherResultat",
+                url: "AfficherResult",
+                defaults: new { controller = "Race", action = "Affichage", id = UrlParameter.Optional }
+             );
+            
+            routes.MapRoute(
                 name: "resultat",
                 url: "ImportResult",
                 defaults: new { controller = "Race", action = "Importresult", id = UrlParameter.Optional }

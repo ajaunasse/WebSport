@@ -31,7 +31,7 @@ namespace WUI.Controllers
             }
 
             var IDNantes = MgtRace.GetInstance().GetRace(1);
-            List<Resultat> temps = MgtResultat.GetInstance().GetResultatsByIdRace(IDNantes);
+            List<Resultat> temps = MgtResultat.GetInstance().GetResultatsByIdRace(IDNantes.Id);
 
             ViewBag.TempsCourseNantes = temps.Select(x => x.TempsDeCourse).ToList();
             ViewBag.idParticipant = temps.Select(x => x.Personne.Id).ToList();

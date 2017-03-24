@@ -1,0 +1,14 @@
+﻿@model List<WUI.Models.RaceModel>
+
+@{
+    ViewBag.Title = "Affichage";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<h2>Liste des courses dont les resultats sont disponibles</h2>
+
+
+@foreach (var item in Model)
+{
+    <a href="@Url.Action("AfficheResult", new {idRace = item.Id })" class="btn btn-info delete">@item.Title @item.Town</a>
+}

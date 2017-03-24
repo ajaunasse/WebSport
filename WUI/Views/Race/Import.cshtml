@@ -4,26 +4,32 @@
 
 @{
     ViewBag.Title = "Import";
+    int idrace = ViewBag.race;
+    string ville = ViewBag.ville;
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+@section AdditionalMeta
+{
+    @Styles.Render("~/Content/PagedList.css")
 }
 
-<h2>Données sauvegardées</h2>
 
 <div class="row adminContent">
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="titlePage">Liste des utilisateurs</h3>
+                <h3 class="titlePage">@ville</h3>
             </div>
             <div class="col-lg-8 offset-lg-4">
                 <hr />
             </div>
             <div class="col-lg-2">
-                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) sur @Model.PageCount
             </div>
             <div class="col-lg-10">
                 <nav class="pull-right">
-                    @Html.PagedListPager(Model, page => Url.Action("Import",
-                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    @Html.PagedListPager(Model, page => Url.Action("AfficheResult",
+                    new { idRace = idrace, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                 </nav>
             </div>
             <table class="table">
