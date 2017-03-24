@@ -7,8 +7,8 @@
     <h2>Importer les resultats</h2>
 </div>
 <br/>
-
-@using (Html.BeginForm("Import", "Race", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<div class="loading" style="display: none;">Loading&#8230;</div>
+@using (Html.BeginForm("Import", "Race", FormMethod.Post, new { enctype = "multipart/form-data", @class="form" }))
 {
     <div class="row">
         <input type="file" id="FileResult" name="FileResult" size="23"  />
@@ -17,5 +17,16 @@
     <div class="row">
         <input type="submit" value="Upload file" class="btn btn-success" />
     </div>
+
 }
-    
+
+@section scripts {
+<script>
+    $(function () {
+        $('.form').on('submit', function () {
+            $('.loading').show();
+        })
+    });
+</script>
+
+}
