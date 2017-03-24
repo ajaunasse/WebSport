@@ -19,7 +19,11 @@
     <script>
         var villes = @(new HtmlString(Json.Encode(ViewBag.villes)));
         var nbParticipants = @(new HtmlString(Json.Encode(ViewBag.nbParticipants)));
+        var tranches = @(new HtmlString(Json.Encode(ViewBag.tranches)));
+        var nbParTranche = @(new HtmlString(Json.Encode(ViewBag.totalByAge)));
 
+        console.log(tranches) ;
+        console.log(nbParTranche) ;
     </script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>

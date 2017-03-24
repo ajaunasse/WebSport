@@ -27,6 +27,24 @@ namespace Repository
         {
             return base.GetAll().ToBos();
         }
+
+        public List<Personne> GetByTranche(DateTime? date1, DateTime? date2)
+        {
+            var test = base.GetAll().Where(x => x.BirthDate >= date1 && x.BirthDate <= date2).ToString(); 
+            var valRet = base.GetAll().ToList();
+            if (date1 != null)
+            {
+                valRet = valRet
+                    .Where(x => x.BirthDate <= date1)
+                    .ToList();
+            }
+            if(date2 != null)
+            {
+                valRet = valRet.Where(x => x.BirthDate >= date2).ToList();
+            }
+
+            return valRet.ToBos();
+        }
         #endregion
     }
 }

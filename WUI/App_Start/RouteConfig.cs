@@ -13,6 +13,11 @@ namespace WUI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(
+                name: "Home",
+                url: "",
+                defaults: new { controller = "Home", action = "Index"}
+            );
+            routes.MapRoute(
                 name: "Admin",
                 url: "Admin",
                 defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }

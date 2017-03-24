@@ -62,7 +62,11 @@
                             <div class="col-lg-6">
                                 <p class="card-text">
                                     <b> Distance : </b><br />
-                                    42.2 km
+                         
+                                   @{
+                                        var res = @item.Distance / 1000;
+                                       <span>@res km</span>
+                                    }
                                 </p>
                             </div>
                             <a href="@Url.Action("Suscribe", "Race", new { idRace = item.Id})" class="btn btn-primary btn-block">S'inscrire</a>

@@ -111,6 +111,11 @@ namespace BLL
         public List<Personne> GetAllItems() {
             return this._uow.PersonneRepo.GetAllItems();
         }
+
+        public List<Personne> getByTrancheDate(DateTime? date1, DateTime? date2)
+        {
+            return this._uow.PersonneRepo.GetByTranche(date1, date2);
+        }
         public Personne UpdatePersonne(Personne personne)
         {
             try

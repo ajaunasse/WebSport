@@ -354,6 +354,7 @@
         var distance = 0;
         var idRace= @(new HtmlString(Json.Encode(Model.Id)));
         var town = @(new HtmlString(Json.Encode(Model.Town)));
+        var center ;
         function initMap(newPoint) {
 
 
@@ -362,7 +363,14 @@
             var geocoder =  new google.maps.Geocoder();
             distance = 0;
 
-            if(typeof newPoints !== 'undefined'){
+            geocoder.geocode( { 'address': town}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    setCenter({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()});
+                } else {
+                }
+            });
+
+             if(typeof newPoints !== 'undefined'){
                 var points = newPoints
             } else {
                 var points = @(new HtmlString(Json.Encode(Model.Points)));
@@ -371,11 +379,13 @@
             // Create a map object and specify the DOM element for display.
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
+                center: center,
             });
 
 
             var geocoder =  new google.maps.Geocoder();
-            calculCenter(geocoder,town) ;
+            var $self = this
+
 
             if(!newPoint){
                 for(var i = 0 ; i < points.length ; i ++){
@@ -399,6 +409,8 @@
                 }
             }
 
+
+
             if((pointDepart != null) && (pointArrivee != null))
             {
                 directionsDisplay.setMap(map);
@@ -416,17 +428,12 @@
                 $("#longitude").val(longitude.replace(".",","));
             });
         }
-
-        function calculCenter(geocoder, town) {
-            var $self = this
-            geocoder.geocode( { 'address':town}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    var center = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()} ;
-                    $self.map.setCenter(center) ;
-                } else {
-                }
-            });
+        function setCenter(LatLng) {
+            console.log("toto") ;
+            center = LatLng ;
+            map.setCenter(center) ;
         }
+        
 
         function calculateAndDisplayRoute(directionService, directionDisplay){
             var $self = this;
@@ -448,17 +455,12 @@
                     var MyUrl = '@Url.Action("UpdateDistance")';
                     var dataToSend = {distance: distance, idRace: idRace}
                     $.post(MyUrl, dataToSend, function( data ) {
-                        
+                            
                     });
                 }else{
                     console.log("La requête de la direction à échoué : " + status);
                 }
             });
-        }
-
-
-        function calculDistance() {
-
         }
 
         function addMarker(lat, long) {
@@ -518,10 +520,10 @@
                          html += '</tr>';
                          $('#tbody').append(html);
 
-                         $('.latitude').val('') ;
-                         $('.longitude').val('') ;
-                         $('.titre').val('') ;
-                         $('.categorie').val('');
+                         $('#latitude').val('') ;
+                         $('#longitude').val('') ;
+                         $('#titre').val('') ;
+                         $('#categorie').val('');
                          var position = new google.maps.LatLng(point.Latitude, point.Longitude);
                          waypts.push({
                              location: position

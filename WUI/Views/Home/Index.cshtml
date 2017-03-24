@@ -45,26 +45,14 @@
     </div>
 </div>
 @section scripts {
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+   
     <script type="text/javascript">
-          $( function() {
-            var availableTags = [
-              "Nantes",
-              "Bordeaux",
-              "Paris",
-              "Lille",
-              "Brest",
-              "Marseille",
-              "Toulouse",
-              "Montpellier",
-              "Strasbourg",
-              "Lyon",
-              "Saint-Etienne",
-              "Metz",
-              "Nancy",
-              "Lens",
-            ];
+        var villes = @(new HtmlString(Json.Encode(ViewBag.villes)));
+        $( function() {
             $("#city").autocomplete({
-              source: availableTags
+                source: villes
             });
           } );
 
