@@ -387,6 +387,8 @@
     <Content Include="Views\Personne\Index.cshtml" />
     <Content Include="Views\Race\ResultatByUser.cshtml" />
     <Content Include="Views\Race\Importresult.cshtml" />
+    <Content Include="Views\Race\Import.cshtml" />
+    <Content Include="Views\Race\SaveResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Autres\" />

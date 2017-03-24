@@ -14,16 +14,23 @@
 
         <div id="container2"></div>
     </div>
+    <br />
+    <div class="col-lg-12">
+        <div id="course"></div>
+    </div>
 </div>
+
 @section scripts {
     <script>
         var villes = @(new HtmlString(Json.Encode(ViewBag.villes)));
         var nbParticipants = @(new HtmlString(Json.Encode(ViewBag.nbParticipants)));
         var tranches = @(new HtmlString(Json.Encode(ViewBag.tranches)));
         var nbParTranche = @(new HtmlString(Json.Encode(ViewBag.totalByAge)));
+        var ResultatParticipant = @(new HtmlString(Json.Encode(ViewBag.TempsCourseNantes)));
+        var IdParticipant = @(new HtmlString(Json.Encode(ViewBag.idParticipant)));
 
-        console.log(tranches) ;
-        console.log(nbParTranche) ;
+        console.log(ResultatParticipant) ;
+        console.log(IdParticipant) ;
     </script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>

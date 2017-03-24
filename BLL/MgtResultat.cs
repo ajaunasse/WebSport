@@ -37,8 +37,39 @@ namespace BLL
             results = entities.Select(x => x.ToBo()).ToList();
 
             return results;
-        } 
+        }
 
 
+        public bool Save(List<Resultat> models)
+        {
+            try
+            {
+                _context = new WebSportEntities();
+
+                foreach (Resultat resultat in models)
+                {
+                    
+                    _context.ResultatEntities.Add(resultat.ToEntity());
+                }
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+            
+            
+        }
+
+        public List<Resultat> GetResultatsByIdRace(Race idrace)
+        {
+            _context = new WebSportEntities();
+            List < ResultatEntity > liste = _context.ResultatEntities.Where(x => x.CourseId == idrace.Id).OrderByDescending(x =>x.HeureArrive).ToList();
+            return liste.Select(x => x.ToBo()).ToList();
+        }
     }
 }

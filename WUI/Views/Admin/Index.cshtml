@@ -9,39 +9,42 @@
             Bienvenue sur la page d'administration
         </div>
     </div>
-    <div class="col-lg-4">
-        <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="col-lg-6">
+        <div class="card">
             <div class="card-block">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h3 class="card-title">Gestion des courses</h3>
+                <p class="card-text">Gère la création, l'édition et la suppression des courses. Édition de l'itinéraire de course.</p>
+                <a href="@Url.RouteUrl("list_course")" class="btn btn-primary">Gestion des courses</a>
             </div>
         </div>
-
     </div>
-    <div class="col-lg-4">
-        <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="col-lg-6">
+        <div class="card">
             <div class="card-block">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h4 class="card-title">Import des résultats</h4>
+                <p class="card-text">Page permettant l'import des résultats d'une course avec un fichier Excel.</p>
+                <a href="@Url.RouteUrl("resultat")" class="btn btn-primary">Import des résultats</a>
             </div>
         </div>
-
     </div>
-    <div class="col-lg-4">
-        <div class="card" style="width: 20rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+</div>
+<div class="row adminContent">
+    <div class="col-lg-6">
+        <div class="card">
             <div class="card-block">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h3 class="card-title">Statistiques</h3>
+                <p class="card-text">Page affichant une batterie de statistiques.</p>
+                <a href="@Url.RouteUrl("statistiques")" class="btn btn-primary">Statistiques</a>
             </div>
         </div>
-
     </div>
-
-
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-block">
+                <h3 class="card-title">Utilisateurs</h3>
+                <p class="card-text">Page listant tout les utilisateurs de l'application</p>
+                <a href="@Url.RouteUrl("list_personne")" class="btn btn-primary">Utilisateurs</a>
+            </div>
+        </div>
+    </div>
 </div>

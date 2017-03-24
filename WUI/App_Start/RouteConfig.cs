@@ -29,7 +29,7 @@ namespace WUI
              );
             routes.MapRoute(
                 name: "resultat",
-                url: "Admin/Course/Index",
+                url: "ImportResult",
                 defaults: new { controller = "Race", action = "Importresult", id = UrlParameter.Optional }
              );
             routes.MapRoute(

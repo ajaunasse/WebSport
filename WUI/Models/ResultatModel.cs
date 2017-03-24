@@ -8,7 +8,7 @@ namespace WUI.Models
     public class ResultatModel
     {
 
-        public int IdPersonne { get; set; }
+        public PersonneModel Personne { get; set; }
 
         public TimeSpan TempsDeCourse { get; set; }
 

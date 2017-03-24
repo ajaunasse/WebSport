@@ -240,7 +240,7 @@
                                     {
                                         if (item != null)
                                         {
-                                            <tr>
+                                            <tr id="point_@item.Id">
                                                 <td>@item.Latitude</td>
                                                 <td>@item.Longitude</td>
                                                 <td>
@@ -355,11 +355,15 @@
         var idRace= @(new HtmlString(Json.Encode(Model.Id)));
         var town = @(new HtmlString(Json.Encode(Model.Town)));
         var center ;
+        var points = [];
+
         function initMap(newPoint) {
 
 
             directionsService = new google.maps.DirectionsService;
-            directionsDisplay = new google.maps.DirectionsRenderer;
+            directionsDisplay = new google.maps.DirectionsRenderer({
+                suppressMarkers: true,
+            });
             var geocoder =  new google.maps.Geocoder();
             distance = 0;
 
@@ -373,7 +377,7 @@
              if(typeof newPoints !== 'undefined'){
                 var points = newPoints
             } else {
-                var points = @(new HtmlString(Json.Encode(Model.Points)));
+                points = @(new HtmlString(Json.Encode(Model.Points)));
             }
 
             // Create a map object and specify the DOM element for display.
@@ -381,15 +385,18 @@
                 zoom: 12,
                 center: center,
             });
-
-
+            
             var geocoder =  new google.maps.Geocoder();
             var $self = this
 
 
+            console.log(points);
+
             if(!newPoint){
                 for(var i = 0 ; i < points.length ; i ++){
+                    var cat = "";
                     if(points[i].isPoi){
+                        cat = points[i].Category.Title;
                         if(points[i].Category.Id === 1) {
                             pointDepart = new google.maps.LatLng(points[i].Latitude, points[i].Longitude );
                         }else if(points[i].Category.Id === 2){
@@ -406,6 +413,15 @@
                             location: position
                         });
                     }
+                    addMarker(points[i].Latitude, points[i].Longitude, points[i].Id, cat);
+                }
+            }else{
+                for(var i = 0 ; i < points.length ; i ++){
+                    var cat = "";
+                    if(points[i].isPoi){
+                        cat = points[i].Category.Title;
+                    }
+                    addMarker(points[i].Latitude, points[i].Longitude, points[i].Id, cat)
                 }
             }
 
@@ -437,7 +453,6 @@
 
         function calculateAndDisplayRoute(directionService, directionDisplay){
             var $self = this;
-            //console.log(waypts);
             directionService.route({
                 origin: pointDepart,
                 destination: pointArrivee,
@@ -463,10 +478,28 @@
             });
         }
 
-        function addMarker(lat, long) {
+        function calculDistance() {
+
+        }
+
+        function addMarker(lat, long, idPoint, cat) {
+            var contentString = "";
+            if(cat == "")
+                contentString = "Point de base";
+            else
+                contentString = cat;
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
             var marker = new google.maps.Marker({
                 position: {lat: lat, lng: long},
-                map: map
+                map: map,
+            });
+            marker.addListener("click", function(){
+                $(".table-success").removeAttr("class");
+                $("#point_" + idPoint).attr("class", "table-success");
+                infoWindow.open(map, marker);
             });
             markers.push(marker)
         }
@@ -485,7 +518,6 @@
             $("#formID").on('submit',function (e) {
                 e.preventDefault();
                 var dataToSend = $('#formID').serialize();
-                console.log("dataToSend", dataToSend);
                 var MyUrl = {
                      MyUseFulUrl: '@Url.Action("AddPoint", "Race")'
                 };
@@ -498,12 +530,14 @@
                         var url = '@Url.Action("DeletePoint", new { idPoint = "__param1__", idRace = "__param2__" })';
                         var url1 = url.replace("__param1__", encodeURIComponent(point.Id));
                         var url2 = url1.replace("__param2__", encodeURIComponent(data.Id));
-                        var html = '<tr>';
+                        var html = '<tr id="point_' + point.Id + '">';
                         html += '<td>' + point.Latitude + '</td>';
                         html += '<td>' + point.Longitude + '</td>';
                         if(point.isPoi) {
+                            var cat = point.Category.Title;
                             html +='<td><span class="badge badge-success">OUI</span></td>'
-                         } else {
+                        } else {
+                            var cat = "";
                              html +='<td><span class="badge badge-danger">NON</span></td>'
                          }
                          if(point.titre !== null) {
@@ -528,8 +562,12 @@
                          waypts.push({
                              location: position
                          });
+                         points.push(point);
+                         addMarker(point.Latitude, point.Longitude, point.Id, cat)
                          newPoint = true;
-                         initMap(newPoint);
+                         directionsDisplay.setMap(map);
+                         calculateAndDisplayRoute(directionsService, directionsDisplay);
+                        
                      }
 
                  })
@@ -543,15 +581,19 @@
                      type: "GET",
                      url: url,
                      success: function (latitude) {
+                         console.log(latitude) ;
                          $self.parent().parent().remove();
-                        var index = $.each(waypts, function(key, value){
+                         var index = -1 ;
+                        $.each(waypts, function(key, value){
                             if(value.location.lat() === latitude) {
-                                return key;
+                                console.log("key", key)
+                                index = key
                             }
                         });
-                        waypts.splice(index,1) ;
+                        waypts.splice(index,1)
                         newPoint  = true;
-                         initMap(newPoint);
+                        directionsDisplay.setMap(map);
+                        calculateAndDisplayRoute(directionsService, directionsDisplay);
                      }
                  })
              });
