@@ -11,7 +11,6 @@
         <div class="entete">
             <h3 class="titlePage">Edition de la course n°@Model.Id</h3>
             <div class="button-group pull-right">
-                <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalResultat"><i class="material-icons">list</i> Résultat </a>
                 <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalParticipant"> <i class="material-icons">group</i> Participants </a>
                 <a href="#" class="btn btn-success withIcon" data-toggle="modal" data-target="#listePoints"> <i class="material-icons">edit_location</i> Itinéraire </a>
             </div>
@@ -153,57 +152,6 @@
     </div>
 </div>
 <!-- END MODAL -->
-<!-- Modal Resultaat-->
-<div class="modal fade" id="modalResultat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Résultat de la course</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-responsive">
-                    <thead>
-                        <tr>
-                            <th>Dossard</th>
-                            <th>Courreurs</th>
-                            <th>Rang</th>
-                            <th>Temps</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1511</td>
-                            <td>Usain Bolt</td>
-                            <td>1</td>
-                            <td>3h 04m 35s</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Zizou</td>
-                            <td>2</td>
-                            <td>3h 35m 35s</td>
-                        </tr>
-                        <tr>
-                            <td>878</td>
-                            <td>Moi même</td>
-                            <td>3</td>
-                            <td>5h 04m 35s</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END MODAL -->
 <!-- Modal liste points-->
 <div class="modal fade" id="listePoints" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -224,7 +172,7 @@
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true)
-                            <table class="table">
+                            <table class="table table-responsive">
                                 <thead>
                                     <tr>
                                         <th>Longitude</th>
