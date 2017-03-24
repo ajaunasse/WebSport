@@ -52,31 +52,28 @@
                 </thead>
                 <tbody>
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @item.Personne.Nom @item.Personne.Prenom
-                        </td>
-                        <td>
-                            @item.Race.Title @item.Race.Town
-                        </td>
-                        <td>
-                            @item.Classement
-                        </td>
-                        <td>
-                            @item.TempsDeCourse
-                        </td>
-                        <td>
-                            @item.HeureDebut
-                        </td>
-                        <td>
-                            @item.HeureArrivee
-                        </td>
-
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Personne.Nom @item.Personne.Prenom
+                            </td>
+                            <td>
+                                @item.Race.Title - @item.Race.Town
+                            </td>
+                            <td>
+                                @item.Classement
+                            </td>
+                            <td>
+                                @item.TempsDeCourse
+                            </td>
+                            <td>
+                                @item.HeureDebut
+                            </td>
+                            <td>
+                                @item.HeureArrivee
+                            </td>
                     </tr>
-
-
                 }
                 </tbody>
             </table>
