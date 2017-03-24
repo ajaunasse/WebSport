@@ -14,9 +14,9 @@
                 <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalResultat"><i class="material-icons">list</i> Résultat </a>
                 <a href="#" class="btn btn-primary withIcon" data-toggle="modal" data-target="#modalParticipant"> <i class="material-icons">group</i> Participants </a>
                 <a href="#" class="btn btn-success withIcon" data-toggle="modal" data-target="#listePoints"> <i class="material-icons">edit_location</i> Itinéraire </a>
-            </div>           
-         </div>
-         <hr />
+            </div>
+        </div>
+        <hr />
         <div class="card">
             <div class="card-header">
                 Organisateurs
@@ -24,28 +24,29 @@
             <div class="card-block">
                 @if (Model.Organisers != null)
                 {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nom complet</th>
-                            <th>Email</th>
-                            <th>Téléphone</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                           @foreach (var item in Model.Organisers)
-                            {
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>@item.Id</td>
-                                <td>@item.Nom @item.Prenom</td>
-                                <td>@item.Email</td>
-                                <td>@item.Phone</td>
+                                <th>#</th>
+                                <th>Nom complet</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Organisers)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Nom @item.Prenom</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Phone</td>
+                                </tr>
                             }
-                    </tbody>
-                </table>
-                } else
+                        </tbody>
+                    </table>
+                }
+                else
                 {
                     <div class="alert alert-info">
                         Pas d'organisateur
@@ -80,7 +81,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.DateStart)
-                        @Html.TextBoxFor(m => m.DateStart, new { @type = "date", @Value = Model.DateStart.ToString("yyyy-MM-dd"), @class="form-control" })
+                        @Html.TextBoxFor(m => m.DateStart, new { @type = "date", @Value = Model.DateStart.ToString("yyyy-MM-dd"), @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.DateStart)
                     </div>
                     <div class="form-group">
@@ -97,7 +98,7 @@
                     @Html.ActionLink("Retour à la liste", "Index", null, new { @class = "btn btn-primary" })
                 }
             </div>
-         </div>  
+        </div>
     </div>
 </div>
 
@@ -137,10 +138,11 @@
                             }
                         </tbody>
                     </table>
-                } else
+                }
+                else
                 {
                     <div class="alert alert-info">
-                        Aucun participant à cette course 
+                        Aucun participant à cette course
                     </div>
                 }
             </div>
@@ -151,7 +153,6 @@
     </div>
 </div>
 <!-- END MODAL -->
-
 <!-- Modal Resultaat-->
 <div class="modal fade" id="modalResultat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -203,7 +204,6 @@
     </div>
 </div>
 <!-- END MODAL -->
-
 <!-- Modal liste points-->
 <div class="modal fade" id="listePoints" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -236,7 +236,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                    @foreach(var item in Model.Points)
+                                    @foreach (var item in Model.Points)
                                     {
                                         if (item != null)
                                         {
@@ -262,7 +262,7 @@
                                                     {
                                                         @item.titre
                                                     }
-                                                
+
                                                 </td>
                                                 <td>
                                                     @if (item.Category == null)
@@ -302,13 +302,13 @@
                                             <input type="checkbox" name="checkbox" id="POIs" class="form-control" />
                                             <span class="slider round"></span>
                                         </label>
-                                        
+
                                     </div>
                                     @Html.TextBoxFor(m => m.Id, new { type = "hidden", })
                                     @*@Html.TextBoxFor(m => m.Distance, new { type = "hidden", id = "distance"})*@
                                     <div class="col-3">
                                         <label>Action</label><br />
-                                        <button type="submit" class="btn btn-success add" name="add"  value="Ajouter">Ajouter le point</button>
+                                        <button type="submit" class="btn btn-success add" name="add" value="Ajouter">Ajouter le point</button>
                                     </div>
                                 </div>
                             </div>
@@ -339,7 +339,7 @@
 <!-- END MODAL -->
 
 
-@section scripts {  
+@section scripts {
 
 
     <script>
@@ -354,7 +354,6 @@
         var distance = 0;
         var idRace= @(new HtmlString(Json.Encode(Model.Id)));
         var town = @(new HtmlString(Json.Encode(Model.Town)));
-        var center ;
         var points = [];
 
         function initMap(newPoint) {
@@ -367,15 +366,8 @@
             var geocoder =  new google.maps.Geocoder();
             distance = 0;
 
-            geocoder.geocode( { 'address': town}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    setCenter({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()});
-                } else {
-                }
-            });
-
-             if(typeof newPoints !== 'undefined'){
-                var points = newPoints
+            if(typeof newPoints !== 'undefined'){
+                points = newPoints
             } else {
                 points = @(new HtmlString(Json.Encode(Model.Points)));
             }
@@ -383,20 +375,10 @@
             // Create a map object and specify the DOM element for display.
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 12,
-                center: center,
             });
-            
+
             var geocoder =  new google.maps.Geocoder();
-            geocoder.geocode( { 'address':town}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    map.setCenter({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()});
-                } else {
-                }
-            });
-            var $self = this
-
-
-            console.log(points);
+            calculCenter(geocoder,town) ;
 
             if(!newPoint){
                 for(var i = 0 ; i < points.length ; i ++){
@@ -431,8 +413,6 @@
                 }
             }
 
-
-
             if((pointDepart != null) && (pointArrivee != null))
             {
                 directionsDisplay.setMap(map);
@@ -450,10 +430,17 @@
                 $("#longitude").val(longitude.replace(".",","));
             });
         }
-        function setCenter(LatLng) {
 
+        function calculCenter(geocoder, town) {
+            var $self = this
+            geocoder.geocode( { 'address':town}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var center = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()} ;
+                    $self.map.setCenter(center) ;
+                } else {
+                }
+            });
         }
-        
 
         function calculateAndDisplayRoute(directionService, directionDisplay){
             var $self = this;
@@ -474,13 +461,14 @@
                     var MyUrl = '@Url.Action("UpdateDistance")';
                     var dataToSend = {distance: distance, idRace: idRace}
                     $.post(MyUrl, dataToSend, function( data ) {
-                            
+
                     });
                 }else{
                     console.log("La requête de la direction à échoué : " + status);
                 }
             });
         }
+
 
         function calculDistance() {
 
@@ -539,6 +527,11 @@
                         html += '<td>' + point.Longitude + '</td>';
                         if(point.isPoi) {
                             var cat = point.Category.Title;
+                            if(point.Category.Id == 1){
+                                pointDepart = new google.maps.LatLng(point.Latitude, point.Longitude);
+                            }else if(point.Category.Id == 2){
+                                pointArrivee = new google.maps.LatLng(point.Latitude, point.Longitude);
+                            }
                             html +='<td><span class="badge badge-success">OUI</span></td>'
                         } else {
                             var cat = "";
@@ -558,10 +551,10 @@
                          html += '</tr>';
                          $('#tbody').append(html);
 
-                         $('#latitude').val('') ;
-                         $('#longitude').val('') ;
-                         $('#titre').val('') ;
-                         $('#categorie').val('');
+                         $('.latitude').val('') ;
+                         $('.longitude').val('') ;
+                         $('.titre').val('') ;
+                         $('.categorie').val('');
                          var position = new google.maps.LatLng(point.Latitude, point.Longitude);
                          waypts.push({
                              location: position
@@ -571,7 +564,7 @@
                          newPoint = true;
                          directionsDisplay.setMap(map);
                          calculateAndDisplayRoute(directionsService, directionsDisplay);
-                        
+
                      }
 
                  })
@@ -605,10 +598,10 @@
 
          });
 
-     </script>
+    </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIyk34t3LjsAXYoq912qTIQoBz1QWfNp0&callback=initMap"
-        async defer>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIyk34t3LjsAXYoq912qTIQoBz1QWfNp0&callback=initMap"
+            async defer>
 
-</script>
+    </script>
 }

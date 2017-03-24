@@ -174,7 +174,8 @@ namespace WUI.Controllers
                     PersonneModel user = (PersonneModel)Session.Contents["User"];
                     int lastId = MgtRace.GetInstance().GetAllItems().Max(x => x.Id);
                     MgtRace.GetInstance().SuscribeRace(user.ToBo(), lastId);
-                    return RedirectToAction("Create");
+
+                    return RedirectToAction("Edit", new { id = lastId });
                 }
                 else
                 {
@@ -383,11 +384,8 @@ namespace WUI.Controllers
                
             }
 
-            int pageSize = 50;
-            int pageNumber = (page ?? 1);
             
-            var valRet = modelsResult.ToPagedList(pageNumber, pageSize);
-            return View(valRet);
+            
 
 
             bool res = MgtResultat.GetInstance().Save(modelsResult.Select(x => x.ToBo()).ToList());
@@ -395,7 +393,8 @@ namespace WUI.Controllers
 
             if (res)
             {
-                return View(modelsResult);
+                return RedirectToAction("Index", "Admin");
+                //return View(valRet);
             }
             else
             {
@@ -405,6 +404,39 @@ namespace WUI.Controllers
             
         }
 
-        
+
+        public ActionResult Affichage()
+        {
+
+            List<int> results = MgtResultat.GetInstance().GetResultats();
+
+            List<RaceModel> races = new List<RaceModel>();
+            foreach (int result in results)
+            {
+                RaceModel race = MgtRace.GetInstance().GetRace(result).ToModel();
+                races.Add(race);
+            }
+
+
+            return View(races);
+        }
+
+        public ActionResult AfficheResult(int idRace, int? page = 1)
+        {
+
+            List<Resultat> results = MgtResultat.GetInstance().GetResultatsByIdRace(idRace);
+            Race race = MgtRace.GetInstance().GetRace(idRace);
+
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+
+            var resultPage = results.Select(x => x.ToModel()).ToPagedList(pageNumber, pageSize);
+
+            ViewBag.race = race.Id;
+            ViewBag.ville = race.Title +" - "+ race.Town;
+            return View("Import", resultPage);
+        }
+
+
     }
 }

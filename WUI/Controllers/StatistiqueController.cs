@@ -29,7 +29,6 @@ namespace WUI.Controllers
                 villes.Add(race.Town);
                 nbParticipants.Add(race.Competitors.Count());
             }
-
             ViewBag.villes = villes;
             ViewBag.nbParticipants = nbParticipants;
             ViewBag.totalByAge = totalByAge;

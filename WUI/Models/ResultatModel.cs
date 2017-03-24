@@ -17,7 +17,7 @@ namespace WUI.Models
         public TimeSpan HeureArrivee { get; set; }
 
         
-        public int Classement { get; set; }
+        public int? Classement { get; set; }
 
         public RaceModel Race { get; set; } 
 
