@@ -171,6 +171,9 @@ namespace WUI.Controllers
             {
                 if (MgtRace.GetInstance().AddRace(race.ToBo()))
                 {
+                    PersonneModel user = (PersonneModel)Session.Contents["User"];
+                    int lastId = MgtRace.GetInstance().GetAllItems().Max(x => x.Id);
+                    MgtRace.GetInstance().SuscribeRace(user.ToBo(), lastId);
                     return RedirectToAction("Create");
                 }
                 else
